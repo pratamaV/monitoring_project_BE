@@ -1,5 +1,6 @@
 package com.askrindo.service;
 
+import com.askrindo.entity.Project;
 import com.askrindo.entity.Release;
 import com.askrindo.entity.Task;
 import com.askrindo.exception.DataNotFoundException;
@@ -22,6 +23,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     ReleaseService releaseService;
+
+    @Autowired
+    ProjectService projectService;
 
     @Override
     public void saveTask(Task task) {
@@ -66,6 +70,7 @@ public class TaskServiceImpl implements TaskService {
         }
         if (task.getStatusDone().equalsIgnoreCase("Ya")){
             task.setTaskProsentase(task.getWeight());
+            System.out.println(task.getTaskProsentase());
             taskRepository.save(task);
         }
         List<Task> taskList = taskRepository.findTaskByReleaseId(id);
@@ -76,6 +81,16 @@ public class TaskServiceImpl implements TaskService {
         Release release = releaseService.getReleaseById(id);
         release.setProsentaseRelease(percentageRelease);
         releaseService.saveRelease(release);
+
+        Project project = projectService.getProjectById(release.getProject().getId());
+        List <Release> releaseList = releaseService.getReleaseByProjectId(release.getProject().getId());
+        Float percentageProject = Float.valueOf(0);
+        for (Release release1: releaseList) {
+            percentageProject = percentageProject + (release1.getProsentaseRelease()*release1.getWeight());
+            System.out.println(percentageProject);
+        }
+        project.setProsentaseProject(percentageProject);
+        projectService.saveProject(project);
     }
 
     @Override

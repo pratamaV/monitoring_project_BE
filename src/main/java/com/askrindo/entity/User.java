@@ -26,10 +26,6 @@ public class User {
     @JsonIgnore
     private List<Task> taskList = new ArrayList<>();
 
-    @OneToMany
-    @JsonIgnore
-    private List<Project> projectList = new ArrayList<>();
-
     public User() {
     }
 

@@ -54,6 +54,11 @@ public class ReleaseServiceImpl implements ReleaseService {
     }
 
     @Override
+    public List<Release> getReleaseByProjectId(String id) {
+        return releaseRepository.findReleaseByProjectId(id);
+    }
+
+    @Override
     public void updateRelease(Release release) {
         releaseRepository.save(release);
     }
