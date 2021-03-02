@@ -21,6 +21,7 @@ public class User {
     private String email;
     private String divisiUser;
     private String directorateUser;
+    private String password;
 
     @OneToMany
     @JsonIgnore
@@ -44,6 +45,17 @@ public class User {
         this.email = email;
         this.divisiUser = divisiUser;
         this.directorateUser = directorateUser;
+        this.taskList = taskList;
+    }
+
+    public User(String id, String username, String userRole, String email, String divisiUser, String directorateUser, String password, List<Task> taskList) {
+        this.id = id;
+        this.username = username;
+        this.userRole = userRole;
+        this.email = email;
+        this.divisiUser = divisiUser;
+        this.directorateUser = directorateUser;
+        this.password = password;
         this.taskList = taskList;
     }
 
@@ -101,5 +113,13 @@ public class User {
 
     public void setTaskList(List<Task> taskList) {
         this.taskList = taskList;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
