@@ -19,11 +19,20 @@ public class Project {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
     private String projectName;
-    private String pmo;
-    private String pm;
+
+    @ManyToOne
+    @JoinColumn(name = "pmo_id")
+    private User pmo;
+
+    @ManyToOne
+    @JoinColumn(name = "pm_id")
+    private User pm;
     private String benefit;
     private String description;
-    private String coPM;
+
+    @ManyToOne
+    @JoinColumn(name = "coPM_id")
+    private User coPM;
     private String divisiUser;
     private String directorateUser;
     private String status;
@@ -38,6 +47,7 @@ public class Project {
     private Float weight;
     private String categoryActivity;
     private String categoryInitiative;
+    private String statusProject;
 
     @OneToMany
     @JsonIgnore
@@ -46,29 +56,7 @@ public class Project {
     public Project() {
     }
 
-    public Project(String id, String projectName, String pmo, String pm, String benefit, String description, String coPM, String divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative) {
-        this.id = id;
-        this.projectName = projectName;
-        this.pmo = pmo;
-        this.pm = pm;
-        this.benefit = benefit;
-        this.description = description;
-        this.coPM = coPM;
-        this.divisiUser = divisiUser;
-        this.directorateUser = directorateUser;
-        this.status = status;
-        this.targetLive = targetLive;
-        this.prosentaseProject = prosentaseProject;
-        this.budget = budget;
-        this.contracted_value = contracted_value;
-        this.paymentRealization = paymentRealization;
-        this.score = score;
-        this.weight = weight;
-        this.categoryActivity = categoryActivity;
-        this.categoryInitiative = categoryInitiative;
-    }
-
-    public Project(String id, String projectName, String pmo, String pm, String benefit, String description, String coPM, String divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, List<Release> releaseList) {
+    public Project(String id, String projectName, User pmo, User pm, String benefit, String description, User coPM, String divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, List<Release> releaseList) {
         this.id = id;
         this.projectName = projectName;
         this.pmo = pmo;
@@ -91,6 +79,64 @@ public class Project {
         this.releaseList = releaseList;
     }
 
+    public Project(String projectName, User pmo, User pm, String benefit, String description, User coPM, String divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, List<Release> releaseList) {
+        this.projectName = projectName;
+        this.pmo = pmo;
+        this.pm = pm;
+        this.benefit = benefit;
+        this.description = description;
+        this.coPM = coPM;
+        this.divisiUser = divisiUser;
+        this.directorateUser = directorateUser;
+        this.status = status;
+        this.targetLive = targetLive;
+        this.prosentaseProject = prosentaseProject;
+        this.budget = budget;
+        this.contracted_value = contracted_value;
+        this.paymentRealization = paymentRealization;
+        this.score = score;
+        this.weight = weight;
+        this.categoryActivity = categoryActivity;
+        this.categoryInitiative = categoryInitiative;
+        this.releaseList = releaseList;
+    }
+
+    public Project(String id, String projectName, User pmo, User pm, String benefit, String description, User coPM, String divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, String statusProject, List<Release> releaseList) {
+        this.id = id;
+        this.projectName = projectName;
+        this.pmo = pmo;
+        this.pm = pm;
+        this.benefit = benefit;
+        this.description = description;
+        this.coPM = coPM;
+        this.divisiUser = divisiUser;
+        this.directorateUser = directorateUser;
+        this.status = status;
+        this.targetLive = targetLive;
+        this.prosentaseProject = prosentaseProject;
+        this.budget = budget;
+        this.contracted_value = contracted_value;
+        this.paymentRealization = paymentRealization;
+        this.score = score;
+        this.weight = weight;
+        this.categoryActivity = categoryActivity;
+        this.categoryInitiative = categoryInitiative;
+        this.statusProject = statusProject;
+        this.releaseList = releaseList;
+    }
+
+    public User getCoPM() {
+        return coPM;
+    }
+
+    public String getStatusProject() {
+        return statusProject;
+    }
+
+    public void setStatusProject(String statusProject) {
+        this.statusProject = statusProject;
+    }
+
     public String getId() {
         return id;
     }
@@ -107,20 +153,24 @@ public class Project {
         this.projectName = projectName;
     }
 
-    public String getPmo() {
+    public User getPmo() {
         return pmo;
     }
 
-    public void setPmo(String pmo) {
+    public void setPmo(User pmo) {
         this.pmo = pmo;
     }
 
-    public String getPm() {
+    public User getPm() {
         return pm;
     }
 
-    public void setPm(String pm) {
+    public void setPm(User pm) {
         this.pm = pm;
+    }
+
+    public void setCoPM(User coPM) {
+        this.coPM = coPM;
     }
 
     public String getBenefit() {
@@ -137,14 +187,6 @@ public class Project {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getCoPM() {
-        return coPM;
-    }
-
-    public void setCoPM(String user) {
-        this.coPM = user;
     }
 
     public String getDivisiUser() {

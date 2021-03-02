@@ -25,7 +25,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 
     @Override
     public void saveRelease(Release release) {
-        List<Release> releaseList = releaseRepository.findAll();
+        List<Release> releaseList = releaseRepository.findReleaseByProjectId(release.getProject().getId());
         Float totalScoreRelease = Float.valueOf(0);
         Float totalScoreRelease2 = Float.valueOf(0);
         for (Release release1: releaseList) {

@@ -34,4 +34,14 @@ public class UserController {
     public void updateUser(@RequestBody User user){
         userService.updateUser(user);
     }
+
+    @PutMapping("/user/{id}")
+    public void updateStatusUserById(@PathVariable String id){
+        userService.updateStatusUserById(id);
+    }
+
+    @GetMapping("/usersByStatus")
+    public List<User> getUserByStatusUser(@RequestParam String status){
+        return userService.getUserByStatus(status);
+    }
 }

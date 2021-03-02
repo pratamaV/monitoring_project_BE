@@ -2,6 +2,7 @@ package com.askrindo.service;
 
 import com.askrindo.entity.Project;
 import com.askrindo.entity.Task;
+import com.askrindo.entity.User;
 import com.askrindo.exception.DataNotFoundException;
 import com.askrindo.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,15 +52,17 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void updateProject(Project project) {
-//        if (!releaseRepository.existsById(release.getId())) {
-//            throw new DataNotFoundException(String.format(DataNotFoundException.DATA_NOT_FOUND, release.getClass(), release.getId()));
-//        }
-//        List<Task> taskList = taskService.getAllTask();
-//        Float percentageRelease = Float.valueOf(0);
-//        for (Task task: taskList) {
-//            percentageRelease = percentageRelease + task.getTaskProsentase();
-//        }
-//        release.setProsentaseRelease(percentageRelease);
         projectRepository.save(project);
+    }
+
+    @Override
+    public void updateStatusProjectById(String id) {
+        Project project = projectRepository.findById(id).get();
+        if (project.getStatusProject().equalsIgnoreCase("tidak aktif")){
+            project.setStatusProject("aktif");
+            projectRepository.save(project);
+        } else {
+            project.setStatusProject("tidak aktif");
+        }
     }
 }

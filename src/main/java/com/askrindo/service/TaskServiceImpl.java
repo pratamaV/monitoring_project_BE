@@ -29,7 +29,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void saveTask(Task task) {
-        List<Task> taskList = taskRepository.findAll();
+        List<Task> taskList = taskRepository.findTaskByReleaseId(task.getRelease().getId());
         Float totalScore = Float.valueOf(0);
         Float totalScore2 = Float.valueOf(0);
         for (Task task1: taskList) {

@@ -12,4 +12,6 @@ public interface UserService {
     public List<User> getAllUser();
     public User getUserById(String id);
     public void updateUser(User user);
+    public void updateStatusUserById(String id);
+    public List<User> getUserByStatus(String status);
 }

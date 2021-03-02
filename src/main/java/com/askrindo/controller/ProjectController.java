@@ -34,4 +34,9 @@ public class ProjectController {
     public void updateProject(@RequestBody Project project){
         projectService.updateProject(project);
     }
+
+    @PutMapping("/project/{id}")
+    public void updateStatusProjectById(@PathVariable String id){
+        projectService.updateStatusProjectById(id);
+    }
 }
