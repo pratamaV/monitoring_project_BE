@@ -103,4 +103,9 @@ public class TaskController {
     public void deleteAllTask(){
         taskService.deleteAllTask();
     }
+
+    @GetMapping("/weightTaskByUserId/{id}")
+    public Float getWeightTaskByUserId(@PathVariable String id){
+        return taskService.getWeightTaskByUserId(id);
+    }
 }

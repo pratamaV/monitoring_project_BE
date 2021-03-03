@@ -14,4 +14,5 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, String> {
     public List<Task> findTaskByReleaseId(String id);
+    public List<Task> findTaskByAssignedToId(String id);
 }

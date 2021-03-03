@@ -29,6 +29,8 @@ public class User {
     private String directorateUser;
     private String password;
     private String statusUser;
+    private Float totalWeight;
+    private Float totalPerformance;
 
     @OneToMany
     @JsonIgnore
@@ -39,6 +41,21 @@ public class User {
     private List<Project> projectList = new ArrayList<>();
 
     public User() {
+    }
+
+    public User(String id, String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, Float totalWeight, Float totalPerformance, List<Task> taskList, List<Project> projectList) {
+        this.id = id;
+        this.username = username;
+        this.userRole = userRole;
+        this.email = email;
+        this.divisiUser = divisiUser;
+        this.directorateUser = directorateUser;
+        this.password = password;
+        this.statusUser = statusUser;
+        this.totalWeight = totalWeight;
+        this.totalPerformance = totalPerformance;
+        this.taskList = taskList;
+        this.projectList = projectList;
     }
 
     public User(String id, String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, List<Task> taskList, List<Project> projectList) {
@@ -147,5 +164,21 @@ public class User {
 
     public void setProjectList(List<Project> projectList) {
         this.projectList = projectList;
+    }
+
+    public Float getTotalWeight() {
+        return totalWeight;
+    }
+
+    public void setTotalWeight(Float totalWeight) {
+        this.totalWeight = totalWeight;
+    }
+
+    public Float getTotalPerformance() {
+        return totalPerformance;
+    }
+
+    public void setTotalPerformance(Float totalPerformance) {
+        this.totalPerformance = totalPerformance;
     }
 }

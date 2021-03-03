@@ -3,6 +3,7 @@ package com.askrindo.service;
 import com.askrindo.entity.Project;
 import com.askrindo.entity.Release;
 import com.askrindo.entity.Task;
+import com.askrindo.entity.User;
 import com.askrindo.exception.DataNotFoundException;
 import com.askrindo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     ProjectService projectService;
 
+    @Autowired
+    UserService userService;
+
     @Override
     public void saveTask(Task task) {
         List<Task> taskList = taskRepository.findTaskByReleaseId(task.getRelease().getId());
@@ -42,6 +46,22 @@ public class TaskServiceImpl implements TaskService {
             taskRepository.save(task1);
         }
         taskRepository.save(task);
+
+        List<Task> taskList2 = taskRepository.findTaskByAssignedToId(task.getAssignedTo().getId());
+        Float userWeight = Float.valueOf(0);
+        Float userPerformance = Float.valueOf(0);
+        for (Task task1: taskList2) {
+            Release release = task1.getRelease();
+            Float releaseWeight = task1.getRelease().getWeight();
+            Float projectWeight = release.getProject().getWeight();
+            Float taskWeight = task1.getWeight();
+            userWeight = userWeight + (taskWeight*releaseWeight*projectWeight);
+            userPerformance = userPerformance + (taskWeight*releaseWeight*projectWeight*task.getTaskProsentase());
+        }
+        User user = userService.getUserById(task.getAssignedTo().getId());
+        user.setTotalWeight(userWeight);
+        user.setTotalPerformance(userPerformance);
+        userService.saveUser(user);
     }
 
     @Override
@@ -91,6 +111,22 @@ public class TaskServiceImpl implements TaskService {
         }
         project.setProsentaseProject(percentageProject);
         projectService.saveProject(project);
+
+        List<Task> taskList2 = taskRepository.findTaskByAssignedToId(task.getAssignedTo().getId());
+        Float userWeight = Float.valueOf(0);
+        Float userPerformance = Float.valueOf(0);
+        for (Task task1: taskList2) {
+            Release release1 = task1.getRelease();
+            Float releaseWeight = task1.getRelease().getWeight();
+            Float projectWeight = release1.getProject().getWeight();
+            Float taskWeight = task1.getWeight();
+            userWeight = userWeight + (taskWeight*releaseWeight*projectWeight);
+            userPerformance = userPerformance + (taskWeight*releaseWeight*projectWeight*task.getTaskProsentase());
+        }
+        User user = userService.getUserById(task.getAssignedTo().getId());
+        user.setTotalWeight(userWeight);
+        user.setTotalPerformance(userPerformance);
+        userService.saveUser(user);
     }
 
     @Override
@@ -101,5 +137,25 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void deleteAllTask() {
         taskRepository.deleteAll();
+    }
+
+    @Override
+    public Float getWeightTaskByUserId(String userID) {
+        List<Task> taskList = taskRepository.findTaskByAssignedToId(userID);
+        Float userWeight = Float.valueOf(0);
+        Float userPerformance = Float.valueOf(0);
+        for (Task task: taskList) {
+            Release release = task.getRelease();
+            Float releaseWeight = task.getRelease().getWeight();
+            Float projectWeight = release.getProject().getWeight();
+            Float taskWeight = task.getWeight();
+            userWeight = userWeight + (taskWeight*releaseWeight*projectWeight);
+            userPerformance = userPerformance + (taskWeight*releaseWeight*projectWeight*task.getTaskProsentase());
+        }
+        User user = userService.getUserById(userID);
+        user.setTotalWeight(userWeight);
+        user.setTotalPerformance(userPerformance);
+        userService.saveUser(user);
+        return userWeight;
     }
 }
