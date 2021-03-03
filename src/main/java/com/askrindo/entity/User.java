@@ -21,7 +21,11 @@ public class User {
 
     @Column(unique = true)
     private String email;
-    private String divisiUser;
+
+    @ManyToOne
+    @JoinColumn(name = "division_id")
+    private Division divisiUser;
+
     private String directorateUser;
     private String password;
     private String statusUser;
@@ -37,36 +41,7 @@ public class User {
     public User() {
     }
 
-    public User(String username, String userRole, String email, String divisiUser, String directorateUser) {
-        this.username = username;
-        this.userRole = userRole;
-        this.email = email;
-        this.divisiUser = divisiUser;
-        this.directorateUser = directorateUser;
-    }
-
-    public User(String id, String username, String userRole, String email, String divisiUser, String directorateUser, List<Task> taskList) {
-        this.id = id;
-        this.username = username;
-        this.userRole = userRole;
-        this.email = email;
-        this.divisiUser = divisiUser;
-        this.directorateUser = directorateUser;
-        this.taskList = taskList;
-    }
-
-    public User(String id, String username, String userRole, String email, String divisiUser, String directorateUser, String password, List<Task> taskList) {
-        this.id = id;
-        this.username = username;
-        this.userRole = userRole;
-        this.email = email;
-        this.divisiUser = divisiUser;
-        this.directorateUser = directorateUser;
-        this.password = password;
-        this.taskList = taskList;
-    }
-
-    public User(String id, String username, String userRole, String email, String divisiUser, String directorateUser, String password, String statusUser, List<Task> taskList, List<Project> projectList) {
+    public User(String id, String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, List<Task> taskList, List<Project> projectList) {
         this.id = id;
         this.username = username;
         this.userRole = userRole;
@@ -78,6 +53,21 @@ public class User {
         this.taskList = taskList;
         this.projectList = projectList;
     }
+
+    public User(String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, List<Task> taskList, List<Project> projectList) {
+        this.username = username;
+        this.userRole = userRole;
+        this.email = email;
+        this.divisiUser = divisiUser;
+        this.directorateUser = directorateUser;
+        this.password = password;
+        this.statusUser = statusUser;
+        this.taskList = taskList;
+        this.projectList = projectList;
+    }
+
+
+
 
     public String getId() {
         return id;
@@ -111,11 +101,11 @@ public class User {
         this.email = email;
     }
 
-    public String getDivisiUser() {
+    public Division getDivisiUser() {
         return divisiUser;
     }
 
-    public void setDivisiUser(String divisiUser) {
+    public void setDivisiUser(Division divisiUser) {
         this.divisiUser = divisiUser;
     }
 

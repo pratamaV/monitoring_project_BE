@@ -33,7 +33,11 @@ public class Project {
     @ManyToOne
     @JoinColumn(name = "coPM_id")
     private User coPM;
-    private String divisiUser;
+
+    @ManyToOne
+    @JoinColumn(name = "division_id")
+    private Division divisiUser;
+
     private String directorateUser;
     private String status;
 
@@ -56,52 +60,7 @@ public class Project {
     public Project() {
     }
 
-    public Project(String id, String projectName, User pmo, User pm, String benefit, String description, User coPM, String divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, List<Release> releaseList) {
-        this.id = id;
-        this.projectName = projectName;
-        this.pmo = pmo;
-        this.pm = pm;
-        this.benefit = benefit;
-        this.description = description;
-        this.coPM = coPM;
-        this.divisiUser = divisiUser;
-        this.directorateUser = directorateUser;
-        this.status = status;
-        this.targetLive = targetLive;
-        this.prosentaseProject = prosentaseProject;
-        this.budget = budget;
-        this.contracted_value = contracted_value;
-        this.paymentRealization = paymentRealization;
-        this.score = score;
-        this.weight = weight;
-        this.categoryActivity = categoryActivity;
-        this.categoryInitiative = categoryInitiative;
-        this.releaseList = releaseList;
-    }
-
-    public Project(String projectName, User pmo, User pm, String benefit, String description, User coPM, String divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, List<Release> releaseList) {
-        this.projectName = projectName;
-        this.pmo = pmo;
-        this.pm = pm;
-        this.benefit = benefit;
-        this.description = description;
-        this.coPM = coPM;
-        this.divisiUser = divisiUser;
-        this.directorateUser = directorateUser;
-        this.status = status;
-        this.targetLive = targetLive;
-        this.prosentaseProject = prosentaseProject;
-        this.budget = budget;
-        this.contracted_value = contracted_value;
-        this.paymentRealization = paymentRealization;
-        this.score = score;
-        this.weight = weight;
-        this.categoryActivity = categoryActivity;
-        this.categoryInitiative = categoryInitiative;
-        this.releaseList = releaseList;
-    }
-
-    public Project(String id, String projectName, User pmo, User pm, String benefit, String description, User coPM, String divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, String statusProject, List<Release> releaseList) {
+    public Project(String id, String projectName, User pmo, User pm, String benefit, String description, User coPM, Division divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, String statusProject, List<Release> releaseList) {
         this.id = id;
         this.projectName = projectName;
         this.pmo = pmo;
@@ -124,6 +83,30 @@ public class Project {
         this.statusProject = statusProject;
         this.releaseList = releaseList;
     }
+
+    public Project(String projectName, User pmo, User pm, String benefit, String description, User coPM, Division divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, String statusProject, List<Release> releaseList) {
+        this.projectName = projectName;
+        this.pmo = pmo;
+        this.pm = pm;
+        this.benefit = benefit;
+        this.description = description;
+        this.coPM = coPM;
+        this.divisiUser = divisiUser;
+        this.directorateUser = directorateUser;
+        this.status = status;
+        this.targetLive = targetLive;
+        this.prosentaseProject = prosentaseProject;
+        this.budget = budget;
+        this.contracted_value = contracted_value;
+        this.paymentRealization = paymentRealization;
+        this.score = score;
+        this.weight = weight;
+        this.categoryActivity = categoryActivity;
+        this.categoryInitiative = categoryInitiative;
+        this.statusProject = statusProject;
+        this.releaseList = releaseList;
+    }
+
 
     public User getCoPM() {
         return coPM;
@@ -189,11 +172,11 @@ public class Project {
         this.description = description;
     }
 
-    public String getDivisiUser() {
+    public Division getDivisiUser() {
         return divisiUser;
     }
 
-    public void setDivisiUser(String divisiUser) {
+    public void setDivisiUser(Division divisiUser) {
         this.divisiUser = divisiUser;
     }
 
