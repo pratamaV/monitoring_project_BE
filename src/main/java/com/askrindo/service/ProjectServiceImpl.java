@@ -1,9 +1,6 @@
 package com.askrindo.service;
 
 import com.askrindo.entity.Project;
-import com.askrindo.entity.Task;
-import com.askrindo.entity.User;
-import com.askrindo.exception.DataNotFoundException;
 import com.askrindo.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

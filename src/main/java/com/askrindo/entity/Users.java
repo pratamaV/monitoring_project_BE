@@ -2,15 +2,17 @@ package com.askrindo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
 @Entity
 @Table(name = "mst_user")
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -40,10 +42,13 @@ public class User {
     @JsonIgnore
     private List<Project> projectList = new ArrayList<>();
 
-    public User() {
+    @Transient
+    private Collection<GrantedAuthority> listOfgrantedAuthorities = new ArrayList<>();
+
+    public Users() {
     }
 
-    public User(String id, String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, Float totalWeight, Float totalPerformance, List<Task> taskList, List<Project> projectList) {
+    public Users(String id, String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, Float totalWeight, Float totalPerformance, List<Task> taskList, List<Project> projectList, Collection<GrantedAuthority> listOfgrantedAuthorities) {
         this.id = id;
         this.username = username;
         this.userRole = userRole;
@@ -56,9 +61,10 @@ public class User {
         this.totalPerformance = totalPerformance;
         this.taskList = taskList;
         this.projectList = projectList;
+        this.listOfgrantedAuthorities = listOfgrantedAuthorities;
     }
 
-    public User(String id, String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, List<Task> taskList, List<Project> projectList) {
+    public Users(String id, String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, List<Task> taskList, List<Project> projectList) {
         this.id = id;
         this.username = username;
         this.userRole = userRole;
@@ -71,7 +77,7 @@ public class User {
         this.projectList = projectList;
     }
 
-    public User(String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, List<Task> taskList, List<Project> projectList) {
+    public Users(String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, List<Task> taskList, List<Project> projectList) {
         this.username = username;
         this.userRole = userRole;
         this.email = email;
@@ -82,8 +88,6 @@ public class User {
         this.taskList = taskList;
         this.projectList = projectList;
     }
-
-
 
 
     public String getId() {
@@ -134,14 +138,6 @@ public class User {
         this.directorateUser = directorateUser;
     }
 
-    public List<Task> getTaskList() {
-        return taskList;
-    }
-
-    public void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -158,14 +154,6 @@ public class User {
         this.statusUser = statusUser;
     }
 
-    public List<Project> getProjectList() {
-        return projectList;
-    }
-
-    public void setProjectList(List<Project> projectList) {
-        this.projectList = projectList;
-    }
-
     public Float getTotalWeight() {
         return totalWeight;
     }
@@ -180,5 +168,29 @@ public class User {
 
     public void setTotalPerformance(Float totalPerformance) {
         this.totalPerformance = totalPerformance;
+    }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
+    }
+
+    public List<Project> getProjectList() {
+        return projectList;
+    }
+
+    public void setProjectList(List<Project> projectList) {
+        this.projectList = projectList;
+    }
+
+    public Collection<GrantedAuthority> getListOfgrantedAuthorities() {
+        return listOfgrantedAuthorities;
+    }
+
+    public void setListOfgrantedAuthorities(Collection<GrantedAuthority> listOfgrantedAuthorities) {
+        this.listOfgrantedAuthorities = listOfgrantedAuthorities;
     }
 }

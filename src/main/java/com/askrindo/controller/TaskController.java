@@ -1,9 +1,8 @@
 package com.askrindo.controller;
 
-import com.askrindo.entity.Project;
 import com.askrindo.entity.Release;
 import com.askrindo.entity.Task;
-import com.askrindo.entity.User;
+import com.askrindo.entity.Users;
 import com.askrindo.service.TaskService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,7 +49,7 @@ public class TaskController {
         }
 
         String taskDocument = StringUtils.cleanPath("TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
-        User assignedTo1 = objectMapper.readValue(assignedTo, User.class);
+        Users assignedTo1 = objectMapper.readValue(assignedTo, Users.class);
         Release release1 = objectMapper.readValue(release, Release.class);
         Task newTask = new Task(taskName, assignedTo1, score, weight, statusDone, taskProsentase, finalTarget, taskDocument, release1);
         taskService.saveTask(newTask);
@@ -93,7 +92,7 @@ public class TaskController {
         }
 
         String taskDocument = StringUtils.cleanPath("TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
-        User assignedTo1 = objectMapper.readValue(assignedTo, User.class);
+        Users assignedTo1 = objectMapper.readValue(assignedTo, Users.class);
         Release release1 = objectMapper.readValue(release, Release.class);
         Task newTask = new Task(id, taskName, assignedTo1, score, weight, statusDone, taskProsentase, finalTarget, taskDocument, release1);
         taskService.updateTaskByReleaseId(newTask, idRelease);
