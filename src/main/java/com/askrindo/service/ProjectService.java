@@ -13,4 +13,5 @@ public interface ProjectService {
     public Project getProjectById(String id);
     public void updateProject(Project project);
     public void updateStatusProjectById(String id);
+    public List<Project> getProjectByStatusProject(String statusProject);
 }

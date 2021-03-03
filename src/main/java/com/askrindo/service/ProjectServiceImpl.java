@@ -25,7 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void saveProject(Project project) {
-        List<Project> projectList = projectRepository.findAll();
+        List<Project> projectList = projectRepository.findProjectByStatusProject("aktif");
         Float totalScoreProject = Float.valueOf(0);
         Float totalScoreProject2 = Float.valueOf(0);
         for (Project project1: projectList) {
@@ -64,5 +64,10 @@ public class ProjectServiceImpl implements ProjectService {
         } else {
             project.setStatusProject("tidak aktif");
         }
+    }
+
+    @Override
+    public List<Project> getProjectByStatusProject(String statusProject) {
+        return projectRepository.findProjectByStatusProject(statusProject);
     }
 }
