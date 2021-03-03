@@ -14,4 +14,6 @@ public interface UserService {
     public void updateUser(User user);
     public void updateStatusUserById(String id);
     public List<User> getUserByStatus(String status);
+    public Float getTotalWeightById(String id);
+    public Float getTotalPerformanceById(String id);
 }

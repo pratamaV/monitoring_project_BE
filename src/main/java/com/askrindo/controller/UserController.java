@@ -44,4 +44,14 @@ public class UserController {
     public List<User> getUserByStatusUser(@RequestParam String status){
         return userService.getUserByStatus(status);
     }
+
+    @GetMapping("/userWeight/{id}")
+    public Float getTotalWeightById(@PathVariable String id){
+        return userService.getTotalWeightById(id);
+    }
+
+    @GetMapping("/userPerformance/{id}")
+    public Float getTotalPerformanceById(@PathVariable String id){
+        return userService.getTotalPerformanceById(id);
+    }
 }

@@ -64,6 +64,15 @@ public class ProjectServiceImpl implements ProjectService {
         } else {
             project.setStatusProject("tidak aktif");
         }
+        List<Project> projectList = projectRepository.findProjectByStatusProject("aktif");
+        Float totalScoreProject = Float.valueOf(0);
+        for (Project project1: projectList) {
+            totalScoreProject = totalScoreProject + project1.getScore();
+        }
+        for (Project project1: projectList) {
+            project1.setWeight(project1.getScore()/totalScoreProject);
+            projectRepository.save(project1);
+        }
     }
 
     @Override

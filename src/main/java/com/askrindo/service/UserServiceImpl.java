@@ -53,4 +53,16 @@ public class UserServiceImpl implements UserService{
     public List<User> getUserByStatus(String status) {
         return userRepository.findUserByStatusUser(status);
     }
+
+    @Override
+    public Float getTotalWeightById(String id) {
+        User user = userRepository.findById(id).get();
+        return user.getTotalWeight();
+    }
+
+    @Override
+    public Float getTotalPerformanceById(String id) {
+        User user = userRepository.findById(id).get();
+        return user.getTotalPerformance();
+    }
 }
