@@ -33,4 +33,14 @@ public class ReleaseController {
     public void updateRelease(@RequestBody Release release){
         releaseService.updateRelease(release);
     }
+
+    @GetMapping("/releasesByStage/{stage}")
+    public List<Release> getReleaseByStage(@PathVariable String stage){
+        return releaseService.getReleaseByStage(stage);
+    }
+
+    @GetMapping("/releasesByStatus/{status}")
+    public List<Release> getReleaseByStatus(@PathVariable String status){
+        return releaseService.getReleaseByStatus(status);
+    }
 }

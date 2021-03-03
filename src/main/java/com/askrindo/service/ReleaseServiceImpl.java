@@ -62,4 +62,14 @@ public class ReleaseServiceImpl implements ReleaseService {
     public void updateRelease(Release release) {
         releaseRepository.save(release);
     }
+
+    @Override
+    public List<Release> getReleaseByStage(String stage) {
+        return releaseRepository.findReleaseByStage(stage);
+    }
+
+    @Override
+    public List<Release> getReleaseByStatus(String status) {
+        return releaseRepository.findReleaseByStatus(status);
+    }
 }

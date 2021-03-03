@@ -13,4 +13,6 @@ import java.util.List;
 @Repository
 public interface ReleaseRepository extends JpaRepository<Release, String> {
     public List<Release> findReleaseByProjectId(String id);
+    public List<Release> findReleaseByStage(String stage);
+    public List<Release> findReleaseByStatus(String status);
 }
