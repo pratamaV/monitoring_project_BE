@@ -15,13 +15,13 @@ import java.util.Properties;
 
 public class PrefixedSequenceIdGenerator extends SequenceStyleGenerator {
     public static final String DATE_FORMAT_PARAMETER = "dateFormat";
-    public static final String DATE_FORMAT_DEFAULT = "%tm-%tY";
+    public static final String DATE_FORMAT_DEFAULT = "%tY";
 
     public static final String VALUE_PREFIX_PARAMETER = "valuePrefix";
     public static final String VALUE_PREFIX_DEFAULT = "";
 
     public static final String NUMBER_FORMAT_PARAMETER = "numberFormat";
-    public static final String NUMBER_FORMAT_DEFAULT = "%06d";
+    public static final String NUMBER_FORMAT_DEFAULT = "%03d";
 
     public static final String DATE_NUMBER_SEPARATOR_PARAMETER = "dateNumberSeparator";
     public static final String DATE_NUMBER_SEPARATOR_DEFAULT = "-";

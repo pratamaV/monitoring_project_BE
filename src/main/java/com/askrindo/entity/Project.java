@@ -1,5 +1,6 @@
 package com.askrindo.entity;
 
+import com.askrindo.generator.PrefixedSequenceIdGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.annotations.Parameter;
 
 
 @Entity
@@ -15,8 +17,12 @@ import java.util.List;
 public class Project {
 
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_seq")
+    @GenericGenerator(
+            name = "project_seq",
+            strategy = "com.askrindo.generator.PrefixedSequenceIdGenerator",
+            parameters = {@Parameter(name = PrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+                    @Parameter(name = PrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "PROJECT-")})
     private String id;
     private String projectName;
 
