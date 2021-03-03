@@ -65,4 +65,24 @@ public class ProjectServiceImpl implements ProjectService {
             project.setStatusProject("tidak aktif");
         }
     }
+
+    @Override
+    public List<Project> getProjectByStatus(String status) {
+        return projectRepository.findProjectByStatus(status);
+    }
+
+    @Override
+    public List<Project> getProjectByStatusProject(String statusProject) {
+        return projectRepository.findProjectByStatusProject(statusProject);
+    }
+
+    @Override
+    public List<Project> getProjectByDirectorate(String directorate) {
+        return projectRepository.findProjectByDirectorateUser(directorate);
+    }
+
+    @Override
+    public List<Project> getProjectByCategoryInitiative(String initiative) {
+        return projectRepository.findProjectByCategoryInitiative(initiative);
+    }
 }

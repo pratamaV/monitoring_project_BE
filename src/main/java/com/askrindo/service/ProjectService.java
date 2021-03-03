@@ -13,4 +13,8 @@ public interface ProjectService {
     public Project getProjectById(String id);
     public void updateProject(Project project);
     public void updateStatusProjectById(String id);
+    public List<Project> getProjectByStatus(String status);
+    public List<Project> getProjectByStatusProject (String statusProject);
+    public List<Project> getProjectByDirectorate (String directorate);
+    public List<Project> getProjectByCategoryInitiative(String initiative);
 }

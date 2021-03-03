@@ -39,4 +39,24 @@ public class ProjectController {
     public void updateStatusProjectById(@PathVariable String id){
         projectService.updateStatusProjectById(id);
     }
+
+    @GetMapping("/projectsByStatus/{status}")
+    public List<Project> getProjectByStatus(@PathVariable String status){
+        return projectService.getProjectByStatus(status);
+    }
+
+    @GetMapping("/projectsByStatusProject/{statusProject}")
+    public List<Project> getProjectByStatusProject(@PathVariable String statusProject){
+        return projectService.getProjectByStatusProject(statusProject);
+    }
+
+    @GetMapping("/projectsByDirectorate/{directorate}")
+    public List<Project> getProjectByDirectorate(@PathVariable String directorate){
+        return projectService.getProjectByDirectorate(directorate);
+    }
+
+    @GetMapping("/projectsByCategoryInitiative/{initiative}")
+    public List<Project> getProjectByCategoryInitiative(@PathVariable String initiative){
+        return projectService.getProjectByCategoryInitiative(initiative);
+    }
 }
