@@ -14,36 +14,28 @@ import java.time.LocalDate;
 import java.util.Properties;
 
 public class PrefixedSequenceIdGenerator extends SequenceStyleGenerator {
-    public static final String DATE_FORMAT_PARAMETER = "dateFormat";
-    public static final String DATE_FORMAT_DEFAULT = "%tY";
-
     public static final String VALUE_PREFIX_PARAMETER = "valuePrefix";
     public static final String VALUE_PREFIX_DEFAULT = "";
+    private String valuePrefix;
 
     public static final String NUMBER_FORMAT_PARAMETER = "numberFormat";
-    public static final String NUMBER_FORMAT_DEFAULT = "%03d";
-
-    public static final String DATE_NUMBER_SEPARATOR_PARAMETER = "dateNumberSeparator";
-    public static final String DATE_NUMBER_SEPARATOR_DEFAULT = "-";
-
-    private String format;
+    public static final String NUMBER_FORMAT_DEFAULT = "%d";
+    private String numberFormat;
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session,
                                  Object object) throws HibernateException {
-        return String.format(format, LocalDate.now(), super.generate(session, object));
+        return valuePrefix + String.format(numberFormat, super.generate(session, object));
     }
 
     @Override
     public void configure(Type type, Properties params,
                           ServiceRegistry serviceRegistry) throws MappingException {
         super.configure(LongType.INSTANCE, params, serviceRegistry);
-
-        String dateFormat = ConfigurationHelper.getString(DATE_FORMAT_PARAMETER, params, DATE_FORMAT_DEFAULT).replace("%", "%1$");
-        String prefixFormat = ConfigurationHelper.getString(VALUE_PREFIX_PARAMETER, params, VALUE_PREFIX_DEFAULT);
-        String numberFormat = ConfigurationHelper.getString(NUMBER_FORMAT_PARAMETER, params, NUMBER_FORMAT_DEFAULT).replace("%", "%2$");
-        String dateNumberSeparator = ConfigurationHelper.getString(DATE_NUMBER_SEPARATOR_PARAMETER, params, DATE_NUMBER_SEPARATOR_DEFAULT);
-        this.format = prefixFormat+dateFormat+dateNumberSeparator+numberFormat;
+        valuePrefix = ConfigurationHelper.getString(VALUE_PREFIX_PARAMETER,
+                params, VALUE_PREFIX_DEFAULT);
+        numberFormat = ConfigurationHelper.getString(NUMBER_FORMAT_PARAMETER,
+                params, NUMBER_FORMAT_DEFAULT);
     }
 }
 

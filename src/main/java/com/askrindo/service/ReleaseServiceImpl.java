@@ -1,7 +1,10 @@
 package com.askrindo.service;
 
+import com.askrindo.entity.Project;
 import com.askrindo.entity.Release;
 import com.askrindo.entity.Task;
+import com.askrindo.entity.sequence.SequenceIdProject;
+import com.askrindo.entity.sequence.SequenceIdRelease;
 import com.askrindo.exception.DataNotFoundException;
 import com.askrindo.repository.ReleaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,12 @@ public class ReleaseServiceImpl implements ReleaseService {
     ReleaseRepository releaseRepository;
 
     @Autowired
+    ProjectService projectService;
+
+    @Autowired
+    SequenceIdReleaseService sequenceIdReleaseService;
+
+    @Autowired
     TaskService taskService;
 
     @Override
@@ -37,6 +46,11 @@ public class ReleaseServiceImpl implements ReleaseService {
             release1.setWeight(release1.getScore()/totalScoreRelease2);
             releaseRepository.save(release1);
         }
+        Project prjObj = projectService.getProjectById(release.getProject().getId());
+        SequenceIdRelease sequenceIdRelease = new SequenceIdRelease();
+        SequenceIdRelease idReleaseGen = sequenceIdReleaseService.saveSequenceIdRelease(sequenceIdRelease);
+        String releaseCodeGen = prjObj.getProjectCode()+"-"+idReleaseGen.getIdGeneratorRelease();
+        release.setReleaseCode(releaseCodeGen);
         releaseRepository.save(release);
     }
 

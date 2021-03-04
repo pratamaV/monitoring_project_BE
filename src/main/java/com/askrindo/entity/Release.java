@@ -19,6 +19,7 @@ public class Release {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
     private String releaseName;
+    private String releaseCode;
     private Integer score;
     private Float weight;
     private String description;
@@ -137,6 +138,14 @@ public class Release {
 
     public void setReleaseName(String releaseName) {
         this.releaseName = releaseName;
+    }
+
+    public String getReleaseCode() {
+        return releaseCode;
+    }
+
+    public void setReleaseCode(String releaseCode) {
+        this.releaseCode = releaseCode;
     }
 
     public String getDescription() {
