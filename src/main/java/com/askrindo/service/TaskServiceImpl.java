@@ -55,6 +55,7 @@ public class TaskServiceImpl implements TaskService {
         SequenceIdTask idTaskGen = sequenceIdTaskService.saveSequenceIdTask(sequenceIdTask);
         String releaseCodeGen = releaseObj.getReleaseCode()+"-"+idTaskGen.getIdGeneratorTask();
         task.setTaskCode(releaseCodeGen);
+        task.setRelease(releaseObj);
         taskRepository.save(task);
 
         List<Task> taskList2 = taskRepository.findTaskByAssignedToId(task.getAssignedTo().getId());
