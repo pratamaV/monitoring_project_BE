@@ -14,17 +14,20 @@ import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "mst_project")
-public class Project {
+public class  Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_seq")
-    @GenericGenerator(
-            name = "project_seq",
-            strategy = "com.askrindo.generator.PrefixedSequenceIdGenerator",
-            parameters = {@Parameter(name = PrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
-                    @Parameter(name = PrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "PROJECT-")})
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_seq")
+//    @GenericGenerator(
+//            name = "project_seq",
+//            strategy = "com.askrindo.generator.PrefixedSequenceIdGenerator",
+//            parameters = {@Parameter(name = PrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+//                    @Parameter(name = PrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "PROJECT-")})
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
     private String projectName;
+    private String projectCode;
 
     @ManyToOne
     @JoinColumn(name = "pmo_id")
@@ -140,6 +143,14 @@ public class Project {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    public String getProjectCode() {
+        return projectCode;
+    }
+
+    public void setProjectCode(String idGen) {
+        this.projectCode = idGen;
     }
 
     public User getPmo() {

@@ -1,13 +1,13 @@
 package com.askrindo.service;
 
+import com.askrindo.entity.Division;
 import com.askrindo.entity.Project;
-import com.askrindo.entity.Task;
-import com.askrindo.entity.User;
-import com.askrindo.exception.DataNotFoundException;
+import com.askrindo.entity.sequence.SequenceIdProject;
 import com.askrindo.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -23,6 +23,13 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     ReleaseService releaseService;
 
+    @Autowired
+    DivisionService divisionService;
+
+
+    @Autowired
+    SequenceIdProjectService sequenceIdProjectService;
+
     @Override
     public void saveProject(Project project) {
         List<Project> projectList = projectRepository.findProjectByStatusProject("aktif");
@@ -37,6 +44,15 @@ public class ProjectServiceImpl implements ProjectService {
             project1.setWeight(project1.getScore()/totalScoreProject2);
             projectRepository.save(project1);
         }
+
+        Division div = divisionService.getDivisionById(project.getDivisiUser().getId());
+        SequenceIdProject sequenceIdProject = new SequenceIdProject();
+        SequenceIdProject idProjectGen = sequenceIdProjectService.saveSequenceIdProject(sequenceIdProject);
+        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        String [] yearChar = year.split("");
+        year = yearChar[2]+yearChar[3];
+        String idProjectgenFormat = div.getDivisionCode() + "-" + year +"-" + idProjectGen.getIdGeneratorProject();
+        project.setProjectCode(idProjectgenFormat);
         projectRepository.save(project);
     }
 
