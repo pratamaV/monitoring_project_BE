@@ -108,4 +108,9 @@ public class TaskController {
     public Float getWeightTaskByUserId(@PathVariable String id){
         return taskService.getWeightTaskByUserId(id);
     }
+
+    @GetMapping("/taskByReleaseId/{id}")
+    public List<Task> getTaskByReleaseId(@PathVariable String id){
+        return taskService.getTaskByReleaseId(id);
+    }
 }

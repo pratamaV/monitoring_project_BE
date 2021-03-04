@@ -25,6 +25,7 @@ public class Release {
     private String status;
     private String stage;
     private Float prosentaseRelease;
+    private String statusRelease;
 
     @JsonFormat(timezone = "Asia/Jakarta",pattern = "yyyy-MM-dd")
     private Date estStartdate;
@@ -101,6 +102,25 @@ public class Release {
         this.actStartdate = actStartdate;
         this.actEnddate = actEnddate;
         this.project = project;
+    }
+
+    public Release(String id, String releaseName, Integer score, Float weight, String description, String status, String stage, Float prosentaseRelease, String statusRelease, Date estStartdate, Date estEnddate, Date actStartdate, Date actEnddate, Project project, List<Task> taskList, List<Issued> issuedList) {
+        this.id = id;
+        this.releaseName = releaseName;
+        this.score = score;
+        this.weight = weight;
+        this.description = description;
+        this.status = status;
+        this.stage = stage;
+        this.prosentaseRelease = prosentaseRelease;
+        this.statusRelease = statusRelease;
+        this.estStartdate = estStartdate;
+        this.estEnddate = estEnddate;
+        this.actStartdate = actStartdate;
+        this.actEnddate = actEnddate;
+        this.project = project;
+        this.taskList = taskList;
+        this.issuedList = issuedList;
     }
 
     public String getId() {
@@ -221,5 +241,13 @@ public class Release {
 
     public void setIssuedList(List<Issued> issuedList) {
         this.issuedList = issuedList;
+    }
+
+    public String getStatusRelease() {
+        return statusRelease;
+    }
+
+    public void setStatusRelease(String statusRelease) {
+        this.statusRelease = statusRelease;
     }
 }

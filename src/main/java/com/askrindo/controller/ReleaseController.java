@@ -43,4 +43,14 @@ public class ReleaseController {
     public List<Release> getReleaseByStatus(@PathVariable String status){
         return releaseService.getReleaseByStatus(status);
     }
+
+    @PutMapping("/releaseUpdate/{id}")
+    public void updateStatusReleaseById(@PathVariable String id){
+        releaseService.updateStatusReleaseById(id);
+    }
+
+    @GetMapping("/releaseByProjectId/{id}")
+    public List<Release> getReleaseByProjectId(@PathVariable String id){
+        return releaseService.getReleaseByProjectId(id);
+    }
 }

@@ -15,4 +15,5 @@ public interface ReleaseRepository extends JpaRepository<Release, String> {
     public List<Release> findReleaseByProjectId(String id);
     public List<Release> findReleaseByStage(String stage);
     public List<Release> findReleaseByStatus(String status);
+    public List<Release> findReleaseByStatusReleaseAndProjectId(String statusRelease, String id);
 }

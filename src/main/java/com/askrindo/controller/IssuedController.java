@@ -33,4 +33,10 @@ public class IssuedController {
     public void updateIssued(@RequestBody Issued issued){
         issuedService.updateIssued(issued);
     }
+
+    @GetMapping("/issuedByReleaseId/{id}")
+    public List<Issued> getIssuedByReleaseId(@PathVariable String id){
+        return issuedService.getIssuedByReleaseId(id);
+    }
 }
+

@@ -36,4 +36,9 @@ public class IssuedServiceImpl implements IssuedService {
     public void updateIssued(Issued issued) {
         issuedRepository.save(issued);
     }
+
+    @Override
+    public List<Issued> getIssuedByReleaseId(String id) {
+        return issuedRepository.findIssuedByReleaseId(id);
+    }
 }
