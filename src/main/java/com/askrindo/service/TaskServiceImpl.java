@@ -4,6 +4,8 @@ import com.askrindo.entity.Project;
 import com.askrindo.entity.Release;
 import com.askrindo.entity.Task;
 import com.askrindo.entity.User;
+import com.askrindo.entity.sequence.SequenceIdRelease;
+import com.askrindo.entity.sequence.SequenceIdTask;
 import com.askrindo.exception.DataNotFoundException;
 import com.askrindo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    SequenceIdTaskService sequenceIdTaskService;
+
     @Override
     public void saveTask(Task task) {
         List<Task> taskList = taskRepository.findTaskByReleaseId(task.getRelease().getId());
@@ -45,6 +50,11 @@ public class TaskServiceImpl implements TaskService {
             task1.setWeight(task1.getScore()/totalScore2);
             taskRepository.save(task1);
         }
+        Release releaseObj = releaseService.getReleaseById(task.getRelease().getId());
+        SequenceIdTask sequenceIdTask = new SequenceIdTask();
+        SequenceIdTask idTaskGen = sequenceIdTaskService.saveSequenceIdTask(sequenceIdTask);
+        String releaseCodeGen = releaseObj.getReleaseCode()+"-"+idTaskGen.getIdGeneratorTask();
+        task.setTaskCode(releaseCodeGen);
         taskRepository.save(task);
 
         List<Task> taskList2 = taskRepository.findTaskByAssignedToId(task.getAssignedTo().getId());

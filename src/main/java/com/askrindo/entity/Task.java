@@ -16,6 +16,7 @@ public class Task {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
     private String taskName;
+    private String taskCode;
 
     @ManyToOne
     @JoinColumn(name = "assigned_to")
@@ -123,6 +124,14 @@ public class Task {
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    public String getTaskCode() {
+        return taskCode;
+    }
+
+    public void setTaskCode(String taskCode) {
+        this.taskCode = taskCode;
     }
 
     public Date getFinalTarget() {
