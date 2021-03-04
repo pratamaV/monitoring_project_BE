@@ -26,7 +26,7 @@ public class SequenceIdProject {
         return idGeneratorProject;
     }
 
-    public void setIdGeneratorProject(String idGeneratorClaim) {
-        this.idGeneratorProject = idGeneratorClaim;
+    public void setIdGeneratorProject(String idGeneratorProject) {
+        this.idGeneratorProject = idGeneratorProject;
     }
 }

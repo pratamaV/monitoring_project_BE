@@ -1,7 +1,7 @@
 package com.askrindo.service;
 
 import com.askrindo.entity.sequence.SequenceIdProject;
-import com.askrindo.repository.SequenceIdProjectRepositoy;
+import com.askrindo.repository.SequenceIdProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class SequenceIdProjectServiceImpl implements SequenceIdProjectService {
 
     @Autowired
-    SequenceIdProjectRepositoy sequenceIdProjectRepositoy;
+    SequenceIdProjectRepository sequenceIdProjectRepositoy;
 
 
     @Override

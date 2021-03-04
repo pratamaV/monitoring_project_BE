@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SequenceIdProjectRepositoy extends JpaRepository<SequenceIdProject, String> {
+public interface SequenceIdProjectRepository extends JpaRepository<SequenceIdProject, String> {
 }
