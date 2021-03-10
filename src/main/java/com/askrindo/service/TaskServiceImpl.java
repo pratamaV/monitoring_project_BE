@@ -101,7 +101,7 @@ public class TaskServiceImpl implements TaskService {
         }
         if (task.getStatusDone().equalsIgnoreCase("Ya")){
             task.setTaskProsentase(task.getWeight());
-            System.out.println(task.getTaskProsentase());
+            task.setStatusDone("Ya");
             taskRepository.save(task);
         }
         List<Task> taskList = taskRepository.findTaskByReleaseId(id);
@@ -118,7 +118,6 @@ public class TaskServiceImpl implements TaskService {
         Float percentageProject = Float.valueOf(0);
         for (Release release1: releaseList) {
             percentageProject = percentageProject + (release1.getProsentaseRelease()*release1.getWeight());
-            System.out.println(percentageProject);
         }
         project.setProsentaseProject(percentageProject);
         projectService.saveProject(project);

@@ -38,6 +38,19 @@ public class Task {
     public Task() {
     }
 
+    public Task(String id, String taskName, String taskCode, User assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, Release release) {
+        this.id = id;
+        this.taskName = taskName;
+        this.taskCode = taskCode;
+        this.assignedTo = assignedTo;
+        this.score = score;
+        this.weight = weight;
+        this.statusDone = statusDone;
+        this.taskProsentase = taskProsentase;
+        this.finalTarget = finalTarget;
+        this.release = release;
+    }
+
     public Task(String taskName, User assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument) {
         this.taskName = taskName;
         this.assignedTo = assignedTo;
@@ -84,7 +97,19 @@ public class Task {
         this.taskDocument = taskDocument;
     }
 
-
+    public Task(String id, String taskName, String taskCode, User assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument, Release release) {
+        this.id = id;
+        this.taskName = taskName;
+        this.taskCode = taskCode;
+        this.assignedTo = assignedTo;
+        this.score = score;
+        this.weight = weight;
+        this.statusDone = statusDone;
+        this.taskProsentase = taskProsentase;
+        this.finalTarget = finalTarget;
+        this.taskDocument = taskDocument;
+        this.release = release;
+    }
 
     public Float getTaskProsentase() {
         return taskProsentase;

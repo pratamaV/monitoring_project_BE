@@ -24,7 +24,7 @@ public class  Project {
 //            parameters = {@Parameter(name = PrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
 //                    @Parameter(name = PrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "PROJECT-")})
     @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GenericGenerator(name = "s ystem-uuid", strategy = "uuid")
     private String id;
     private String projectName;
     private String projectCode;
