@@ -52,7 +52,7 @@ public class TaskController {
         System.out.println(taskDoc);
         System.out.println(assignedTo);
 
-        String taskDocument = StringUtils.cleanPath("TD-" + taskCode + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
+        String taskDocument = StringUtils.cleanPath("TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
         User assignedTo1 = objectMapper.readValue(assignedTo, User.class);
         Release release1 = objectMapper.readValue(release, Release.class);
         Task newTask = new Task(taskName, taskCode, assignedTo1, score, weight, statusDone, taskProsentase, finalTarget, taskDocument, release1);
