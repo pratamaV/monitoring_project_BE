@@ -46,11 +46,14 @@ public class ReleaseServiceImpl implements ReleaseService {
             release1.setWeight(release1.getScore()/totalScoreRelease2);
             releaseRepository.save(release1);
         }
-        Project prjObj = projectService.getProjectById(release.getProject().getId());
-        SequenceIdRelease sequenceIdRelease = new SequenceIdRelease();
-        SequenceIdRelease idReleaseGen = sequenceIdReleaseService.saveSequenceIdRelease(sequenceIdRelease);
-        String releaseCodeGen = prjObj.getProjectCode()+"-"+idReleaseGen.getIdGeneratorRelease();
-        release.setReleaseCode(releaseCodeGen);
+
+        if (release.getId() == null){
+            Project prjObj = projectService.getProjectById(release.getProject().getId());
+            SequenceIdRelease sequenceIdRelease = new SequenceIdRelease();
+            SequenceIdRelease idReleaseGen = sequenceIdReleaseService.saveSequenceIdRelease(sequenceIdRelease);
+            String releaseCodeGen = prjObj.getProjectCode()+"-"+idReleaseGen.getIdGeneratorRelease();
+            release.setReleaseCode(releaseCodeGen);
+        }
         releaseRepository.save(release);
     }
 

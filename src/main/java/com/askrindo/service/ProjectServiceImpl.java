@@ -45,14 +45,16 @@ public class ProjectServiceImpl implements ProjectService {
             projectRepository.save(project1);
         }
 
-        Division div = divisionService.getDivisionById(project.getDivisiUser().getId());
-        SequenceIdProject sequenceIdProject = new SequenceIdProject();
-        SequenceIdProject idProjectGen = sequenceIdProjectService.saveSequenceIdProject(sequenceIdProject);
-        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-        String [] yearChar = year.split("");
-        year = yearChar[2]+yearChar[3];
-        String idProjectgenFormat = div.getDivisionCode() + "-" + year +"-" + idProjectGen.getIdGeneratorProject();
-        project.setProjectCode(idProjectgenFormat);
+       if (project.getId() == null){
+           Division div = divisionService.getDivisionById(project.getDivisiUser().getId());
+           SequenceIdProject sequenceIdProject = new SequenceIdProject();
+           SequenceIdProject idProjectGen = sequenceIdProjectService.saveSequenceIdProject(sequenceIdProject);
+           String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+           String [] yearChar = year.split("");
+           year = yearChar[2]+yearChar[3];
+           String idProjectgenFormat = div.getDivisionCode() + "-" + year +"-" + idProjectGen.getIdGeneratorProject();
+           project.setProjectCode(idProjectgenFormat);
+       }
         projectRepository.save(project);
     }
 
