@@ -62,9 +62,10 @@ public class Task {
         this.taskDocument = taskDocument;
     }
 
-    public Task(String id, String taskName, User assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument, Release release) {
-        this.id = id;
+    public Task( String taskName, String taskCode, User assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument, Release release) {
+
         this.taskName = taskName;
+        this.taskCode = taskCode;
         this.assignedTo = assignedTo;
         this.score = score;
         this.weight = weight;
