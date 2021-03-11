@@ -59,6 +59,27 @@ public class TaskController {
         taskService.saveTask(newTask);
     }
 
+    @PostMapping("/addTask")
+    public void addTask(@RequestBody Task task){
+        taskService.addTask(task);
+    }
+
+    @PutMapping("/uploadTaskDoc/{id}")
+    public void uploadTaskDocument(@RequestPart(required = false) MultipartFile taskDoc,
+                         @PathVariable String id) throws JsonProcessingException {
+        Task task = taskService.getTaskById(id);
+        String taskName = task.getTaskName();
+        try{
+            if (taskDoc != null) {
+                taskDoc.transferTo(Paths.get(documentTask, "TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename())));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String taskDocument = StringUtils.cleanPath("TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
+        taskService.uploadDocumentById(taskDocument, id);
+    }
+
     @GetMapping("/task/{id}")
     public Task getTaskById(@PathVariable String id){
         return taskService.getTaskById(id);
