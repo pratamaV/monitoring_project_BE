@@ -173,7 +173,41 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void addTask(Task task) {
+        List<Task> taskList = taskRepository.findTaskByReleaseId(task.getRelease().getId());
+        Float totalScore = Float.valueOf(0);
+        Float totalScore2 = Float.valueOf(0);
+        for (Task task1: taskList) {
+            totalScore = totalScore + task1.getScore();
+        }
+        totalScore2 = totalScore + task.getScore();
+        task.setWeight(task.getScore()/totalScore2);
+        for (Task task1: taskList) {
+            task1.setWeight(task1.getScore()/totalScore2);
+            taskRepository.save(task1);
+        }
+        Release releaseObj = releaseService.getReleaseById(task.getRelease().getId());
+        SequenceIdTask sequenceIdTask = new SequenceIdTask();
+        SequenceIdTask idTaskGen = sequenceIdTaskService.saveSequenceIdTask(sequenceIdTask);
+        String releaseCodeGen = releaseObj.getReleaseCode()+"-"+idTaskGen.getIdGeneratorTask();
+        task.setTaskCode(releaseCodeGen);
+        task.setRelease(releaseObj);
         taskRepository.save(task);
+
+        List<Task> taskList2 = taskRepository.findTaskByAssignedToId(task.getAssignedTo().getId());
+        Float userWeight = Float.valueOf(0);
+        Float userPerformance = Float.valueOf(0);
+        for (Task task1: taskList2) {
+            Release release = task1.getRelease();
+            Float releaseWeight = task1.getRelease().getWeight();
+            Float projectWeight = release.getProject().getWeight();
+            Float taskWeight = task1.getWeight();
+            userWeight = userWeight + (taskWeight*releaseWeight*projectWeight);
+            userPerformance = userPerformance + (taskWeight*releaseWeight*projectWeight*task.getTaskProsentase());
+        }
+        User user = userService.getUserById(task.getAssignedTo().getId());
+        user.setTotalWeight(userWeight);
+        user.setTotalPerformance(userPerformance);
+        userService.saveUser(user);
     }
 
     @Override
@@ -181,5 +215,10 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository.findById(id).get();
         task.setTaskDocument(taskDocument);
         taskRepository.save(task);
+    }
+
+    @Override
+    public List<Task> getTaskByUserId(String id) {
+        return taskRepository.findTaskByAssignedToId(id);
     }
 }

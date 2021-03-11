@@ -128,4 +128,9 @@ public class TaskController {
     public List<Task> getTaskByReleaseId(@PathVariable String id){
         return taskService.getTaskByReleaseId(id);
     }
+
+    @GetMapping("/taskByUserId/{id}")
+    public List<Task> getTaskByUserId(@PathVariable String id){
+        return taskService.getTaskByUserId(id);
+    }
 }

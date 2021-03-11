@@ -19,4 +19,5 @@ public interface TaskService {
     public List<Task> getTaskByReleaseId(String id);
     public void updateTaskByReleaseId(Task task,String id);
     public Float getWeightTaskByUserId(String userID);
+    public List<Task> getTaskByUserId(String id);
 }
