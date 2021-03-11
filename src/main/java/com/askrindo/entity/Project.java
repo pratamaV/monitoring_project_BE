@@ -24,24 +24,24 @@ public class  Project {
 //            parameters = {@Parameter(name = PrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
 //                    @Parameter(name = PrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "PROJECT-")})
     @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "s ystem-uuid", strategy = "uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
     private String projectName;
     private String projectCode;
 
     @ManyToOne
     @JoinColumn(name = "pmo_id")
-    private User pmo;
+    private Users pmo;
 
     @ManyToOne
     @JoinColumn(name = "pm_id")
-    private User pm;
+    private Users pm;
     private String benefit;
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "coPM_id")
-    private User coPM;
+    private Users coPM;
 
     @ManyToOne
     @JoinColumn(name = "division_id")
@@ -69,7 +69,7 @@ public class  Project {
     public Project() {
     }
 
-    public Project(String id, String projectName, User pmo, User pm, String benefit, String description, User coPM, Division divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, String statusProject, List<Release> releaseList) {
+    public Project(String id, String projectName, Users pmo, Users pm, String benefit, String description, Users coPM, Division divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, String statusProject, List<Release> releaseList) {
         this.id = id;
         this.projectName = projectName;
         this.pmo = pmo;
@@ -93,7 +93,7 @@ public class  Project {
         this.releaseList = releaseList;
     }
 
-    public Project(String projectName, User pmo, User pm, String benefit, String description, User coPM, Division divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, String statusProject, List<Release> releaseList) {
+    public Project(String projectName, Users pmo, Users pm, String benefit, String description, Users coPM, Division divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, String statusProject, List<Release> releaseList) {
         this.projectName = projectName;
         this.pmo = pmo;
         this.pm = pm;
@@ -117,7 +117,7 @@ public class  Project {
     }
 
 
-    public User getCoPM() {
+    public Users getCoPM() {
         return coPM;
     }
 
@@ -153,23 +153,24 @@ public class  Project {
         this.projectCode = idGen;
     }
 
-    public User getPmo() {
+    public Users getPmo() {
+
         return pmo;
     }
 
-    public void setPmo(User pmo) {
+    public void setPmo(Users pmo) {
         this.pmo = pmo;
     }
 
-    public User getPm() {
+    public Users getPm() {
         return pm;
     }
 
-    public void setPm(User pm) {
+    public void setPm(Users pm) {
         this.pm = pm;
     }
 
-    public void setCoPM(User coPM) {
+    public void setCoPM(Users coPM) {
         this.coPM = coPM;
     }
 

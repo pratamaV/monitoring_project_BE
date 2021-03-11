@@ -20,7 +20,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "assigned_to")
-    private User assignedTo;
+    private Users assignedTo;
 
     private Integer score;
     private Float weight;
@@ -38,7 +38,8 @@ public class Task {
     public Task() {
     }
 
-    public Task(String id, String taskName, String taskCode, User assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, Release release) {
+
+    public Task(String id, String taskName, String taskCode, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, Release release) {
         this.id = id;
         this.taskName = taskName;
         this.taskCode = taskCode;
@@ -51,7 +52,7 @@ public class Task {
         this.release = release;
     }
 
-    public Task(String taskName, User assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument) {
+    public Task(String taskName, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument) {
         this.taskName = taskName;
         this.assignedTo = assignedTo;
         this.score = score;
@@ -62,8 +63,9 @@ public class Task {
         this.taskDocument = taskDocument;
     }
 
-    public Task( String taskName, String taskCode, User assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument, Release release) {
 
+    public Task(String id, String taskName, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument, Release release) {
+        this.id = id;
         this.taskName = taskName;
         this.taskCode = taskCode;
         this.assignedTo = assignedTo;
@@ -76,7 +78,7 @@ public class Task {
         this.release = release;
     }
 
-    public Task(String taskName, User assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument, Release release) {
+    public Task(String taskName, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument, Release release) {
         this.taskName = taskName;
         this.assignedTo = assignedTo;
         this.score = score;
@@ -98,7 +100,7 @@ public class Task {
         this.taskDocument = taskDocument;
     }
 
-    public Task(String id, String taskName, String taskCode, User assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument, Release release) {
+    public Task(String id, String taskName, String taskCode, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument, Release release) {
         this.id = id;
         this.taskName = taskName;
         this.taskCode = taskCode;
@@ -194,11 +196,11 @@ public class Task {
         this.release = release;
     }
 
-    public User getAssignedTo() {
+    public Users getAssignedTo() {
         return assignedTo;
     }
 
-    public void setAssignedTo(User assignedTo) {
+    public void setAssignedTo(Users assignedTo) {
         this.assignedTo = assignedTo;
     }
 }

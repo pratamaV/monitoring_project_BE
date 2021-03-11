@@ -3,16 +3,16 @@ package com.askrindo.service;
 import com.askrindo.entity.Project;
 import com.askrindo.entity.Release;
 import com.askrindo.entity.Task;
-import com.askrindo.entity.User;
-import com.askrindo.entity.sequence.SequenceIdRelease;
 import com.askrindo.entity.sequence.SequenceIdTask;
+
+import com.askrindo.entity.Users;
 import com.askrindo.exception.DataNotFoundException;
 import com.askrindo.repository.TaskRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,10 +70,10 @@ public class TaskServiceImpl implements TaskService {
             userWeight = userWeight + (taskWeight*releaseWeight*projectWeight);
             userPerformance = userPerformance + (taskWeight*releaseWeight*projectWeight*task.getTaskProsentase());
         }
-        User user = userService.getUserById(task.getAssignedTo().getId());
-        user.setTotalWeight(userWeight);
-        user.setTotalPerformance(userPerformance);
-        userService.saveUser(user);
+        Users users = userService.getUserById(task.getAssignedTo().getId());
+        users.setTotalWeight(userWeight);
+        users.setTotalPerformance(userPerformance);
+        userService.saveUser(users);
     }
 
     @Override
@@ -135,10 +135,10 @@ public class TaskServiceImpl implements TaskService {
             userWeight = userWeight + (taskWeight*releaseWeight*projectWeight);
             userPerformance = userPerformance + (taskWeight*releaseWeight*projectWeight*task.getTaskProsentase());
         }
-        User user = userService.getUserById(task.getAssignedTo().getId());
-        user.setTotalWeight(userWeight);
-        user.setTotalPerformance(userPerformance);
-        userService.saveUser(user);
+        Users users = userService.getUserById(task.getAssignedTo().getId());
+        users.setTotalWeight(userWeight);
+        users.setTotalPerformance(userPerformance);
+        userService.saveUser(users);
     }
 
     @Override
@@ -164,10 +164,10 @@ public class TaskServiceImpl implements TaskService {
             userWeight = userWeight + (taskWeight*releaseWeight*projectWeight);
             userPerformance = userPerformance + (taskWeight*releaseWeight*projectWeight*task.getTaskProsentase());
         }
-        User user = userService.getUserById(userID);
-        user.setTotalWeight(userWeight);
-        user.setTotalPerformance(userPerformance);
-        userService.saveUser(user);
+        Users users = userService.getUserById(userID);
+        users.setTotalWeight(userWeight);
+        users.setTotalPerformance(userPerformance);
+        userService.saveUser(users);
         return userWeight;
     }
 
@@ -204,7 +204,7 @@ public class TaskServiceImpl implements TaskService {
             userWeight = userWeight + (taskWeight*releaseWeight*projectWeight);
             userPerformance = userPerformance + (taskWeight*releaseWeight*projectWeight*task.getTaskProsentase());
         }
-        User user = userService.getUserById(task.getAssignedTo().getId());
+        Users user = userService.getUserById(task.getAssignedTo().getId());
         user.setTotalWeight(userWeight);
         user.setTotalPerformance(userPerformance);
         userService.saveUser(user);

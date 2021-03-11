@@ -1,6 +1,6 @@
 package com.askrindo.service;
 
-import com.askrindo.entity.User;
+import com.askrindo.entity.Users;
 import com.askrindo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,51 +18,51 @@ public class UserServiceImpl implements UserService{
     UserRepository userRepository;
 
     @Override
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public void saveUser(Users users) {
+        userRepository.save(users);
     }
 
     @Override
-    public List<User> getAllUser() {
+    public List<Users> getAllUser() {
         return userRepository.findAll();
     }
 
     @Override
-    public User getUserById(String id) {
+    public Users getUserById(String id) {
         return userRepository.findById(id).get();
     }
 
     @Override
-    public void updateUser(User user) {
-        userRepository.save(user);
+    public void updateUser(Users users) {
+        userRepository.save(users);
     }
 
     @Override
     public void updateStatusUserById(String id) {
-        User user = userRepository.findById(id).get();
-        if (user.getStatusUser().equalsIgnoreCase("aktif")){
-            user.setStatusUser("tidak aktif");
-            userRepository.save(user);
+        Users users = userRepository.findById(id).get();
+        if (users.getStatusUser().equalsIgnoreCase("aktif")){
+            users.setStatusUser("tidak aktif");
+            userRepository.save(users);
         } else {
-            user.setStatusUser("aktif");
-            userRepository.save(user);
+            users.setStatusUser("aktif");
+            userRepository.save(users);
         }
     }
 
     @Override
-    public List<User> getUserByStatus(String status) {
+    public List<Users> getUserByStatus(String status) {
         return userRepository.findUserByStatusUser(status);
     }
 
     @Override
     public Float getTotalWeightById(String id) {
-        User user = userRepository.findById(id).get();
-        return user.getTotalWeight();
+        Users users = userRepository.findById(id).get();
+        return users.getTotalWeight();
     }
 
     @Override
     public Float getTotalPerformanceById(String id) {
-        User user = userRepository.findById(id).get();
-        return user.getTotalPerformance();
+        Users users = userRepository.findById(id).get();
+        return users.getTotalPerformance();
     }
 }

@@ -1,9 +1,8 @@
 package com.askrindo.controller;
 
-import com.askrindo.entity.Project;
 import com.askrindo.entity.Release;
 import com.askrindo.entity.Task;
-import com.askrindo.entity.User;
+import com.askrindo.entity.Users;
 import com.askrindo.service.TaskService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,7 +52,7 @@ public class TaskController {
         System.out.println(assignedTo);
 
         String taskDocument = StringUtils.cleanPath("TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
-        User assignedTo1 = objectMapper.readValue(assignedTo, User.class);
+        Users assignedTo1 = objectMapper.readValue(assignedTo, Users.class);
         Release release1 = objectMapper.readValue(release, Release.class);
         Task newTask = new Task(taskName, taskCode, assignedTo1, score, weight, statusDone, taskProsentase, finalTarget, taskDocument, release1);
         taskService.saveTask(newTask);
@@ -96,7 +95,8 @@ public class TaskController {
     }
 
     @PutMapping("/task/{idRelease}")
-    public void updateTask(@PathVariable String idRelease,
+    public void updateTask(@RequestPart(required = false) MultipartFile taskDoc,
+                            @PathVariable String idRelease,
                          @RequestParam String id,
                          @RequestParam String taskName,
                            @RequestParam String taskCode,
@@ -108,7 +108,16 @@ public class TaskController {
                          @RequestParam Date finalTarget,
                          @RequestParam String release
     ) throws JsonProcessingException {
-        User assignedTo1 = objectMapper.readValue(assignedTo, User.class);
+        try{
+            if (taskDoc != null) {
+                taskDoc.transferTo(Paths.get(documentTask, "TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename())));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String taskDocument = StringUtils.cleanPath("TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
+        Users assignedTo1 = objectMapper.readValue(assignedTo, Users.class);
         Release release1 = objectMapper.readValue(release, Release.class);
         Task newTask = new Task(id, taskName, taskCode, assignedTo1, score, weight, statusDone, taskProsentase, finalTarget, release1);
         taskService.updateTaskByReleaseId(newTask, idRelease);
