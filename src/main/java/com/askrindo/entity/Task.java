@@ -112,6 +112,8 @@ public class Task {
         this.release = release;
     }
 
+
+
     public Float getTaskProsentase() {
         return taskProsentase;
     }
