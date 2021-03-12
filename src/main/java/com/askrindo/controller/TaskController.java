@@ -32,7 +32,7 @@ public class TaskController {
     @PostMapping("/task")
     public void saveTask(@RequestPart(required = false) MultipartFile taskDoc,
                          @RequestParam String taskName,
-                         @RequestParam String taskCode,
+//                         @RequestParam String taskCode,
                          @RequestParam String assignedTo,
                          @RequestParam Integer score,
                          @RequestParam Float weight,
@@ -50,7 +50,7 @@ public class TaskController {
         }
         System.out.println(taskDoc);
         System.out.println(assignedTo);
-
+        String taskCode = null;
         String taskDocument = StringUtils.cleanPath("TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
         Users assignedTo1 = objectMapper.readValue(assignedTo, Users.class);
         Release release1 = objectMapper.readValue(release, Release.class);
