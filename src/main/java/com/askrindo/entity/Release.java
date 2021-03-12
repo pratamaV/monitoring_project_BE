@@ -2,6 +2,7 @@ package com.askrindo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -44,8 +45,9 @@ public class Release {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @OneToMany
-    @JsonIgnore
+    @OneToMany(mappedBy = "release", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("release")
+//    @JsonIgnore
     private List<Task> taskList = new ArrayList<>();
 
     @OneToMany

@@ -3,6 +3,7 @@ package com.askrindo.entity;
 import com.askrindo.generator.PrefixedSequenceIdGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -62,8 +63,9 @@ public class  Project {
     private String categoryInitiative;
     private String statusProject;
 
-    @OneToMany
-    @JsonIgnore
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("project")
+//    @JsonIgnore
     private List<Release> releaseList = new ArrayList<>();
 
     public Project() {
