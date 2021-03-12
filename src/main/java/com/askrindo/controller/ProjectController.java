@@ -36,6 +36,11 @@ public class ProjectController {
         return projectService.getAllProject();
     }
 
+    @GetMapping("/projectbyuser")
+    public List<Project> getAllProjectforUser(){
+        return projectService.getAllProjectforUser();
+    }
+
     @PutMapping("/project")
     public void updateProject(@RequestBody Project project){
         projectService.updateProject(project);

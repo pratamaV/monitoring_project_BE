@@ -97,4 +97,10 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getProjectByStatusProject(String statusProject) {
         return projectRepository.findProjectByStatusProject(statusProject);
     }
+
+    @Override
+    public List<Project> getAllProjectforUser() {
+        return null;
+//        return projectRepository.getAllProjectforUser();
+    }
 }
