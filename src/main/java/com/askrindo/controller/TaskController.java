@@ -123,6 +123,12 @@ public class TaskController {
         taskService.updateTaskByReleaseId(newTask, idRelease);
     }
 
+    @PutMapping("/doneTask/{idRelease}")
+    public void doneTask(@PathVariable String idRelease,
+                         @RequestBody Task task){
+        taskService.updateTaskByReleaseId(task, idRelease);
+    }
+
     @DeleteMapping("/tasks")
     public void deleteAllTask(){
         taskService.deleteAllTask();
