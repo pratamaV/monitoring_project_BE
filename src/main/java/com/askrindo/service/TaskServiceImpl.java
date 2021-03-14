@@ -97,7 +97,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void updateTaskByReleaseId(Task task, String id) {
-
         if (!taskRepository.existsById(task.getId())) {
             throw new DataNotFoundException(String.format(DataNotFoundException.DATA_NOT_FOUND, task.getClass(), task.getId()));
         }

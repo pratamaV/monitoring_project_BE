@@ -95,7 +95,7 @@ public class TaskController {
     }
 
     @PutMapping("/task/{idRelease}")
-    public void updateTask(@RequestPart(required = false) MultipartFile taskDoc,
+    public void updateTask(
                             @PathVariable String idRelease,
                          @RequestParam String id,
                          @RequestParam String taskName,
@@ -108,19 +108,25 @@ public class TaskController {
                          @RequestParam Date finalTarget,
                          @RequestParam String release
     ) throws JsonProcessingException {
-        try{
-            if (taskDoc != null) {
-                taskDoc.transferTo(Paths.get(documentTask, "TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename())));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String taskDocument = StringUtils.cleanPath("TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
+//        try{
+//            if (taskDoc != null) {
+//                taskDoc.transferTo(Paths.get(documentTask, "TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename())));
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        @RequestPart(required = false) MultipartFile taskDoc,
+//        String taskDocument = StringUtils.cleanPath("TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
         Users assignedTo1 = objectMapper.readValue(assignedTo, Users.class);
         Release release1 = objectMapper.readValue(release, Release.class);
         Task newTask = new Task(id, taskName, taskCode, assignedTo1, score, weight, statusDone, taskProsentase, finalTarget, release1);
         taskService.updateTaskByReleaseId(newTask, idRelease);
+    }
+
+    @PutMapping("/doneTask/{idRelease}")
+    public void doneTask(@PathVariable String idRelease,
+                         @RequestBody Task task){
+        taskService.updateTaskByReleaseId(task, idRelease);
     }
 
     @DeleteMapping("/tasks")
