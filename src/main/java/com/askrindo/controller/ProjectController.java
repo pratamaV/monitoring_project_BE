@@ -63,4 +63,10 @@ public class ProjectController {
 
     }
 
+    @GetMapping("/projectByDivision")
+    public List<Project> getProjectByDivisiUserAndStatusProject(@RequestParam String divisiUser,
+                                                                @RequestParam String statusProject){
+        return projectService.getProjectByDivisiUserAndStatusProject(divisiUser, statusProject);
+    }
+
 }
