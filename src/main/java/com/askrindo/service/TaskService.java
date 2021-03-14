@@ -20,4 +20,6 @@ public interface TaskService {
     public void updateTaskByReleaseId(Task task,String id);
     public Float getWeightTaskByUserId(String userID);
     public List<Task> getTaskByUserId(String id);
+
+    public List<Task> getTaskByReleaseId(String id, String userId, String statusDone);
 }
