@@ -220,4 +220,9 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> getTaskByUserId(String id) {
         return taskRepository.findTaskByAssignedToId(id);
     }
+
+    @Override
+    public List<Task> getTaskByReleaseId(String id, String userId, String statusDone) {
+        return taskRepository.getTaskByReleaseId(id, userId, statusDone);
+    }
 }

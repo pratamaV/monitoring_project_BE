@@ -139,10 +139,26 @@ public class TaskController {
         return taskService.getWeightTaskByUserId(id);
     }
 
+//    @GetMapping("/taskByReleaseId/{id}")
+//    public List<Task> getTaskByReleaseId(@PathVariable String id){
+//        return taskService.getTaskByReleaseId(id);
+//    }
+
     @GetMapping("/taskByReleaseId/{id}")
-    public List<Task> getTaskByReleaseId(@PathVariable String id){
-        return taskService.getTaskByReleaseId(id);
+    public List<Task> getTaskByReleaseId(@PathVariable String id,
+                                         @RequestParam(name = "userId", required = false) String userId,
+                                         @RequestParam(name = "statusDone", required = false) String statusDone){
+        if (userId == null && statusDone == null) {
+            userId = "";
+            statusDone = "";
+        } else if (userId == null) {
+            userId = "";
+        } else if (statusDone == null) {
+            statusDone = "";
+        }
+        return taskService.getTaskByReleaseId(id, userId, statusDone);
     }
+
 
     @GetMapping("/taskByUserId/{id}")
     public List<Task> getTaskByUserId(@PathVariable String id){
