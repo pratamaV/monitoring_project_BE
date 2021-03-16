@@ -13,4 +13,5 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project, String> {
     public List<Project> findProjectByStatusProject(String statusProject);
 //    public List<Project> getAllProjectforUser();
+    public List<Project> findProjectByDivisiUserAndStatusProject(String divisiUser, String statusProject);
 }

@@ -103,4 +103,9 @@ public class ProjectServiceImpl implements ProjectService {
         return null;
 //        return projectRepository.getAllProjectforUser();
     }
+
+    @Override
+    public List<Project> getProjectByDivisiUserAndStatusProject(String divisiUser, String statusProject) {
+        return projectRepository.findProjectByDivisiUserAndStatusProject(divisiUser, "aktif");
+    }
 }
