@@ -146,7 +146,7 @@ public class TaskController {
 
     @GetMapping("/taskByReleaseId/{id}")
     public List<Task> getTaskByReleaseId(@PathVariable String id,
-                                         @RequestParam(name = "userId", required = false) String userId,
+                                         @RequestParam(name = "assignTo", required = false) String userId,
                                          @RequestParam(name = "statusDone", required = false) String statusDone){
         if (userId == null && statusDone == null) {
             userId = "";
