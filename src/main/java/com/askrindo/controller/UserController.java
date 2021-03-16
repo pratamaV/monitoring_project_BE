@@ -63,4 +63,9 @@ public class UserController {
     public void signup(@RequestBody Users users) throws IOException {
         usersServiceAuth.registerUser(users);
     }
+
+    @GetMapping("/userByPerformance")
+    public List<Users> getUserByTotalPerformance(){
+        return userService.getUsersByTotalPerformanceAsc();
+    }
 }

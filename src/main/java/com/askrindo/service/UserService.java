@@ -16,4 +16,5 @@ public interface UserService {
     public List<Users> getUserByStatus(String status);
     public Float getTotalWeightById(String id);
     public Float getTotalPerformanceById(String id);
+    public List<Users> getUsersByTotalPerformanceAsc();
 }

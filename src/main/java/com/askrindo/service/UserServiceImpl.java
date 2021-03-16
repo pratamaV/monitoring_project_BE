@@ -3,6 +3,7 @@ package com.askrindo.service;
 import com.askrindo.entity.Users;
 import com.askrindo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -64,5 +65,10 @@ public class UserServiceImpl implements UserService{
     public Float getTotalPerformanceById(String id) {
         Users users = userRepository.findById(id).get();
         return users.getTotalPerformance();
+    }
+
+    @Override
+    public List<Users> getUsersByTotalPerformanceAsc() {
+        return userRepository.findByOrderByTotalPerformanceDesc();
     }
 }
