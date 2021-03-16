@@ -1,11 +1,14 @@
 package com.askrindo.service;
 
 import com.askrindo.entity.Division;
+import com.askrindo.exception.DataNotFoundException;
 import com.askrindo.repository.DivisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DivisionServiceImpl implements DivisionService {
@@ -31,5 +34,14 @@ public class DivisionServiceImpl implements DivisionService {
     @Override
     public void deleteDivisionById(String id) {
         divisionRepository.deleteById(id);
+    }
+
+    @Override
+    public Division getDivisionByName(String name) {
+        Optional<Division> divisionOptional = divisionRepository.findDivisionByDivisionName(name);
+        if(divisionOptional.isPresent()){
+            return divisionOptional.get();
+        }
+        throw new DataNotFoundException("Not Found");
     }
 }
