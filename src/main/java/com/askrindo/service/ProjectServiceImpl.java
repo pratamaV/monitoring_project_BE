@@ -193,6 +193,16 @@ public class ProjectServiceImpl implements ProjectService {
             return projectRepository.findProjectAK(pmo,directorateUser);
         }
 
+        if(divisiUser.isEmpty() && !directorateUser.isEmpty() && !pmId.isEmpty() && pmoId.isEmpty()){
+            Division division = divisionService.getDivisionByName(divisiUser);
+            Users pm = userService.getUserById(pmId);
+            return projectRepository.findProjectAL(pm,directorateUser);
+        }
+
+        if(divisiUser.isEmpty() && !directorateUser.isEmpty() && pmId.isEmpty() && pmoId.isEmpty()){
+            return projectRepository.findProjectAM(directorateUser);
+        }
+
         return null;
     }
 }

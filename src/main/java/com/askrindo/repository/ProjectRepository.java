@@ -100,4 +100,18 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
             "AND p.pmo_id = :pmo " +
             "AND p.directorate_user = :directorateUser")
     Project findProjectAK(@Param("pmo") Users pmo,@Param("directorateUser") String directorateUser);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u " +
+            "WHERE p.division_id = d.id " +
+            "AND p.pm_id = u.id " +
+            "AND p.pm_id = :pm " +
+            "AND p.directorate_user = :directorateUser")
+    Project findProjectAL(@Param("pm") Users pm,@Param("directorateUser") String directorateUser);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u " +
+            "WHERE p.division_id = d.id " +
+            "AND p.directorate_user = :directorateUser")
+    Project findProjectAM(@Param("directorateUser") String directorateUser);
+
+
 }
