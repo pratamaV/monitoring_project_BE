@@ -63,4 +63,10 @@ public class UserController {
     public void signup(@RequestBody Users users) throws IOException {
         usersServiceAuth.registerUser(users);
     }
+
+    @PutMapping(value = "/userChangePassword/{id}")
+    public void changePassword(@PathVariable(name = "id") String id,
+                               @RequestParam(value = "newPassword", required = true) String newPassword) {
+        usersServiceAuth.updatePassword(id ,newPassword);
+    }
 }

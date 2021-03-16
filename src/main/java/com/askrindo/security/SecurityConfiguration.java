@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/signup", "/division", "/divisions");
+                .antMatchers("/signup", "/division", "/divisions","/userChangePassword/**");
     }
     @Override
     @Bean

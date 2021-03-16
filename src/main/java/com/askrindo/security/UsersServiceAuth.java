@@ -78,4 +78,10 @@ public class UsersServiceAuth implements UserDetailsService {
         return usersOptional.get();
     }
 
+    public void updatePassword(String id, String newPassword) {
+        Users users = userRepository.findById(id).get();
+        users.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(users);
+    }
+
 }
