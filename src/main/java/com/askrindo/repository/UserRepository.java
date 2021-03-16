@@ -1,6 +1,7 @@
 package com.askrindo.repository;
 
 import com.askrindo.entity.Users;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -16,4 +17,5 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<Users, String>, JpaSpecificationExecutor<Users> {
     public List<Users> findUserByStatusUser(String status);
     Optional<Users> findUsersByEmail(String email);
+    public List<Users> findByOrderByTotalPerformanceDesc();
 }

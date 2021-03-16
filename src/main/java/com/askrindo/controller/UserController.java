@@ -67,6 +67,11 @@ public class UserController {
     @PutMapping(value = "/userChangePassword/{id}")
     public void changePassword(@PathVariable(name = "id") String id,
                                @RequestParam(value = "newPassword", required = true) String newPassword) {
-        usersServiceAuth.updatePassword(id ,newPassword);
+        usersServiceAuth.updatePassword(id, newPassword);
+    }
+
+    @GetMapping("/userByPerformance")
+    public List<Users> getUserByTotalPerformance(){
+        return userService.getUsersByTotalPerformanceAsc();
     }
 }
