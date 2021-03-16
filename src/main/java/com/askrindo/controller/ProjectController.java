@@ -96,10 +96,11 @@ public class ProjectController {
 //    }
 
     @GetMapping("/project")
-    public Project searchProject(@RequestParam(name = "divisiUser", required = false) String divisiUser,
+    public List<Project> searchProject(@RequestParam(name = "divisiUser", required = false) String divisiUser,
                                        @RequestParam(name = "directorateUser", required = false) String directorateUser,
                                        @RequestParam(name = "pm", required = false) String pm,
                                        @RequestParam(name = "pmo", required = false) String pmo){
+        System.out.println("divisi usernya adlaha: " + divisiUser);
         return  projectService.getProjectList(divisiUser, directorateUser, pm, pmo);
     }
 

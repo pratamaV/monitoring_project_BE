@@ -34,31 +34,31 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
             "AND p.pm_id = :pm " +
             "AND p.pmo_id = :pmo " +
             "AND p.directorate_user = :directorateUser")
-    Project findProjectAA(@Param("division") Division division,@Param("pm") Users pm,@Param("pmo") Users pmo,@Param("directorateUser") String directorateUser);
+    List<Project> findProjectAA(@Param("division") Division division,@Param("pm") Users pm,@Param("pmo") Users pmo,@Param("directorateUser") String directorateUser);
 
     @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_user as u " +
             "WHERE p.pm_id = u.id " +
             "AND p.pm_id = :pm " +
             "AND p.pmo_id = :pmo " +
             "AND p.directorate_user = :directorateUser")
-    Project findProjectAB(@Param("pm") Users pm,@Param("pmo") Users pmo,@Param("directorateUser") String directorateUser);
+    List<Project> findProjectAB(@Param("pm") Users pm,@Param("pmo") Users pmo,@Param("directorateUser") String directorateUser);
 
     @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_user as u " +
             "WHERE p.pm_id = u.id " +
             "AND p.pm_id = :pm " +
             "AND p.pmo_id = :pmo")
-    Project findProjectAC(@Param("pm") Users pm,@Param("pmo") Users pmo);
+    List<Project> findProjectAC(@Param("pm") Users pm,@Param("pmo") Users pmo);
 
     @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_user as u " +
             "WHERE p.pmo_id = u.id " +
             "AND p.pmo_id = :pmo")
-    Project findProjectAD(@Param("pmo") Users pmo);
+    List<Project> findProjectAD(@Param("pmo") Users pmo);
 
 
     @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_user as u " +
             "WHERE p.pm_id = u.id " +
             "AND p.pm_id = :pm")
-    Project findProjectAE(@Param("pm") Users pm);
+    List<Project> findProjectAE(@Param("pm") Users pm);
 
     @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u " +
             "WHERE p.division_id = d.id " +
@@ -66,17 +66,18 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
             "AND p.division_id = :division " +
             "AND p.pm_id = :pm " +
             "AND p.directorate_user = :directorateUser")
-    Project findProjectAF(@Param("division") Division division,@Param("pm") Users pm, @Param("directorateUser") String directorateUser);
+    List<Project> findProjectAF(@Param("division") Division division,@Param("pm") Users pm, @Param("directorateUser") String directorateUser);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u WHERE p.division_id = d.id AND p.division_id = :division")
-    Project findProjectAG(@Param("division") Division division);
+    @Query(nativeQuery = true, value = "SELECT * " +
+            "FROM mst_project as p WHERE p.division_id = :division")
+    List<Project> findProjectAG(@Param("division") Division division);
 
     @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u " +
             "WHERE p.division_id = d.id " +
             "AND p.pm_id = u.id " +
             "AND p.division_id = :division " +
             "AND p.directorate_user = :directorateUser")
-    Project findProjectAH(@Param("division") Division division, @Param("directorateUser") String directorateUser);
+    List<Project> findProjectAH(@Param("division") Division division, @Param("directorateUser") String directorateUser);
 
     @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u " +
             "WHERE p.division_id = d.id " +
@@ -84,7 +85,7 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
             "AND p.division_id = :division " +
             "AND p.pmo_id = :pmo " +
             "AND p.directorate_user = :directorateUser")
-    Project findProjectAI(@Param("division") Division division, @Param("pmo") Users pmo,@Param("directorateUser") String directorateUser);
+    List<Project> findProjectAI(@Param("division") Division division, @Param("pmo") Users pmo,@Param("directorateUser") String directorateUser);
 
 
     @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u " +
@@ -92,26 +93,24 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
             "AND p.pm_id = u.id " +
             "AND p.division_id = :division " +
             "AND p.pm_id = :pm ")
-    Project findProjectAJ(@Param("division") Division division, @Param("pm") Users pm);
+    List<Project> findProjectAJ(@Param("division") Division division, @Param("pm") Users pm);
 
     @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u " +
             "WHERE p.division_id = d.id " +
             "AND p.pm_id = u.id " +
             "AND p.pmo_id = :pmo " +
             "AND p.directorate_user = :directorateUser")
-    Project findProjectAK(@Param("pmo") Users pmo,@Param("directorateUser") String directorateUser);
+    List<Project> findProjectAK(@Param("pmo") Users pmo,@Param("directorateUser") String directorateUser);
 
     @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u " +
             "WHERE p.division_id = d.id " +
             "AND p.pm_id = u.id " +
             "AND p.pm_id = :pm " +
             "AND p.directorate_user = :directorateUser")
-    Project findProjectAL(@Param("pm") Users pm,@Param("directorateUser") String directorateUser);
+    List<Project> findProjectAL(@Param("pm") Users pm,@Param("directorateUser") String directorateUser);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u " +
-            "WHERE p.division_id = d.id " +
-            "AND p.directorate_user = :directorateUser")
-    Project findProjectAM(@Param("directorateUser") String directorateUser);
+    @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p WHERE p.directorate_user = :directorateUser")
+    List<Project> findProjectAM(@Param("directorateUser") String directorateUser);
 
 
 }

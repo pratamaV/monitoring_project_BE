@@ -126,7 +126,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project getProjectList(String divisiUser, String directorateUser, String pmId, String pmoId) {
+    public List<Project> getProjectList(String divisiUser, String directorateUser, String pmId, String pmoId) {
         if(divisiUser.isEmpty() && !directorateUser.isEmpty() && !pmId.isEmpty() && !pmoId.isEmpty()){
             System.out.println("kosong");
             Users pm = userService.getUserById(pmId);
@@ -166,12 +166,17 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         if(!divisiUser.isEmpty() && !directorateUser.isEmpty() && !pmId.isEmpty() && pmoId.isEmpty()){
+            System.out.println("masuk sini dia yo");
             Division division = divisionService.getDivisionByName(divisiUser);
             Users pm = userService.getUserById(pmId);
+            System.out.println("pm nya adalah: " + pm);
+            System.out.println("direktorateuser: " + directorateUser);
+            System.out.println("divisionnyaUser: " + division);
             return projectRepository.findProjectAF(division,pm,directorateUser);
         }
 
         if(!divisiUser.isEmpty() && directorateUser.isEmpty() && pmId.isEmpty() && pmoId.isEmpty()){
+            System.out.println("divisi doang disini");
             Division division = divisionService.getDivisionByName(divisiUser);
             return projectRepository.findProjectAG(division);
         }

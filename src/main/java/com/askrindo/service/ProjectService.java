@@ -20,5 +20,5 @@ public interface ProjectService {
     public List<Project> getAllProjectforUser();
     public List<Project> getProjectByDivisiUserAndStatusProject(String divisiUser, String statusProject);
     Page<Project> getProjects(Pageable pageable, ProjectSearchDTO projectSearchDTO);
-    public Project getProjectList(String divisiUser, String directorateUser, String pm, String pmo);
+    public List<Project> getProjectList(String divisiUser, String directorateUser, String pm, String pmo);
 }
