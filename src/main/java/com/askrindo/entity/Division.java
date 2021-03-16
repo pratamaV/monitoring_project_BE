@@ -70,4 +70,15 @@ public class Division {
     public void setProjectList(List<Project> projectList) {
         this.projectList = projectList;
     }
+
+
+    @Override
+    public String toString() {
+        return "Division{" +
+                "id='" + id + '\'' +
+                ", divisionName='" + divisionName + '\'' +
+                ", divisionCode='" + divisionCode + '\'' +
+                ", projectList=" + projectList +
+                '}';
+    }
 }
