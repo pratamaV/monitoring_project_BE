@@ -38,10 +38,12 @@ public class DivisionServiceImpl implements DivisionService {
 
     @Override
     public Division getDivisionByName(String name) {
+        System.out.println("nameee: " + name);
         Optional<Division> divisionOptional = divisionRepository.findDivisionByDivisionName(name);
+        System.out.println("divisionOptaional: " + divisionOptional);
         if(divisionOptional.isPresent()){
             return divisionOptional.get();
         }
-        throw new DataNotFoundException("Not Found");
+        return null;
     }
 }

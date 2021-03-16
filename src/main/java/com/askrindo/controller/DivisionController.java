@@ -28,9 +28,9 @@ public class DivisionController {
         return divisionService.getDivisionById(id);
     }
 
-    @GetMapping("/division/{name}")
-    public Division getDivisionByName(@PathVariable String name){
-        return divisionService.getDivisionByName(name);
+    @GetMapping("/division")
+    public Division getDivisionByName(@RequestParam String division){
+        return divisionService.getDivisionByName(division);
     }
 
     @DeleteMapping("/division/{id}")
