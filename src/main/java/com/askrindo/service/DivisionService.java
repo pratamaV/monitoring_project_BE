@@ -9,4 +9,5 @@ public interface DivisionService {
     public List<Division> getAllDivision();
     public Division getDivisionById(String id);
     public void deleteDivisionById(String id);
+    public Division getDivisionByName(String name);
 }

@@ -303,4 +303,32 @@ public class  Project {
     public void setReleaseList(List<Release> releaseList) {
         this.releaseList = releaseList;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id='" + id + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", projectCode='" + projectCode + '\'' +
+                ", pmo=" + pmo +
+                ", pm=" + pm +
+                ", benefit='" + benefit + '\'' +
+                ", description='" + description + '\'' +
+                ", coPM=" + coPM +
+                ", divisiUser=" + divisiUser +
+                ", directorateUser='" + directorateUser + '\'' +
+                ", status='" + status + '\'' +
+                ", targetLive=" + targetLive +
+                ", prosentaseProject=" + prosentaseProject +
+                ", budget=" + budget +
+                ", contracted_value=" + contracted_value +
+                ", paymentRealization=" + paymentRealization +
+                ", score=" + score +
+                ", weight=" + weight +
+                ", categoryActivity='" + categoryActivity + '\'' +
+                ", categoryInitiative='" + categoryInitiative + '\'' +
+                ", statusProject='" + statusProject + '\'' +
+                ", releaseList=" + releaseList +
+                '}';
+    }
 }

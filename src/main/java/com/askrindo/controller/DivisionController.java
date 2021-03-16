@@ -28,6 +28,11 @@ public class DivisionController {
         return divisionService.getDivisionById(id);
     }
 
+    @GetMapping("/division")
+    public Division getDivisionByName(@RequestParam String division){
+        return divisionService.getDivisionByName(division);
+    }
+
     @DeleteMapping("/division/{id}")
     public void deleteDivisionById(@PathVariable String id){
         divisionService.deleteDivisionById(id);
