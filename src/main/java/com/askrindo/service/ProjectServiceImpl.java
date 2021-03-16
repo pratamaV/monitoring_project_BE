@@ -158,10 +158,39 @@ public class ProjectServiceImpl implements ProjectService {
             return projectRepository.findProjectAA(division,pm,pmo,directorateUser);
         }
 
+        if(!divisiUser.isEmpty() && !directorateUser.isEmpty() && pmId.isEmpty() && !pmoId.isEmpty()){
+            System.out.println("masuk sini");
+            Division division = divisionService.getDivisionByName(divisiUser);
+            Users pmo = userService.getUserById(pmoId);
+            return projectRepository.findProjectAI(division,pmo,directorateUser);
+        }
+
         if(!divisiUser.isEmpty() && !directorateUser.isEmpty() && !pmId.isEmpty() && pmoId.isEmpty()){
             Division division = divisionService.getDivisionByName(divisiUser);
             Users pm = userService.getUserById(pmId);
             return projectRepository.findProjectAF(division,pm,directorateUser);
+        }
+
+        if(!divisiUser.isEmpty() && directorateUser.isEmpty() && pmId.isEmpty() && pmoId.isEmpty()){
+            Division division = divisionService.getDivisionByName(divisiUser);
+            return projectRepository.findProjectAG(division);
+        }
+
+        if(!divisiUser.isEmpty() && !directorateUser.isEmpty() && pmId.isEmpty() && pmoId.isEmpty()){
+            Division division = divisionService.getDivisionByName(divisiUser);
+            return projectRepository.findProjectAH(division,directorateUser);
+        }
+
+        if(!divisiUser.isEmpty() && directorateUser.isEmpty() && !pmId.isEmpty() && pmoId.isEmpty()){
+            Division division = divisionService.getDivisionByName(divisiUser);
+            Users pm = userService.getUserById(pmId);
+            return projectRepository.findProjectAJ(division,pm);
+        }
+
+        if(divisiUser.isEmpty() && !directorateUser.isEmpty() && pmId.isEmpty() && !pmoId.isEmpty()){
+            Division division = divisionService.getDivisionByName(divisiUser);
+            Users pmo = userService.getUserById(pmoId);
+            return projectRepository.findProjectAK(pmo,directorateUser);
         }
 
         return null;

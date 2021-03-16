@@ -66,5 +66,38 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
             "AND p.division_id = :division " +
             "AND p.pm_id = :pm " +
             "AND p.directorate_user = :directorateUser")
-    Project findProjectAF(Division division, Users pm, String directorateUser);
+    Project findProjectAF(@Param("division") Division division,@Param("pm") Users pm, @Param("directorateUser") String directorateUser);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u WHERE p.division_id = d.id AND p.division_id = :division")
+    Project findProjectAG(@Param("division") Division division);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u " +
+            "WHERE p.division_id = d.id " +
+            "AND p.pm_id = u.id " +
+            "AND p.division_id = :division " +
+            "AND p.directorate_user = :directorateUser")
+    Project findProjectAH(@Param("division") Division division, @Param("directorateUser") String directorateUser);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u " +
+            "WHERE p.division_id = d.id " +
+            "AND p.pmo_id = u.id " +
+            "AND p.division_id = :division " +
+            "AND p.pmo_id = :pmo " +
+            "AND p.directorate_user = :directorateUser")
+    Project findProjectAI(@Param("division") Division division, @Param("pmo") Users pmo,@Param("directorateUser") String directorateUser);
+
+
+    @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u " +
+            "WHERE p.division_id = d.id " +
+            "AND p.pm_id = u.id " +
+            "AND p.division_id = :division " +
+            "AND p.pm_id = :pm ")
+    Project findProjectAJ(@Param("division") Division division, @Param("pm") Users pm);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p, mst_division as d, mst_user as u " +
+            "WHERE p.division_id = d.id " +
+            "AND p.pm_id = u.id " +
+            "AND p.pmo_id = :pmo " +
+            "AND p.directorate_user = :directorateUser")
+    Project findProjectAK(@Param("pmo") Users pmo,@Param("directorateUser") String directorateUser);
 }
