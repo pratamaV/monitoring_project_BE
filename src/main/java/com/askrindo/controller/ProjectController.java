@@ -97,4 +97,19 @@ public class ProjectController {
         return  projectService.getProjectList(divisiUser, directorateUser, pm, pmo);
     }
 
+    @GetMapping("/projectByPM/{id}")
+    public List<Project> getProjectByPMID(@PathVariable String id){
+       return projectService.getProjectByPmID(id);
+    }
+
+    @GetMapping("/projectByPMO/{id}")
+    public List<Project> getProjectByPMOID(@PathVariable String id){
+        return projectService.getProjectByPmoID(id);
+    }
+
+    @GetMapping("/projectBycoPM/{id}")
+    public List<Project> getProjectByCoPMID(@PathVariable String id){
+        return projectService.getProjectByCoPmID(id);
+    }
+
 }

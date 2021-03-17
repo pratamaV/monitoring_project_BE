@@ -210,4 +210,20 @@ public class ProjectServiceImpl implements ProjectService {
 
         return null;
     }
+
+
+    @Override
+    public List<Project> getProjectByPmID(String id) {
+        return projectRepository.findProjectByPmId(id);
+    }
+
+    @Override
+    public List<Project> getProjectByPmoID(String id) {
+        return projectRepository.findProjectByPmoId(id);
+    }
+
+    @Override
+    public List<Project> getProjectByCoPmID(String id) {
+        return projectRepository.findProjectByCoPMId(id);
+    }
 }
