@@ -112,5 +112,8 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
     @Query(nativeQuery = true, value = "SELECT * FROM mst_project as p WHERE p.directorate_user = :directorateUser")
     List<Project> findProjectAM(@Param("directorateUser") String directorateUser);
 
+    List<Project> findProjectByPmId(String id);
+    List<Project> findProjectByPmoId(String id);
+    List<Project> findProjectByCoPMId(String id);
 
 }
