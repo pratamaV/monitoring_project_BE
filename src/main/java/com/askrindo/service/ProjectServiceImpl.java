@@ -42,19 +42,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void saveProject(Project project) {
-        List<Project> projectList = projectRepository.findProjectByStatusProject("aktif");
-        Float totalScoreProject = Float.valueOf(0);
-        Float totalScoreProject2 = Float.valueOf(0);
-        for (Project project1 : projectList) {
-            totalScoreProject = totalScoreProject + project1.getScore();
-        }
-        totalScoreProject2 = totalScoreProject + project.getScore();
-        project.setWeight(project.getScore() / totalScoreProject2);
-        for (Project project1 : projectList) {
-            project1.setWeight(project1.getScore() / totalScoreProject2);
-            projectRepository.save(project1);
-        }
-
         if (project.getId() == null) {
             Division div = divisionService.getDivisionById(project.getDivisiUser().getId());
             SequenceIdProject sequenceIdProject = new SequenceIdProject();
@@ -66,6 +53,18 @@ public class ProjectServiceImpl implements ProjectService {
             project.setProjectCode(idProjectgenFormat);
         }
         projectRepository.save(project);
+
+        List<Project> projectList = projectRepository.findProjectByStatusProject("aktif");
+        Float totalScoreProject = Float.valueOf(0);
+        for (Project project1 : projectList) {
+            totalScoreProject = totalScoreProject + project1.getScore();
+        }
+        for (Project project1 : projectList) {
+            project1.setWeight(project1.getScore() / totalScoreProject);
+            projectRepository.save(project1);
+        }
+
+
     }
 
     @Override

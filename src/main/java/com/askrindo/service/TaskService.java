@@ -22,4 +22,5 @@ public interface TaskService {
     public List<Task> getTaskByUserId(String id);
 
     public List<Task> getTaskByReleaseId(String id, String userId, String statusDone);
+    public List<Task> getTaskAfterDeadline();
 }

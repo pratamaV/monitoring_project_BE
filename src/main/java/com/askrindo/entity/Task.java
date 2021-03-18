@@ -28,7 +28,16 @@ public class Task {
     private Float taskProsentase;
 
     @JsonFormat(timezone = "Asia/Jakarta",pattern = "yyyy-MM-dd")
-    private Date finalTarget;
+    private Date estStartDate;
+
+    @JsonFormat(timezone = "Asia/Jakarta",pattern = "yyyy-MM-dd")
+    private Date actStartDate;
+
+    @JsonFormat(timezone = "Asia/Jakarta",pattern = "yyyy-MM-dd")
+    private Date estEndDate;
+
+    @JsonFormat(timezone = "Asia/Jakarta",pattern = "yyyy-MM-dd")
+    private Date actEndDate;
     private String taskDocument;
 
     @ManyToOne
@@ -39,7 +48,7 @@ public class Task {
     }
 
 
-    public Task(String id, String taskName, String taskCode, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, Release release) {
+    public Task(String id, String taskName, String taskCode, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date estEndDate, Release release) {
         this.id = id;
         this.taskName = taskName;
         this.taskCode = taskCode;
@@ -48,23 +57,23 @@ public class Task {
         this.weight = weight;
         this.statusDone = statusDone;
         this.taskProsentase = taskProsentase;
-        this.finalTarget = finalTarget;
+        this.estEndDate = estEndDate;
         this.release = release;
     }
 
-    public Task(String taskName, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument) {
+    public Task(String taskName, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date estEndDate, String taskDocument) {
         this.taskName = taskName;
         this.assignedTo = assignedTo;
         this.score = score;
         this.weight = weight;
         this.statusDone = statusDone;
         this.taskProsentase = taskProsentase;
-        this.finalTarget = finalTarget;
+        this.estEndDate = estEndDate;
         this.taskDocument = taskDocument;
     }
 
 
-    public Task(String id, String taskName, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument, Release release) {
+    public Task(String id, String taskName, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date estEndDate, String taskDocument, Release release) {
         this.id = id;
         this.taskName = taskName;
         this.taskCode = taskCode;
@@ -73,34 +82,34 @@ public class Task {
         this.weight = weight;
         this.statusDone = statusDone;
         this.taskProsentase = taskProsentase;
-        this.finalTarget = finalTarget;
+        this.estEndDate = estEndDate;
         this.taskDocument = taskDocument;
         this.release = release;
     }
 
-    public Task(String taskName, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument, Release release) {
+    public Task(String taskName, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date estEndDate, String taskDocument, Release release) {
         this.taskName = taskName;
         this.assignedTo = assignedTo;
         this.score = score;
         this.weight = weight;
         this.statusDone = statusDone;
         this.taskProsentase = taskProsentase;
-        this.finalTarget = finalTarget;
+        this.estEndDate = estEndDate;
         this.taskDocument = taskDocument;
         this.release = release;
     }
 
-    public Task(String taskName, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument) {
+    public Task(String taskName, Integer score, Float weight, String statusDone, Float taskProsentase, Date estEndDate, String taskDocument) {
         this.taskName = taskName;
         this.score = score;
         this.weight = weight;
         this.statusDone = statusDone;
         this.taskProsentase = taskProsentase;
-        this.finalTarget = finalTarget;
+        this.estEndDate = estEndDate;
         this.taskDocument = taskDocument;
     }
 
-    public Task(String id, String taskName, String taskCode, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date finalTarget, String taskDocument, Release release) {
+    public Task(String id, String taskName, String taskCode, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date estEndDate, String taskDocument, Release release) {
         this.id = id;
         this.taskName = taskName;
         this.taskCode = taskCode;
@@ -109,12 +118,26 @@ public class Task {
         this.weight = weight;
         this.statusDone = statusDone;
         this.taskProsentase = taskProsentase;
-        this.finalTarget = finalTarget;
+        this.estEndDate = estEndDate;
         this.taskDocument = taskDocument;
         this.release = release;
     }
 
-
+    public Task(String id, String taskName, String taskCode, Users assignedTo, Integer score, Float weight, String statusDone, Float taskProsentase, Date estStartDate, Date actStartDate, Date estEndDate, Date actEndDate, Release release) {
+        this.id = id;
+        this.taskName = taskName;
+        this.taskCode = taskCode;
+        this.assignedTo = assignedTo;
+        this.score = score;
+        this.weight = weight;
+        this.statusDone = statusDone;
+        this.taskProsentase = taskProsentase;
+        this.estStartDate = estStartDate;
+        this.actStartDate = actStartDate;
+        this.estEndDate = estEndDate;
+        this.actEndDate = actEndDate;
+        this.release = release;
+    }
 
     public Float getTaskProsentase() {
         return taskProsentase;
@@ -164,12 +187,12 @@ public class Task {
         this.taskCode = taskCode;
     }
 
-    public Date getFinalTarget() {
-        return finalTarget;
+    public Date getEstEndDate() {
+        return estEndDate;
     }
 
-    public void setFinalTarget(Date finalTarget) {
-        this.finalTarget = finalTarget;
+    public void setEstEndDate(Date finalTarget) {
+        this.estEndDate = finalTarget;
     }
 
     public Float getWeight() {
@@ -202,5 +225,29 @@ public class Task {
 
     public void setAssignedTo(Users assignedTo) {
         this.assignedTo = assignedTo;
+    }
+
+    public Date getEstStartDate() {
+        return estStartDate;
+    }
+
+    public void setEstStartDate(Date estStartDate) {
+        this.estStartDate = estStartDate;
+    }
+
+    public Date getActStartDate() {
+        return actStartDate;
+    }
+
+    public void setActStartDate(Date actStartDate) {
+        this.actStartDate = actStartDate;
+    }
+
+    public Date getActEndDate() {
+        return actEndDate;
+    }
+
+    public void setActEndDate(Date actEndDate) {
+        this.actEndDate = actEndDate;
     }
 }

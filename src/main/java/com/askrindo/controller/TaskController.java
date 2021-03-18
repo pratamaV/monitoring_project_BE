@@ -105,7 +105,10 @@ public class TaskController {
                          @RequestParam Float weight,
                          @RequestParam String statusDone,
                          @RequestParam Float taskProsentase,
-                         @RequestParam Date finalTarget,
+                         @RequestParam Date estStartDate,
+                            @RequestParam Date estEndDate,
+                            @RequestParam Date actStartDate,
+                            @RequestParam Date actEndDate,
                          @RequestParam String release
     ) throws JsonProcessingException {
 //        try{
@@ -119,7 +122,7 @@ public class TaskController {
 //        String taskDocument = StringUtils.cleanPath("TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
         Users assignedTo1 = objectMapper.readValue(assignedTo, Users.class);
         Release release1 = objectMapper.readValue(release, Release.class);
-        Task newTask = new Task(id, taskName, taskCode, assignedTo1, score, weight, statusDone, taskProsentase, finalTarget, release1);
+        Task newTask = new Task(id, taskName, taskCode, assignedTo1, score, weight, statusDone, taskProsentase, estStartDate, actStartDate, estEndDate, actEndDate, release1);
         taskService.updateTaskByReleaseId(newTask, idRelease);
     }
 
@@ -163,5 +166,10 @@ public class TaskController {
     @GetMapping("/taskByUserId/{id}")
     public List<Task> getTaskByUserId(@PathVariable String id){
         return taskService.getTaskByUserId(id);
+    }
+
+    @GetMapping("/taskDeadline")
+    public List<Task> getTaskDeadline(){
+        return taskService.getTaskAfterDeadline();
     }
 }
