@@ -64,10 +64,10 @@ public class UserController {
         usersServiceAuth.registerUser(users);
     }
 
-    @PutMapping(value = "/userChangePassword/{id}")
-    public void changePassword(@PathVariable(name = "id") String id,
+    @PutMapping(value = "/userChangePassword")
+    public void changePassword(@RequestParam(value = "email", required = true) String email,
                                @RequestParam(value = "newPassword", required = true) String newPassword) {
-        usersServiceAuth.updatePassword(id, newPassword);
+        usersServiceAuth.updatePassword(email, newPassword);
     }
 
     @GetMapping("/userByPerformance")
