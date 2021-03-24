@@ -40,7 +40,7 @@ public class ReleaseServiceImpl implements ReleaseService {
         }
         releaseRepository.save(release);
 
-        List<Release> releaseList = releaseRepository.findReleaseByStatusReleaseAndProjectId("aktif" , release.getProject().getId());
+        List<Release> releaseList = releaseRepository.findReleaseByStatusReleaseAndProjectId("Active" , release.getProject().getId());
         Float totalScoreRelease = Float.valueOf(0);
         for (Release release1: releaseList) {
             totalScoreRelease = totalScoreRelease + release1.getScore();
@@ -85,18 +85,15 @@ public class ReleaseServiceImpl implements ReleaseService {
     }
 
     @Override
-    public void updateStatusReleaseById(String id) {
+    public void updateStatusReleaseById(String id, String releaseStatus) {
         Release release = releaseRepository.findById(id).get();
-        if(release.getStatusRelease().equalsIgnoreCase("aktif")){
-            release.setStatusRelease("tidak aktif");
+        release.setStatusRelease(releaseStatus);
+        if(releaseStatus.equalsIgnoreCase("Not Active")){
             release.setWeight(0.0f);
-            releaseRepository.save(release);
-        } else {
-            release.setStatusRelease("aktif");
-            releaseRepository.save(release);
         }
+        releaseRepository.save(release);
 
-        List<Release> releaseList = releaseRepository.findReleaseByStatusReleaseAndProjectId("aktif" , release.getProject().getId());
+        List<Release> releaseList = releaseRepository.findReleaseByStatusReleaseAndProjectId("Active" , release.getProject().getId());
         Float totalScoreRelease = Float.valueOf(0);
         for (Release release1: releaseList) {
             totalScoreRelease = totalScoreRelease + release1.getScore();

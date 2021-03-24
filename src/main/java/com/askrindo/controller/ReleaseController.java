@@ -57,8 +57,9 @@ public class ReleaseController {
     }
 
     @PutMapping("/releaseUpdate/{id}")
-    public void updateStatusReleaseById(@PathVariable String id) {
-        releaseService.updateStatusReleaseById(id);
+    public void updateStatusReleaseById(@PathVariable String id,
+                                        @RequestParam String releaseStatus) {
+        releaseService.updateStatusReleaseById(id, releaseStatus);
     }
 
     @GetMapping("/releaseByProjectId/{id}")
