@@ -15,6 +15,6 @@ public interface ReleaseService {
     public List<Release> getReleaseByProjectId(String id);
     public List<Release> getReleaseByStage(String stage);
     public List<Release> getReleaseByStatus(String status);
-    public void updateStatusReleaseById(String id);
+    public void updateStatusReleaseById(String id, String releaseStatus);
     public List<Release> getReleaseByProjectId(String idProject, String status, String stage);
 }

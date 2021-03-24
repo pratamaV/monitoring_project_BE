@@ -50,9 +50,11 @@ public class ProjectController {
     }
 
     @PutMapping("/project/{id}")
-    public void updateStatusProjectById(@PathVariable String id){
-        projectService.updateStatusProjectById(id);
+    public void updateStatusProjectById(@PathVariable String id,
+                                        @RequestParam String projectStatus){
+        projectService.updateStatusProjectById(id, projectStatus);
     }
+
 
     @GetMapping("/test")
     public void test(){

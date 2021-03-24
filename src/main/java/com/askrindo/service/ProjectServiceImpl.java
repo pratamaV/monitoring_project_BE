@@ -54,7 +54,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
         projectRepository.save(project);
 
-        List<Project> projectList = projectRepository.findProjectByStatusProject("aktif");
+        List<Project> projectList = projectRepository.findProjectByStatusProject("Active");
         Float totalScoreProject = Float.valueOf(0);
         for (Project project1 : projectList) {
             totalScoreProject = totalScoreProject + project1.getScore();
@@ -83,15 +83,14 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void updateStatusProjectById(String id) {
+    public void updateStatusProjectById(String id, String projectStatus) {
         Project project = projectRepository.findById(id).get();
-        if (project.getStatusProject().equalsIgnoreCase("tidak aktif")) {
-            project.setStatusProject("aktif");
-            projectRepository.save(project);
-        } else {
-            project.setStatusProject("tidak aktif");
+        project.setStatusProject(projectStatus);
+        if(projectStatus.equalsIgnoreCase("Not Active")){
+            project.setWeight(0.0f);
         }
-        List<Project> projectList = projectRepository.findProjectByStatusProject("aktif");
+        projectRepository.save(project);
+        List<Project> projectList = projectRepository.findProjectByStatusProject("Active");
         Float totalScoreProject = Float.valueOf(0);
         for (Project project1 : projectList) {
             totalScoreProject = totalScoreProject + project1.getScore();
@@ -115,7 +114,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> getProjectByDivisiUserAndStatusProject(String divisiUser, String statusProject) {
-        return projectRepository.findProjectByDivisiUserAndStatusProject(divisiUser, "aktif");
+        return projectRepository.findProjectByDivisiUserAndStatusProject(divisiUser, "Active");
     }
 
     @Override
