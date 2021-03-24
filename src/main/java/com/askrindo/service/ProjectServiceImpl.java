@@ -86,6 +86,9 @@ public class ProjectServiceImpl implements ProjectService {
     public void updateStatusProjectById(String id, String projectStatus) {
         Project project = projectRepository.findById(id).get();
         project.setStatusProject(projectStatus);
+        if(projectStatus.equalsIgnoreCase("Not Active")){
+            project.setWeight(0.0f);
+        }
         projectRepository.save(project);
         List<Project> projectList = projectRepository.findProjectByStatusProject("Active");
         Float totalScoreProject = Float.valueOf(0);
