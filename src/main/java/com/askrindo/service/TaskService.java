@@ -3,6 +3,7 @@ package com.askrindo.service;
 import com.askrindo.entity.Task;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +20,8 @@ public interface TaskService {
     public List<Task> getTaskByReleaseId(String id);
     public void updateTaskByReleaseId(Task task,String id);
     public Float getWeightTaskByUserId(String userID);
-    public List<Task> getTaskByUserId(String id);
+    public List<Task> getTaskByUserId(String id, String statusDone, String releaseName,
+                                      String projectName, String estStartDate, String estEndDate);
 
     public List<Task> getTaskByReleaseId(String id, String userId, String statusDone);
     public List<Task> getTaskAfterDeadline();
