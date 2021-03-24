@@ -15,7 +15,7 @@ public interface ProjectService {
     public List<Project> getAllProject();
     public Project getProjectById(String id);
     public void updateProject(Project project);
-    public void updateStatusProjectById(String id);
+    public void updateStatusProjectById(String id, String projectStatus);
     public List<Project> getProjectByStatusProject(String statusProject);
     public List<Project> getAllProjectforUser();
     public List<Project> getProjectByDivisiUserAndStatusProject(String divisiUser, String statusProject);
