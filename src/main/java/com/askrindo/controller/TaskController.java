@@ -132,6 +132,12 @@ public class TaskController {
         taskService.updateTaskByReleaseId(task, idRelease);
     }
 
+    @PutMapping("/doneTaskNew/{idTask}")
+    public void updateDoneTask(@PathVariable String idTask,
+                               @RequestParam Integer prosentase) {
+        taskService.updateDoneTask(idTask, prosentase);
+    }
+
     @DeleteMapping("/tasks")
     public void deleteAllTask() {
         taskService.deleteAllTask();

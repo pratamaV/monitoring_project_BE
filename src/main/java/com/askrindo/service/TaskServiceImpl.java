@@ -1,5 +1,6 @@
 package com.askrindo.service;
 
+import com.askrindo.GlobalKey;
 import com.askrindo.entity.Project;
 import com.askrindo.entity.Release;
 import com.askrindo.entity.Task;
@@ -285,5 +286,59 @@ public class TaskServiceImpl implements TaskService {
             }
         }
         return taskDeadline;
+    }
+
+    @Override
+    public void updateDoneTask(String idTask, Integer prosentase) {
+        Task taskObj = this.getTaskById(idTask);
+        Release releaseObj = releaseService.getReleaseById(taskObj.getRelease().getId());
+        Project projectObj = projectService.getProjectById(releaseObj.getProject().getId());
+
+        taskObj.setTaskProsentase(Float.valueOf(prosentase));
+        if (prosentase == 0) {
+            taskObj.setStatusDone(GlobalKey.TASK_STATUS_NOT_STARTED);
+        } else if (prosentase > 0 && prosentase < 100) {
+            taskObj.setStatusDone(GlobalKey.TASK_STATUS_ON_PROGRESS);
+        } else if (prosentase == 100) {
+            taskObj.setStatusDone(GlobalKey.TASK_STATUS_DONE);
+        }
+        taskRepository.save(taskObj);
+        updateProsentaseRelease(releaseObj);
+        updateProsentaseProject(projectObj);
+        updatePerformanceUser(taskObj, releaseObj, projectObj);
+    }
+
+    private void updatePerformanceUser(Task taskObj, Release releaseObj, Project projectObj) {
+        Users userObj = userService.getUserById(taskObj.getAssignedTo().getId());
+        Float performanceUser = Float.valueOf(0);
+        List<Task> taskListUser = new ArrayList<>();
+        taskListUser = taskRepository.findTaskByAssignedToId(userObj.getId());
+        for (Task task : taskListUser) {
+            performanceUser = performanceUser + (task.getWeight() * task.getTaskProsentase() * releaseObj.getWeight() * projectObj.getWeight());
+        }
+        userObj.setTotalPerformance(performanceUser);
+        userService.saveUser(userObj);
+    }
+
+    private void updateProsentaseProject(Project projectObj) {
+        List<Release> releaseList = new ArrayList<>();
+        Float prosentaseProject = Float.valueOf(0);
+        releaseList = releaseService.getReleaseByProjectId(projectObj.getId());
+        for (Release release : releaseList) {
+            prosentaseProject = prosentaseProject + (release.getWeight() * release.getProsentaseRelease());
+        }
+        projectObj.setProsentaseProject(prosentaseProject);
+        projectService.saveProject(projectObj);
+    }
+
+    private void updateProsentaseRelease(Release releaseObj) {
+        List<Task> taskList = new ArrayList<>();
+        Float prosentaseRelease = Float.valueOf(0);
+        taskList = taskRepository.findTaskByReleaseId(releaseObj.getId());
+        for (Task task : taskList) {
+            prosentaseRelease = prosentaseRelease + (task.getWeight() * task.getTaskProsentase());
+        }
+        releaseObj.setProsentaseRelease(prosentaseRelease);
+        releaseService.saveRelease(releaseObj);
     }
 }
