@@ -114,4 +114,9 @@ public class ProjectController {
         return projectService.getProjectByCoPmID(id);
     }
 
+    @GetMapping("/projectByKeyword/{keyword}")
+    public List<Project> getProjectByKeyword(@PathVariable String keyword){
+        return projectService.getProjectByKeyword(keyword);
+    }
+
 }

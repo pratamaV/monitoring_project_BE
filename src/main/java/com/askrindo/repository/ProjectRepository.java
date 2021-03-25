@@ -116,4 +116,7 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
     List<Project> findProjectByPmoId(String id);
     List<Project> findProjectByCoPMId(String id);
 
+    @Query(nativeQuery = true, value = "SELECT * FROM mst_project WHERE keyword ilike %:keyword%")
+    List<Project> findProjectByKeyword(@Param("keyword") String keyword);
+
 }

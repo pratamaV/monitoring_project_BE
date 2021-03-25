@@ -223,4 +223,9 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getProjectByCoPmID(String id) {
         return projectRepository.findProjectByCoPMId(id);
     }
+
+    @Override
+    public List<Project> getProjectByKeyword(String keyword) {
+        return projectRepository.findProjectByKeyword(keyword);
+    }
 }
