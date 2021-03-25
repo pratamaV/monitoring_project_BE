@@ -134,8 +134,8 @@ public class TaskController {
 
     @PutMapping("/doneTaskNew/{idTask}")
     public void updateDoneTask(@PathVariable String idTask,
-                               @RequestParam Integer prosentase) {
-        taskService.updateDoneTask(idTask, prosentase);
+                               @RequestParam(name = "prosentase", required = false) Float prosentase) {
+        taskService.updateDoneTask(idTask,prosentase);
     }
 
     @DeleteMapping("/tasks")

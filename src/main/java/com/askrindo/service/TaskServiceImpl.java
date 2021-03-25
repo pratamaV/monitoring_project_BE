@@ -289,7 +289,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void updateDoneTask(String idTask, Integer prosentase) {
+    public void updateDoneTask(String idTask, Float prosentase) {
         Task taskObj = this.getTaskById(idTask);
         Release releaseObj = releaseService.getReleaseById(taskObj.getRelease().getId());
         Project projectObj = projectService.getProjectById(releaseObj.getProject().getId());
@@ -297,9 +297,9 @@ public class TaskServiceImpl implements TaskService {
         taskObj.setTaskProsentase(Float.valueOf(prosentase));
         if (prosentase == 0) {
             taskObj.setStatusDone(GlobalKey.TASK_STATUS_NOT_STARTED);
-        } else if (prosentase > 0 && prosentase < 100) {
+        } else if (prosentase > 0 && prosentase < 1) {
             taskObj.setStatusDone(GlobalKey.TASK_STATUS_ON_PROGRESS);
-        } else if (prosentase == 100) {
+        } else if (prosentase == 1) {
             taskObj.setStatusDone(GlobalKey.TASK_STATUS_DONE);
         }
         taskRepository.save(taskObj);
