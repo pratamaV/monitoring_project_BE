@@ -91,7 +91,22 @@ public class TaskServiceImpl implements TaskService {
         if (!taskRepository.existsById(task.getId())) {
             throw new DataNotFoundException(String.format(DataNotFoundException.DATA_NOT_FOUND, task.getClass(), task.getId()));
         }
-        taskRepository.save(task);
+        Task taskObj = this.getTaskById(task.getId());
+        Release releaseObj = releaseService.getReleaseById(taskObj.getRelease().getId());
+        Project projectObj = projectService.getProjectById(releaseObj.getProject().getId());
+
+        taskObj.setTaskProsentase(Float.valueOf(task.getTaskProsentase()));
+        if (task.getTaskProsentase() == 0) {
+            taskObj.setStatusDone(GlobalKey.TASK_STATUS_NOT_STARTED);
+        } else if (task.getTaskProsentase() > 0 && task.getTaskProsentase() < 100) {
+            taskObj.setStatusDone(GlobalKey.TASK_STATUS_ON_PROGRESS);
+        } else if (task.getTaskProsentase() == 100) {
+            taskObj.setStatusDone(GlobalKey.TASK_STATUS_DONE);
+        }
+        taskRepository.save(taskObj);
+        updateProsentaseRelease(releaseObj);
+        updateProsentaseProject(projectObj);
+        updatePerformanceUser(taskObj, releaseObj, projectObj);
 
     }
 
