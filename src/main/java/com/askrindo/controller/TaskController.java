@@ -40,8 +40,8 @@ public class TaskController {
                          @RequestParam Float taskProsentase,
                          @RequestParam Date finalTarget,
                          @RequestParam String release
-                         ) throws JsonProcessingException {
-        try{
+    ) throws JsonProcessingException {
+        try {
             if (taskDoc != null) {
                 taskDoc.transferTo(Paths.get(documentTask, "TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename())));
             }
@@ -59,16 +59,16 @@ public class TaskController {
     }
 
     @PostMapping("/addTask")
-    public void addTask(@RequestBody Task task){
+    public void addTask(@RequestBody Task task) {
         taskService.addTask(task);
     }
 
     @PutMapping("/uploadTaskDoc/{id}")
     public void uploadTaskDocument(@RequestPart(required = false) MultipartFile taskDoc,
-                         @PathVariable String id) throws JsonProcessingException {
+                                   @PathVariable String id) throws JsonProcessingException {
         Task task = taskService.getTaskById(id);
         String taskName = task.getTaskName();
-        try{
+        try {
             if (taskDoc != null) {
                 taskDoc.transferTo(Paths.get(documentTask, "TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename())));
             }
@@ -80,36 +80,36 @@ public class TaskController {
     }
 
     @GetMapping("/task/{id}")
-    public Task getTaskById(@PathVariable String id){
+    public Task getTaskById(@PathVariable String id) {
         return taskService.getTaskById(id);
     }
 
     @GetMapping("/tasks")
-    public List<Task> getAllTask(){
+    public List<Task> getAllTask() {
         return taskService.getAllTask();
     }
 
     @PutMapping("/task")
-    public void updateTask(@RequestBody Task task){
+    public void updateTask(@RequestBody Task task) {
         taskService.updateTask(task);
     }
 
     @PutMapping("/task/{idRelease}")
     public void updateTask(
-                            @PathVariable String idRelease,
-                         @RequestParam String id,
-                         @RequestParam String taskName,
-                           @RequestParam String taskCode,
-                         @RequestParam String assignedTo,
-                         @RequestParam Integer score,
-                         @RequestParam Float weight,
-                         @RequestParam String statusDone,
-                         @RequestParam Float taskProsentase,
-                         @RequestParam Date estStartDate,
-                            @RequestParam Date estEndDate,
-                            @RequestParam Date actStartDate,
-                            @RequestParam Date actEndDate,
-                         @RequestParam String release
+            @PathVariable String idRelease,
+            @RequestParam String id,
+            @RequestParam String taskName,
+            @RequestParam String taskCode,
+            @RequestParam String assignedTo,
+            @RequestParam Integer score,
+            @RequestParam Float weight,
+            @RequestParam String statusDone,
+            @RequestParam Float taskProsentase,
+            @RequestParam Date estStartDate,
+            @RequestParam Date estEndDate,
+            @RequestParam Date actStartDate,
+            @RequestParam Date actEndDate,
+            @RequestParam String release
     ) throws JsonProcessingException {
 //        try{
 //            if (taskDoc != null) {
@@ -128,17 +128,17 @@ public class TaskController {
 
     @PutMapping("/doneTask/{idRelease}")
     public void doneTask(@PathVariable String idRelease,
-                         @RequestBody Task task){
+                         @RequestBody Task task) {
         taskService.updateTaskByReleaseId(task, idRelease);
     }
 
     @DeleteMapping("/tasks")
-    public void deleteAllTask(){
+    public void deleteAllTask() {
         taskService.deleteAllTask();
     }
 
     @GetMapping("/weightTaskByUserId/{id}")
-    public Float getWeightTaskByUserId(@PathVariable String id){
+    public Float getWeightTaskByUserId(@PathVariable String id) {
         return taskService.getWeightTaskByUserId(id);
     }
 
@@ -150,7 +150,7 @@ public class TaskController {
     @GetMapping("/taskByReleaseId/{id}")
     public List<Task> getTaskByReleaseId(@PathVariable String id,
                                          @RequestParam(name = "assignTo", required = false) String userId,
-                                         @RequestParam(name = "statusDone", required = false) String statusDone){
+                                         @RequestParam(name = "statusDone", required = false) String statusDone) {
         if (userId == null && statusDone == null) {
             userId = "";
             statusDone = "";
@@ -164,12 +164,12 @@ public class TaskController {
 
 
     @GetMapping("/taskByUserId/{id}")
-    public List<Task> getTaskByUserId(@PathVariable String id){
+    public List<Task> getTaskByUserId(@PathVariable String id) {
         return taskService.getTaskByUserId(id);
     }
 
     @GetMapping("/taskDeadline")
-    public List<Task> getTaskDeadline(){
+    public List<Task> getTaskDeadline() {
         return taskService.getTaskAfterDeadline();
     }
 }
