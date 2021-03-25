@@ -164,8 +164,30 @@ public class TaskController {
 
 
     @GetMapping("/taskByUserId/{id}")
-    public List<Task> getTaskByUserId(@PathVariable String id) {
-        return taskService.getTaskByUserId(id);
+    public List<Task> getTaskByUserId(@PathVariable String id,
+                                      @RequestParam(name = "statusDone", required = false) String statusDone,
+                                      @RequestParam(name = "releaseName", required = false) String releaseName,
+                                      @RequestParam(name = "projectName", required = false) String projectName,
+                                      @RequestParam(name = "estStartDate", required = false) String estStartDate,
+                                      @RequestParam(name = "estEndDate", required = false) String estEndDate) {
+
+        if (statusDone == null) {
+            statusDone = "";
+        }
+        if (releaseName == null) {
+            releaseName = "";
+        }
+        if (projectName == null) {
+            projectName = "";
+        }
+
+        if (estStartDate == null) {
+            estStartDate = "";
+        }
+        if (estEndDate == null) {
+            estEndDate = "";
+        }
+        return taskService.getTaskByUserId(id, statusDone, releaseName, projectName, estStartDate, estEndDate );
     }
 
     @GetMapping("/taskDeadline")

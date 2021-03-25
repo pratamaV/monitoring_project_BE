@@ -62,6 +62,11 @@ public class  Project {
     private String categoryActivity;
     private String categoryInitiative;
     private String statusProject;
+    private String keyword;
+
+    @ManyToOne
+    @JoinColumn(name = "department_head")
+    private Users departmentHead;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("project")
@@ -95,7 +100,10 @@ public class  Project {
         this.releaseList = releaseList;
     }
 
-    public Project(String projectName, Users pmo, Users pm, String benefit, String description, Users coPM, Division divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, String statusProject, List<Release> releaseList) {
+    public Project(String projectName, Users pmo, Users pm, String benefit, String description, Users coPM, Division divisiUser, String directorateUser, String status,
+                   Date targetLive, Float prosentaseProject, Float budget, Float contracted_value,
+                   Float paymentRealization, Integer score, Float weight, String categoryActivity,
+                   String categoryInitiative, String statusProject, String keyword, Users departmentHead, List<Release> releaseList) {
         this.projectName = projectName;
         this.pmo = pmo;
         this.pm = pm;
@@ -116,6 +124,8 @@ public class  Project {
         this.categoryInitiative = categoryInitiative;
         this.statusProject = statusProject;
         this.releaseList = releaseList;
+        this.keyword = keyword;
+        this.departmentHead = departmentHead;
     }
 
 
@@ -294,6 +304,22 @@ public class  Project {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public Users getDepartmentHead() {
+        return departmentHead;
+    }
+
+    public void setDepartmentHead(Users departmentHead) {
+        this.departmentHead = departmentHead;
     }
 
     public List<Release> getReleaseList() {

@@ -264,8 +264,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getTaskByUserId(String id) {
-        return taskRepository.findTaskByAssignedToId(id);
+    public List<Task> getTaskByUserId(String id, String statusDone, String releaseName,
+                                      String projectName, String estStartDate, String estEndDate) {
+        return taskRepository.getTaskAssignedToId(id, statusDone, releaseName, projectName, estStartDate, estEndDate);
     }
 
     @Override

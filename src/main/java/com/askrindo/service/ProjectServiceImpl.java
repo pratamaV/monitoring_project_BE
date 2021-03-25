@@ -205,7 +205,6 @@ public class ProjectServiceImpl implements ProjectService {
         if(divisiUser.isEmpty() && !directorateUser.isEmpty() && pmId.isEmpty() && pmoId.isEmpty()){
             return projectRepository.findProjectAM(directorateUser);
         }
-
         return null;
     }
 
