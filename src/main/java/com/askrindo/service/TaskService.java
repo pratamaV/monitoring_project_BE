@@ -25,4 +25,5 @@ public interface TaskService {
 
     public List<Task> getTaskByReleaseId(String id, String userId, String statusDone);
     public List<Task> getTaskAfterDeadline();
+    public void updateDoneTask(String idTask, Integer prosentase);
 }
