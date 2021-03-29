@@ -1,9 +1,12 @@
 package com.askrindo.security;
 
+import com.askrindo.entity.Mail;
 import com.askrindo.entity.Users;
 import com.askrindo.entity.UsersHelper;
 import com.askrindo.repository.UserRepository;
+import com.askrindo.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UsersServiceAuth implements UserDetailsService {
@@ -26,6 +26,12 @@ public class UsersServiceAuth implements UserDetailsService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    JavaMailSender javaMailSender;
+
+    @Autowired
+    MailService mailService;
 
 //    @Autowired
 //    SecureTokenService secureTokenService;
@@ -78,10 +84,43 @@ public class UsersServiceAuth implements UserDetailsService {
         return usersOptional.get();
     }
 
-    public void updatePassword(String email, String newPassword) {
+    public char[] generatePasswordDefault(Integer length) {
+        // A strong password has Cap_chars, Lower_chars,
+        // numeric value and symbols. So we are using all of
+        // them to generate our password
+        String Capital_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String Small_chars = "abcdefghijklmnopqrstuvwxyz";
+        String numbers = "0123456789";
+        String values = Capital_chars + Small_chars +
+                numbers;
+
+        // Using random method
+        Random rndm_method = new Random();
+        char[] password = new char[length];
+        for (int i = 0; i < length; i++) {
+            // Use of charAt() method : to get character value
+            // Use of nextInt() as it is scanning the value as int
+            password[i] = values.charAt(rndm_method.nextInt(values.length()));
+
+        }
+        return password;
+    }
+
+    public void updatePassword(String email) {
         Users users = userRepository.findUsersByEmail(email).get();
-        users.setPassword(passwordEncoder.encode(newPassword));
+        String userDefaultPassword = "2Up" + String.copyValueOf(this.generatePasswordDefault(6));
+        users.setPassword(passwordEncoder.encode(userDefaultPassword));
         userRepository.save(users);
+        if (users.getId()!=null){
+            Mail mail = new Mail();
+            mail.setMailFrom("imo.askrindo@gmail.com");
+            mail.setMailTo(users.getEmail());
+            mail.setMailSubject("IMO Change Password");
+            mail.setMailContent("Kepada Yth. Bapak / Ibu.\n\nBerikut merupakan password baru untuk akun anda : " + userDefaultPassword + " \n\nTerima kasih.\nTeam IMO Askrindo");
+            mailService.sendEmail(mail);
+        } else {
+
+        }
     }
 
 }
