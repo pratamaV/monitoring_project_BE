@@ -1,5 +1,6 @@
 package com.askrindo.controller;
 
+import com.askrindo.entity.File;
 import com.askrindo.entity.Release;
 import com.askrindo.entity.Task;
 import com.askrindo.entity.Users;
@@ -63,20 +64,40 @@ public class TaskController {
         taskService.addTask(task);
     }
 
-    @PutMapping("/uploadTaskDoc/{id}")
+//    @PutMapping("/uploadTaskDoc/{id}")
+//    public void uploadTaskDocument(@RequestPart(required = false) MultipartFile taskDoc,
+//                                   @PathVariable String id) throws JsonProcessingException {
+//        Task task = taskService.getTaskById(id);
+//        String taskName = task.getTaskName();
+//        try {
+//            if (taskDoc != null) {
+//                taskDoc.transferTo(Paths.get(documentTask, "TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename())));
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        String taskDocument = StringUtils.cleanPath("TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
+//        taskService.uploadDocumentById(taskDocument, id);
+//    }
+
+    @PostMapping("/uploadTaskDoc/{id}")
     public void uploadTaskDocument(@RequestPart(required = false) MultipartFile taskDoc,
-                                   @PathVariable String id) throws JsonProcessingException {
-        Task task = taskService.getTaskById(id);
-        String taskName = task.getTaskName();
-        try {
-            if (taskDoc != null) {
-                taskDoc.transferTo(Paths.get(documentTask, "TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename())));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String taskDocument = StringUtils.cleanPath("TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
-        taskService.uploadDocumentById(taskDocument, id);
+                                   @PathVariable String id,
+                                   @RequestParam(name = "data", required = false) String data) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        File fileObj = mapper.readValue(data, File.class);
+//        Task task = taskService.getTaskById(id);
+//        String taskName = task.getTaskName();
+//        try {
+//            if (taskDoc != null) {
+//                taskDoc.transferTo(Paths.get(documentTask, "TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename())));
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        String taskDocument = StringUtils.cleanPath("TD-" + taskName + "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
+//        taskService.uploadDocumentById(taskDocument, id);
+        taskService.uploadDocumentById(taskDoc, fileObj, id);
     }
 
     @GetMapping("/task/{id}")
