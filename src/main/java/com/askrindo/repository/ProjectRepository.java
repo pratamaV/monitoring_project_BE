@@ -1,10 +1,8 @@
 package com.askrindo.repository;
 
-import com.askrindo.entity.*;
-import com.sun.org.apache.xpath.internal.operations.Div;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
+import com.askrindo.entity.Division;
+import com.askrindo.entity.Project;
+import com.askrindo.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

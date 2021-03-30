@@ -65,9 +65,8 @@ public class UserController {
     }
 
     @PutMapping(value = "/userChangePassword")
-    public void changePassword(@RequestParam(value = "email", required = true) String email,
-                               @RequestParam(value = "newPassword", required = true) String newPassword) {
-        usersServiceAuth.updatePassword(email, newPassword);
+    public void changePassword(@RequestParam(value = "email", required = true) String email) {
+        usersServiceAuth.updatePassword(email);
     }
 
     @GetMapping("/userByPerformance")
