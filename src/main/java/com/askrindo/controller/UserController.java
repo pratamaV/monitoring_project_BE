@@ -64,7 +64,7 @@ public class UserController {
         usersServiceAuth.registerUser(users);
     }
 
-    @PutMapping(value = "/userChangePassword")
+    @PutMapping(value = "/userForgotPassword")
     public void changePassword(@RequestParam(value = "email", required = true) String email) {
         usersServiceAuth.updatePassword(email);
     }
