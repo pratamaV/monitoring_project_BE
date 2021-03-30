@@ -112,7 +112,7 @@ public class TaskController {
 
     @PutMapping("/task")
     public void updateTask(@RequestBody Task task) {
-        taskService.updateTask(task);
+                taskService.updateTask(task);
     }
 
     @PutMapping("/task/{idRelease}")
