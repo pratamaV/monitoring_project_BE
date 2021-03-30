@@ -73,6 +73,15 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<Project> getAllProjectWithFilter(String divisionId,
+                                                 String pmId,
+                                                 String pmoId,
+                                                 String statusProject,
+                                                 String directoratUser) {
+        return projectRepository.getAllProject(divisionId, pmId, pmoId, statusProject, directoratUser);
+    }
+
+    @Override
     public Project getProjectById(String id) {
         return projectRepository.findById(id).get();
     }

@@ -117,4 +117,11 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
     @Query(nativeQuery = true, value = "SELECT * FROM mst_project WHERE keyword ilike %:keyword%")
     List<Project> findProjectByKeyword(@Param("keyword") String keyword);
 
+    @Query(nativeQuery = true, value = "select mst_project.* from mst_project inner join mst_division on mst_project.division_id = mst_division.id inner join mst_user on mst_project.pm_id = mst_user.id where mst_project.division_id like %:divisionId% and mst_project.pm_id like %:pmId% and mst_project.pmo_id like %:pmoId% and mst_project.status like %:statusProject% and mst_project.directorate_user like %:directoratUser%")
+    List<Project> getAllProject(@Param("divisionId") String divisionId,
+                                @Param("pmId") String pmId,
+                                @Param("pmoId") String pmoId,
+                                @Param("statusProject") String statusProject,
+                                @Param("directoratUser") String directoratUser);
+
 }
