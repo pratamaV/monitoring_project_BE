@@ -34,10 +34,38 @@ public class ProjectController {
         return projectService.getProjectById(id);
     }
 
-    @GetMapping("/projects")
-    public List<Project> getAllProject(){
+    @GetMapping("/projectsnofilter")
+    public List<Project> getAllProjectNoFilter(){
         return projectService.getAllProject();
     }
+
+    @GetMapping("/projects")
+    public List<Project> getAllProject(
+            @RequestParam(name = "divisionId", required = false) String divisionId,
+            @RequestParam(name = "pmId", required = false) String pmId,
+            @RequestParam(name = "pmoId", required = false) String pmoId,
+            @RequestParam(name = "statusProject", required = false) String statusProject,
+            @RequestParam(name = "directoratUser", required = false) String directoratUser) {
+
+        if (divisionId == null ) {
+            divisionId = "";
+        }
+        if (pmId == null) {
+            pmId = "";
+        }
+        if (pmoId == null) {
+            pmoId = "";
+        }
+        if (statusProject == null) {
+            statusProject = "";
+        }
+        if (directoratUser == null) {
+            directoratUser = "";
+        }
+
+        return projectService.getAllProjectWithFilter(divisionId, pmId, pmoId, statusProject, directoratUser);
+    }
+
 
     @GetMapping("/projectbyuser")
     public List<Project> getAllProjectforUser(){

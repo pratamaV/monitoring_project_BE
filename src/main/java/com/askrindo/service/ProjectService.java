@@ -13,6 +13,11 @@ import java.util.List;
 public interface ProjectService {
     public void saveProject(Project project);
     public List<Project> getAllProject();
+    public List<Project> getAllProjectWithFilter(String divisionId,
+                                                 String pmId,
+                                                 String pmoId,
+                                                 String statusProject,
+                                                 String directoratUser);
     public Project getProjectById(String id);
     public void updateProject(Project project);
     public void updateStatusProjectById(String id, String projectStatus);

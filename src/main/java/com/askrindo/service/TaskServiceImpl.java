@@ -1,19 +1,22 @@
 package com.askrindo.service;
 
 import com.askrindo.GlobalKey;
-import com.askrindo.entity.Project;
-import com.askrindo.entity.Release;
-import com.askrindo.entity.Task;
+import com.askrindo.entity.*;
+import com.askrindo.entity.sequence.SequenceIdFile;
 import com.askrindo.entity.sequence.SequenceIdTask;
 
-import com.askrindo.entity.Users;
 import com.askrindo.exception.DataNotFoundException;
 import com.askrindo.repository.TaskRepository;
 import org.apache.catalina.User;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -36,7 +39,16 @@ public class TaskServiceImpl implements TaskService {
     UserService userService;
 
     @Autowired
+    FileService fileService;
+
+    @Autowired
     SequenceIdTaskService sequenceIdTaskService;
+
+    @Autowired
+    SequenceIdFileService sequenceIdFileService;
+
+    @Value("${document-task}")
+    String documentTask;
 
     @Override
     public void saveTask(Task task) {
@@ -272,11 +284,32 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
+//    @Override
+//    public void uploadDocumentById(String taskDocument, String id) {
+//        Task task = taskRepository.findById(id).get();
+//        task.setTaskDocument(taskDocument);
+//        taskRepository.save(task);
+//    }
+
     @Override
-    public void uploadDocumentById(String taskDocument, String id) {
-        Task task = taskRepository.findById(id).get();
-        task.setTaskDocument(taskDocument);
-        taskRepository.save(task);
+    public void uploadDocumentById(MultipartFile taskDoc, File file, String taskId) {
+        Task task = taskRepository.findById(taskId).get();
+        SequenceIdFile sequenceIdFile = new SequenceIdFile();
+        SequenceIdFile idFileGen = sequenceIdFileService.saveSequenceIdFile(sequenceIdFile);
+        String taskDocument = StringUtils.cleanPath(task.getTaskCode() + "-" + idFileGen.getIdGeneratorFile()+ "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
+
+        try {
+            if (taskDoc != null) {
+                taskDoc.transferTo(Paths.get(documentTask, taskDocument));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        file.setDocumentCode(task.getTaskCode() + "-" + idFileGen.getIdGeneratorFile());
+        file.setDocumentName(taskDocument);
+        file.setTask(task);
+        file.setCreatedDate(new Date());
+        fileService.saveFile(file);
     }
 
     @Override

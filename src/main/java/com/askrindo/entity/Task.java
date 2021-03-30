@@ -1,11 +1,13 @@
 package com.askrindo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
 
 
 @Entity
@@ -43,6 +45,11 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "release_id")
     private Release release;
+
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("task")
+//    @JsonIgnore
+    private List<File> fileList = new ArrayList<>();
 
     public Task() {
     }
@@ -249,5 +256,13 @@ public class Task {
 
     public void setActEndDate(Date actEndDate) {
         this.actEndDate = actEndDate;
+    }
+
+    public List<File> getFileList() {
+        return fileList;
+    }
+
+    public void setFileList(List<File> fileList) {
+        this.fileList = fileList;
     }
 }

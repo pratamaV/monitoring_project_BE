@@ -1,5 +1,6 @@
 package com.askrindo.service;
 
+import com.askrindo.entity.File;
 import com.askrindo.entity.Task;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public interface TaskService {
     public void saveTask(Task task);
     public void addTask(Task task);
-    public void uploadDocumentById(String taskDocument, String id);
+    public void uploadDocumentById(MultipartFile taskDoc,File file, String taskId);
     public List<Task> getAllTask();
     public Task getTaskById(String id);
     public void updateTask(Task task);
