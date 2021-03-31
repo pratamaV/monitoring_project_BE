@@ -39,15 +39,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updateStatusUserById(String id) {
-        Users users = userRepository.findById(id).get();
-        if (users.getStatusUser().equalsIgnoreCase("Active")){
-            users.setStatusUser("Not Active");
-            userRepository.save(users);
-        } else {
-            users.setStatusUser("Active");
-            userRepository.save(users);
-        }
+    public void updateStatusUserById(String id, String status) {
+        Users userObj = userRepository.findById(id).get();
+//        if (users.getStatusUser().equalsIgnoreCase("Active")){
+        userObj.setStatusUser(status);
+        userRepository.save(userObj);
+//        } else {
+//            users.setStatusUser("Active");
+//            userRepository.save(users);
+//        }
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface UserService {
     public List<Users> getAllUser();
     public Users getUserById(String id);
     public void updateUser(Users users);
-    public void updateStatusUserById(String id);
+    public void updateStatusUserById(String id, String status);
     public List<Users> getUserByStatus(String status);
     public Float getTotalWeightById(String id);
     public Float getTotalPerformanceById(String id);

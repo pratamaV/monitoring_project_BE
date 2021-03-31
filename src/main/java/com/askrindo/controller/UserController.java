@@ -40,8 +40,9 @@ public class UserController {
     }
 
     @PutMapping("/user/{id}")
-    public void updateStatusUserById(@PathVariable String id){
-        userService.updateStatusUserById(id);
+    public void updateStatusUserById(@PathVariable String id,
+                                     @RequestParam(value = "status", required = true) String status){
+        userService.updateStatusUserById(id, status);
     }
 
     @GetMapping("/usersByStatus")
