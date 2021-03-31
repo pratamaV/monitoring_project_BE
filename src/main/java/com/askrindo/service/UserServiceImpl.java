@@ -41,11 +41,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public void updateStatusUserById(String id) {
         Users users = userRepository.findById(id).get();
-        if (users.getStatusUser().equalsIgnoreCase("aktif")){
-            users.setStatusUser("tidak aktif");
+        if (users.getStatusUser().equalsIgnoreCase("Active")){
+            users.setStatusUser("Not Active");
             userRepository.save(users);
         } else {
-            users.setStatusUser("aktif");
+            users.setStatusUser("Active");
             userRepository.save(users);
         }
     }
