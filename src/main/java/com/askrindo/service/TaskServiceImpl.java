@@ -314,8 +314,41 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getTaskByUserId(String id, String statusDone, String releaseName,
-                                      String projectName, String estStartDate, String estEndDate) {
-        return taskRepository.getTaskAssignedToId(id, statusDone, releaseName, projectName, estStartDate, estEndDate);
+                                      String projectName,
+                                      Date estStartDateFrom,
+                                      Date estStartDateTo,
+                                      Date estEndDateFrom,
+                                      Date estEndDateTo) {
+        Date estStartDateToNow = new Date();
+        Date estEndDateToNow = new Date();
+
+        if (estStartDateFrom != null && estEndDateFrom == null) {
+            if (estStartDateTo != null) {
+                return taskRepository.getTaskAssignedToIdWithEstStartDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateTo);
+            } else if (estStartDateTo == null) {
+                return taskRepository.getTaskAssignedToIdWithEstStartDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateToNow);
+            }
+        } else if (estStartDateFrom == null && estEndDateFrom != null) {
+            if (estEndDateTo != null) {
+                return taskRepository.getTaskAssignedToIdWithEstEndDate(id, statusDone, releaseName, projectName, estEndDateFrom, estEndDateTo);
+            } else if (estEndDateTo == null) {
+                return taskRepository.getTaskAssignedToIdWithEstEndDate(id, statusDone, releaseName, projectName, estEndDateFrom, estEndDateToNow);
+            }
+        } else if (estStartDateFrom != null && estEndDateFrom != null) {
+            if (estStartDateTo == null && estEndDateTo == null) {
+                return taskRepository.getTaskAssignedToIdWithDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateToNow, estEndDateFrom, estEndDateToNow);
+            } else if (estStartDateTo == null) {
+                return taskRepository.getTaskAssignedToIdWithDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateToNow, estEndDateFrom, estEndDateTo);
+            } else if (estEndDateTo == null) {
+                return taskRepository.getTaskAssignedToIdWithDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateTo, estEndDateFrom, estEndDateToNow);
+            }
+            else {
+                return taskRepository.getTaskAssignedToIdWithDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateTo, estEndDateFrom, estEndDateTo);
+            }
+        } else if (estStartDateFrom == null && estEndDateFrom == null) {
+            return taskRepository.getTaskAssignedToId(id, statusDone, releaseName, projectName);
+        }
+        return null;
     }
 
     @Override

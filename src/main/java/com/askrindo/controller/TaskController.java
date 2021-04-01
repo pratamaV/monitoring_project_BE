@@ -16,6 +16,8 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -195,26 +197,37 @@ public class TaskController {
                                       @RequestParam(name = "statusDone", required = false) String statusDone,
                                       @RequestParam(name = "releaseName", required = false) String releaseName,
                                       @RequestParam(name = "projectName", required = false) String projectName,
-                                      @RequestParam(name = "estStartDate", required = false) String estStartDate,
-                                      @RequestParam(name = "estEndDate", required = false) String estEndDate) {
+                                      @RequestParam(name = "estStartDateFrom", required = false) String estStartDateFrom,
+                                      @RequestParam(name = "estEndDateFrom", required = false) String estEndDateFrom,
+                                      @RequestParam(name = "estStartDateTo", required = false) String estStartDateTo,
+                                      @RequestParam(name = "estEndDateTo", required = false) String estEndDateTo) throws ParseException {
 
-        if (statusDone == null) {
-            statusDone = "";
-        }
-        if (releaseName == null) {
-            releaseName = "";
-        }
-        if (projectName == null) {
-            projectName = "";
-        }
+        Date estStartDateFromParse = new Date();
+        Date estStartDateToParse = new Date();
+        Date estEndDateFromParse = new Date();
+        Date estEndDateToParse = new Date();
 
-        if (estStartDate == null) {
-            estStartDate = "";
+        if (estStartDateFrom == ""){
+            estStartDateFromParse = null;
+        }else {
+            estStartDateFromParse = new SimpleDateFormat("yyyy-MM-dd").parse(estStartDateFrom);
         }
-        if (estEndDate == null) {
-            estEndDate = "";
+        if (estStartDateTo == ""){
+            estStartDateToParse = null;
+        }else {
+            estStartDateToParse = new SimpleDateFormat("yyyy-MM-dd").parse(estStartDateTo);
         }
-        return taskService.getTaskByUserId(id, statusDone, releaseName, projectName, estStartDate, estEndDate );
+        if (estEndDateFrom == ""){
+            estEndDateFromParse = null;
+        }else {
+            estEndDateFromParse = new SimpleDateFormat("yyyy-MM-dd").parse(estEndDateFrom);
+        }
+        if (estEndDateTo== ""){
+            estEndDateToParse = null;
+        }else {
+            estEndDateToParse = new SimpleDateFormat("yyyy-MM-dd").parse(estEndDateTo);
+        }
+        return taskService.getTaskByUserId(id, statusDone, releaseName, projectName, estStartDateFromParse , estStartDateToParse , estEndDateFromParse , estEndDateToParse);
     }
 
     @GetMapping("/taskDeadline")

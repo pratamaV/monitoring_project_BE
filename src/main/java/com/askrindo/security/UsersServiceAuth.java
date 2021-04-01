@@ -108,10 +108,10 @@ public class UsersServiceAuth implements UserDetailsService {
 
     public void updatePassword(String email) {
         Users users = userRepository.findUsersByEmail(email).get();
-        String userDefaultPassword = "2Up" + String.copyValueOf(this.generatePasswordDefault(6));
-        users.setPassword(passwordEncoder.encode(userDefaultPassword));
-        userRepository.save(users);
-        if (users.getId()!=null){
+        if (users.getId() != null) {
+            String userDefaultPassword = "2Up" + String.copyValueOf(this.generatePasswordDefault(6));
+            users.setPassword(passwordEncoder.encode(userDefaultPassword));
+            userRepository.save(users);
             Mail mail = new Mail();
             mail.setMailFrom("imo.askrindo@gmail.com");
             mail.setMailTo(users.getEmail());
