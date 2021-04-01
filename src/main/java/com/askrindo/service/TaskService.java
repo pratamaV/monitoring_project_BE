@@ -22,7 +22,11 @@ public interface TaskService {
     public void updateTaskByReleaseId(Task task,String id);
     public Float getWeightTaskByUserId(String userID);
     public List<Task> getTaskByUserId(String id, String statusDone, String releaseName,
-                                      String projectName, String estStartDate, String estEndDate);
+                                      String projectName,
+                                      Date estStartDateFrom,
+                                      Date estStartDateTo,
+                                      Date estEndDateFrom,
+                                      Date estEndDateTo);
 
     public List<Task> getTaskByReleaseId(String id, String userId, String statusDone);
     public List<Task> getTaskAfterDeadline();
