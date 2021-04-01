@@ -213,15 +213,16 @@ public class TaskServiceImpl implements TaskService {
         List<Task> taskList = taskRepository.findTaskByReleaseId(task.getRelease().getId());
         Float totalScore = Float.valueOf(0);
         Float percentageRelease = Float.valueOf(0);
-        for (Task task1: taskList) {
-            totalScore = totalScore + task1.getScore();
+        if(!taskList.isEmpty()){
+            for (Task task1: taskList) {
+                totalScore = totalScore + task1.getScore();
+            }
+            for (Task task1: taskList) {
+                task1.setWeight(task1.getScore()/totalScore);
+                percentageRelease = percentageRelease + (task1.getTaskProsentase()*task1.getWeight());
+                taskRepository.save(task1);
+            }
         }
-        for (Task task1: taskList) {
-            task1.setWeight(task1.getScore()/totalScore);
-            percentageRelease = percentageRelease + (task1.getTaskProsentase()*task1.getWeight());
-            taskRepository.save(task1);
-        }
-
         Release release = releaseService.getReleaseById(task.getRelease().getId());
         release.setProsentaseRelease(percentageRelease);
         Task taskActEndDate = taskRepository.findTaskByActEndDateDesc();
