@@ -65,10 +65,11 @@ public class TaskServiceImpl implements TaskService {
             taskRepository.save(task1);
         }
         Release releaseObj = releaseService.getReleaseById(task.getRelease().getId());
-        SequenceIdTask sequenceIdTask = new SequenceIdTask();
-        SequenceIdTask idTaskGen = sequenceIdTaskService.saveSequenceIdTask(sequenceIdTask);
-        String releaseCodeGen = releaseObj.getReleaseCode()+"-"+idTaskGen.getIdGeneratorTask();
-        task.setTaskCode(releaseCodeGen);
+//        SequenceIdTask sequenceIdTask = new SequenceIdTask();
+//        SequenceIdTask idTaskGen = sequenceIdTaskService.saveSequenceIdTask(sequenceIdTask);
+//        String idTaskGen = releaseObj.getReleaseCode()+"-"+idTaskGen.getIdGeneratorTask();
+        String idTaskGen = this.generateTaskCode(releaseObj.getId());
+        task.setTaskCode(idTaskGen);
         task.setRelease(releaseObj);
         taskRepository.save(task);
 
@@ -86,6 +87,15 @@ public class TaskServiceImpl implements TaskService {
         users.setTotalWeight(userWeight);
         userService.saveUser(users);
 
+    }
+
+//    @Override
+    public String generateTaskCode(String idRelease){
+        Release releaseObj = releaseService.getReleaseById(idRelease);
+        Integer countTaskByReleaseId = taskRepository.countTaskByReleaseId(idRelease);
+        String numberIncrement = String.format(Locale.getDefault(), "%05d", countTaskByReleaseId + 1);
+        String taskCode = releaseObj.getReleaseCode() + "-" + numberIncrement;
+        return taskCode;
     }
 
     @Override
@@ -201,10 +211,10 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void addTask(Task task) {
         Release releaseObj = releaseService.getReleaseById(task.getRelease().getId());
-        SequenceIdTask sequenceIdTask = new SequenceIdTask();
-        SequenceIdTask idTaskGen = sequenceIdTaskService.saveSequenceIdTask(sequenceIdTask);
-        String releaseCodeGen = releaseObj.getReleaseCode()+"-"+idTaskGen.getIdGeneratorTask();
-        task.setTaskCode(releaseCodeGen);
+//        SequenceIdTask sequenceIdTask = new SequenceIdTask();
+//        SequenceIdTask idTaskGen = sequenceIdTaskService.saveSequenceIdTask(sequenceIdTask);
+        String taskCodeGen = this.generateTaskCode(releaseObj.getId());
+        task.setTaskCode(taskCodeGen);
         task.setRelease(releaseObj);
         task.setActStartDate(task.getEstStartDate());
         task.setActEndDate(task.getEstEndDate());
@@ -234,53 +244,58 @@ public class TaskServiceImpl implements TaskService {
         Project project = projectService.getProjectById(release.getProject().getId());
         List <Release> releaseList = releaseService.getReleaseByProjectId(release.getProject().getId());
         Float percentageProject = Float.valueOf(0);
-        for (Release release1: releaseList) {
-            percentageProject = percentageProject + (release1.getProsentaseRelease()*release1.getWeight());
+        if (!releaseList.isEmpty()){
+            for (Release release1: releaseList) {
+                percentageProject = percentageProject + (release1.getProsentaseRelease()*release1.getWeight());
+            }
+            project.setProsentaseProject(percentageProject);
+            projectService.saveProject(project);
         }
-        project.setProsentaseProject(percentageProject);
-        projectService.saveProject(project);
 
         List<Task> taskList2 = taskRepository.findTaskByAssignedToId(task.getAssignedTo().getId());
         Float userWeight = Float.valueOf(0);
         Float userPerformance = Float.valueOf(0);
-        for (Task task1: taskList2) {
-            Release release1 = task1.getRelease();
-            Float releaseWeight = task1.getRelease().getWeight();
-            Float projectWeight = release1.getProject().getWeight();
-            Float taskWeight = task1.getWeight();
-            userWeight = userWeight + (taskWeight*releaseWeight*projectWeight);
-            userPerformance = userPerformance + (releaseWeight*projectWeight*task.getTaskProsentase()*taskWeight);
-        }
-        Users user = userService.getUserById(task.getAssignedTo().getId());
-        user.setTotalWeight(userWeight);
-        user.setTotalPerformance(userPerformance);
-        userService.saveUser(user);
-
-        Task taskStartDate = taskRepository.findTaskByEstStartDateAcs();
-        Task taskEndDate = taskRepository.findTaskByEstEndDateDesc();
-
-        releaseObj.setEstStartdate(taskStartDate.getEstStartDate());
-        releaseObj.setEstEnddate(taskEndDate.getEstEndDate());
-        releaseService.saveRelease(releaseObj);
-
-        for (Task task3: taskList) {
-            Users users1 = userService.getUserById(task3.getAssignedTo().getId());
-            List<Task> tasks = taskRepository.findTaskByAssignedToId(users1.getId());
-            Float uwUpdate = Float.valueOf(0);
-            Float performanceUpdate = Float.valueOf(0);
-            for (Task task4: tasks) {
-                Release release2 = task4.getRelease();
-                Float releaseWeight = task4.getRelease().getWeight();
-                Float projectWeight = release2.getProject().getWeight();
-                Float taskWeight = task4.getWeight();
-                uwUpdate = uwUpdate + (taskWeight*releaseWeight*projectWeight);
-                performanceUpdate = performanceUpdate + (releaseWeight*projectWeight*task4.getTaskProsentase()*taskWeight);
+        if (!taskList2.isEmpty()){
+            for (Task task1: taskList2) {
+                Release release1 = task1.getRelease();
+                Float releaseWeight = task1.getRelease().getWeight();
+                Float projectWeight = release1.getProject().getWeight();
+                Float taskWeight = task1.getWeight();
+                userWeight = userWeight + (taskWeight*releaseWeight*projectWeight);
+                userPerformance = userPerformance + (releaseWeight*projectWeight*task.getTaskProsentase()*taskWeight);
             }
-            System.out.println(users1);
-            System.out.println(performanceUpdate);
-            users1.setTotalPerformance(performanceUpdate);
-            users1.setTotalWeight(uwUpdate);
-            userService.saveUser(users1);
+            Users user = userService.getUserById(task.getAssignedTo().getId());
+            user.setTotalWeight(userWeight);
+            user.setTotalPerformance(userPerformance);
+            userService.saveUser(user);
+            Task taskStartDate = taskRepository.findTaskByEstStartDateAcs();
+            Task taskEndDate = taskRepository.findTaskByEstEndDateDesc();
+
+            releaseObj.setEstStartdate(taskStartDate.getEstStartDate());
+            releaseObj.setEstEnddate(taskEndDate.getEstEndDate());
+            releaseService.saveRelease(releaseObj);
+        }
+
+        if(!taskList.isEmpty()) {
+            for (Task task3 : taskList) {
+                Users users1 = userService.getUserById(task3.getAssignedTo().getId());
+                List<Task> tasks = taskRepository.findTaskByAssignedToId(users1.getId());
+                Float uwUpdate = Float.valueOf(0);
+                Float performanceUpdate = Float.valueOf(0);
+                for (Task task4 : tasks) {
+                    Release release2 = task4.getRelease();
+                    Float releaseWeight = task4.getRelease().getWeight();
+                    Float projectWeight = release2.getProject().getWeight();
+                    Float taskWeight = task4.getWeight();
+                    uwUpdate = uwUpdate + (taskWeight * releaseWeight * projectWeight);
+                    performanceUpdate = performanceUpdate + (releaseWeight * projectWeight * task4.getTaskProsentase() * taskWeight);
+                }
+                System.out.println(users1);
+                System.out.println(performanceUpdate);
+                users1.setTotalPerformance(performanceUpdate);
+                users1.setTotalWeight(uwUpdate);
+                userService.saveUser(users1);
+            }
         }
     }
 

@@ -234,4 +234,11 @@ public class TaskController {
     public List<Task> getTaskDeadline() {
         return taskService.getTaskAfterDeadline();
     }
+
+//    @GetMapping("/taskCode")
+//    public String TestGenerateReleaseCode() {
+//
+//        return taskService.generateTaskCode("2c951081786843430178685388f40000");
+//    }
+
 }

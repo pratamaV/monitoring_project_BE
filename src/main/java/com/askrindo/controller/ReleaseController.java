@@ -78,6 +78,12 @@ public class ReleaseController {
         return releaseService.getReleaseByProjectId(id, status, stage);
     }
 
+//    @GetMapping("/releaseCode")
+//    public String TestGenerateReleaseCode() {
+//
+//        return releaseService.generateReleaseCode("2c951081786843430178685388f40000");
+//    }
+
 //    @GetMapping("/releaseByProjectId/{id}")
 //    public List<Release> getReleaseByProjectId(@PathVariable String id){
 //        return releaseService.getReleaseByProjectId(id);

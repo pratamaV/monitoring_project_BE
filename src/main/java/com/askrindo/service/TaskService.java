@@ -27,8 +27,9 @@ public interface TaskService {
                                       Date estStartDateTo,
                                       Date estEndDateFrom,
                                       Date estEndDateTo);
-
+;
     public List<Task> getTaskByReleaseId(String id, String userId, String statusDone);
     public List<Task> getTaskAfterDeadline();
     public void updateDoneTask(String idTask, Float prosentase);
+//    public String generateTaskCode(String idRelease);
 }

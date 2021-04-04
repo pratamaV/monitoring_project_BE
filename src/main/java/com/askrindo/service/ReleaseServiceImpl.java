@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by DELL on 26/02/2021.
@@ -33,9 +34,10 @@ public class ReleaseServiceImpl implements ReleaseService {
     public void saveRelease(Release release) {
         if (release.getId() == null){
             Project prjObj = projectService.getProjectById(release.getProject().getId());
-            SequenceIdRelease sequenceIdRelease = new SequenceIdRelease();
-            SequenceIdRelease idReleaseGen = sequenceIdReleaseService.saveSequenceIdRelease(sequenceIdRelease);
-            String releaseCodeGen = prjObj.getProjectCode()+"-"+idReleaseGen.getIdGeneratorRelease();
+//            SequenceIdRelease sequenceIdRelease = new SequenceIdRelease();
+//            SequenceIdRelease idReleaseGen = sequenceIdReleaseService.saveSequenceIdRelease(sequenceIdRelease);
+//            String releaseCodeGen = prjObj.getProjectCode()+"-"+idReleaseGen.getIdGeneratorRelease();
+            String releaseCodeGen = this.generateReleaseCode(prjObj.getId());
             release.setReleaseCode(releaseCodeGen);
         }
         releaseRepository.save(release);
@@ -49,6 +51,14 @@ public class ReleaseServiceImpl implements ReleaseService {
             release1.setWeight(release1.getScore()/totalScoreRelease);
             releaseRepository.save(release1);
         }
+    }
+
+    public String generateReleaseCode(String idProject){
+        Project projectObj = projectService.getProjectById(idProject);
+        Integer countReleaseByProjectId = releaseRepository.countReleaseByProjectId(idProject);
+        String numberIncrement = String.format(Locale.getDefault(), "%04d", countReleaseByProjectId + 1);
+        String releaseCode = projectObj.getProjectCode() + "-" + numberIncrement;
+        return releaseCode;
     }
 
     @Override
@@ -108,4 +118,6 @@ public class ReleaseServiceImpl implements ReleaseService {
     public List<Release> getReleaseByProjectId(String idProject, String status, String stage) {
         return releaseRepository.getReleasebyId2(idProject, status, stage);
     }
+
+
 }
