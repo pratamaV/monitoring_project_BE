@@ -116,13 +116,12 @@ public class TaskServiceImpl implements TaskService {
         task.setTaskProsentase(Float.valueOf(task.getTaskProsentase()));
         if (task.getTaskProsentase() == 0) {
             task.setStatusDone(GlobalKey.TASK_STATUS_NOT_STARTED);
-        } else if (task.getTaskProsentase() > 0 && task.getTaskProsentase() < 100) {
+        } else if (task.getTaskProsentase() > 0 && task.getTaskProsentase() < 1) {
             task.setStatusDone(GlobalKey.TASK_STATUS_ON_PROGRESS);
-        } else if (task.getTaskProsentase() == 100) {
+        } else if (task.getTaskProsentase() == 1) {
             task.setStatusDone(GlobalKey.TASK_STATUS_DONE);
         }
         Task taskObj = taskRepository.save(task);
-//         = this.getTaskById(task.getId());
         Release releaseObj = releaseService.getReleaseById(taskObj.getRelease().getId());
         Project projectObj = projectService.getProjectById(releaseObj.getProject().getId());
         updateProsentaseRelease(releaseObj);
@@ -407,11 +406,14 @@ public class TaskServiceImpl implements TaskService {
     private void updatePerformanceUser(Task taskObj, Release releaseObj, Project projectObj) {
         Users userObj = userService.getUserById(taskObj.getAssignedTo().getId());
         Float performanceUser = Float.valueOf(0);
+        Float weightUser = Float.valueOf(0);
         List<Task> taskListUser = new ArrayList<>();
         taskListUser = taskRepository.findTaskByAssignedToId(userObj.getId());
         for (Task task : taskListUser) {
             performanceUser = performanceUser + (task.getWeight() * task.getTaskProsentase() * releaseObj.getWeight() * projectObj.getWeight());
+            weightUser = weightUser + (task.getWeight() * releaseObj.getWeight() * projectObj.getWeight());
         }
+        userObj.setTotalWeight(weightUser);
         userObj.setTotalPerformance(performanceUser);
         userService.saveUser(userObj);
     }
