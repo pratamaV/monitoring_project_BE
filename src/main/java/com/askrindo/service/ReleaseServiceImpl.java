@@ -42,15 +42,7 @@ public class ReleaseServiceImpl implements ReleaseService {
         }
         releaseRepository.save(release);
 
-        List<Release> releaseList = releaseRepository.findReleaseByStatusReleaseAndProjectId("Active" , release.getProject().getId());
-        Float totalScoreRelease = Float.valueOf(0);
-        for (Release release1: releaseList) {
-            totalScoreRelease = totalScoreRelease + release1.getScore();
-        }
-        for (Release release1: releaseList) {
-            release1.setWeight(release1.getScore()/totalScoreRelease);
-            releaseRepository.save(release1);
-        }
+        updateWeightRelease(release);
     }
 
     public String generateReleaseCode(String idProject){
@@ -102,7 +94,10 @@ public class ReleaseServiceImpl implements ReleaseService {
             release.setWeight(0.0f);
         }
         releaseRepository.save(release);
+        updateWeightRelease(release);
+    }
 
+    public void updateWeightRelease(Release release) {
         List<Release> releaseList = releaseRepository.findReleaseByStatusReleaseAndProjectId("Active" , release.getProject().getId());
         Float totalScoreRelease = Float.valueOf(0);
         for (Release release1: releaseList) {
@@ -112,6 +107,11 @@ public class ReleaseServiceImpl implements ReleaseService {
             release1.setWeight(release1.getScore()/totalScoreRelease);
             releaseRepository.save(release1);
         }
+    }
+
+    @Override
+    public List<Release> getReleaseByStatusReleaseAndProjectId(String statusRelease, String projectId) {
+        return releaseRepository.findReleaseByStatusReleaseAndProjectId(statusRelease, projectId);
     }
 
     @Override

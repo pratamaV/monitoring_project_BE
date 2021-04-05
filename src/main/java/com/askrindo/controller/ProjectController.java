@@ -147,4 +147,14 @@ public class ProjectController {
         return projectService.getProjectByKeyword(keyword);
     }
 
+    @GetMapping("/projectByBebanUsaha")
+    public List<Project> getProjectByLineItemBebanUsaha(){
+        return projectService.getProjectByLineItemBebanUsaha();
+    }
+
+    @GetMapping("/projectByBelanjaModal")
+    public List<Project> getProjectByLineItemBelanjaModal(){
+        return projectService.getProjectByLineItemBelanjaModal();
+    }
+
 }

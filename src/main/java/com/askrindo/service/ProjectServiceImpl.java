@@ -1,10 +1,7 @@
 package com.askrindo.service;
 
 import com.askrindo.dto.ProjectSearchDTO;
-import com.askrindo.entity.Division;
-import com.askrindo.entity.Project;
-import com.askrindo.entity.User;
-import com.askrindo.entity.Users;
+import com.askrindo.entity.*;
 import com.askrindo.entity.sequence.SequenceIdProject;
 import com.askrindo.repository.ProjectRepository;
 import com.askrindo.spesification.ProjectSpesification;
@@ -14,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -68,6 +66,32 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<Project> getProjectByLineItemBebanUsaha() {
+        List<Project> projectList = projectRepository.findAll();
+        List<Project> bebanUsaha = new ArrayList<>();
+        bebanUsaha.clear();
+        for (Project project : projectList) {
+            if (project.getLineItem().equalsIgnoreCase("Beban Usaha")) {
+                bebanUsaha.add(project);
+            }
+        }
+        return bebanUsaha;
+    }
+
+    @Override
+    public List<Project> getProjectByLineItemBelanjaModal() {
+        List<Project> projectList = projectRepository.findAll();
+        List<Project> belanjaModal = new ArrayList<>();
+        belanjaModal.clear();
+        for (Project project : projectList) {
+            if (project.getLineItem().equalsIgnoreCase("Belanja Modal/ Software") || project.getLineItem().equalsIgnoreCase("Belanja Modal/ Hardware")) {
+                belanjaModal.add(project);
+            }
+        }
+        return belanjaModal;
+    }
+
+    @Override
     public List<Project> getAllProject() {
         return projectRepository.findAll();
     }
@@ -95,7 +119,7 @@ public class ProjectServiceImpl implements ProjectService {
     public void updateStatusProjectById(String id, String projectStatus) {
         Project project = projectRepository.findById(id).get();
         project.setStatusProject(projectStatus);
-        if(projectStatus.equalsIgnoreCase("Not Active")){
+        if (projectStatus.equalsIgnoreCase("Not Active")) {
             project.setWeight(0.0f);
         }
         projectRepository.save(project);
@@ -108,6 +132,21 @@ public class ProjectServiceImpl implements ProjectService {
             project1.setWeight(project1.getScore() / totalScoreProject);
             projectRepository.save(project1);
         }
+        List <Release> releaseList = project.getReleaseList();
+        for (Release release: releaseList) {
+            release.setStatusRelease("Not Active");
+            release.setWeight(0.0f);
+            releaseService.saveRelease(release);
+        }
+//        List <Release> releaseList1 = releaseService.getReleaseByStatusReleaseAndProjectId("Active", id);
+//        Float totalScoreRelease = Float.valueOf(0);
+//        for (Release release1: releaseList1) {
+//            totalScoreRelease = totalScoreRelease + release1.getScore();
+//        }
+//        for (Release release1: releaseList) {
+//            release1.setWeight(release1.getScore()/totalScoreRelease);
+//            releaseService.saveRelease(release1);
+//        }
     }
 
     @Override
@@ -134,84 +173,84 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> getProjectList(String divisiUser, String directorateUser, String pmId, String pmoId) {
-        if(divisiUser.isEmpty() && !directorateUser.isEmpty() && !pmId.isEmpty() && !pmoId.isEmpty()){
+        if (divisiUser.isEmpty() && !directorateUser.isEmpty() && !pmId.isEmpty() && !pmoId.isEmpty()) {
             System.out.println("kosong");
             Users pm = userService.getUserById(pmId);
             Users pmo = userService.getUserById(pmoId);
-            return projectRepository.findProjectAB(pm,pmo,directorateUser);
+            return projectRepository.findProjectAB(pm, pmo, directorateUser);
         }
 
-        if(divisiUser.isEmpty() && directorateUser.isEmpty() && !pmId.isEmpty() && !pmoId.isEmpty()){
+        if (divisiUser.isEmpty() && directorateUser.isEmpty() && !pmId.isEmpty() && !pmoId.isEmpty()) {
             Users pm = userService.getUserById(pmId);
             Users pmo = userService.getUserById(pmoId);
-            return projectRepository.findProjectAC(pm,pmo);
+            return projectRepository.findProjectAC(pm, pmo);
         }
 
-        if(divisiUser.isEmpty() && directorateUser.isEmpty() && pmId.isEmpty() && !pmoId.isEmpty()){
+        if (divisiUser.isEmpty() && directorateUser.isEmpty() && pmId.isEmpty() && !pmoId.isEmpty()) {
             Users pmo = userService.getUserById(pmoId);
             return projectRepository.findProjectAD(pmo);
         }
 
-        if(divisiUser.isEmpty() && directorateUser.isEmpty() && !pmId.isEmpty() && pmoId.isEmpty()){
+        if (divisiUser.isEmpty() && directorateUser.isEmpty() && !pmId.isEmpty() && pmoId.isEmpty()) {
             Users pm = userService.getUserById(pmId);
             return projectRepository.findProjectAE(pm);
         }
 
-        if(!divisiUser.isEmpty() && !directorateUser.isEmpty() && !pmId.isEmpty() && !pmoId.isEmpty()){
+        if (!divisiUser.isEmpty() && !directorateUser.isEmpty() && !pmId.isEmpty() && !pmoId.isEmpty()) {
             System.out.println("masuk sini");
             Division division = divisionService.getDivisionByName(divisiUser);
             Users pm = userService.getUserById(pmId);
             Users pmo = userService.getUserById(pmoId);
-            return projectRepository.findProjectAA(division,pm,pmo,directorateUser);
+            return projectRepository.findProjectAA(division, pm, pmo, directorateUser);
         }
 
-        if(!divisiUser.isEmpty() && !directorateUser.isEmpty() && pmId.isEmpty() && !pmoId.isEmpty()){
+        if (!divisiUser.isEmpty() && !directorateUser.isEmpty() && pmId.isEmpty() && !pmoId.isEmpty()) {
             System.out.println("masuk sini");
             Division division = divisionService.getDivisionByName(divisiUser);
             Users pmo = userService.getUserById(pmoId);
-            return projectRepository.findProjectAI(division,pmo,directorateUser);
+            return projectRepository.findProjectAI(division, pmo, directorateUser);
         }
 
-        if(!divisiUser.isEmpty() && !directorateUser.isEmpty() && !pmId.isEmpty() && pmoId.isEmpty()){
+        if (!divisiUser.isEmpty() && !directorateUser.isEmpty() && !pmId.isEmpty() && pmoId.isEmpty()) {
             System.out.println("masuk sini dia yo");
             Division division = divisionService.getDivisionByName(divisiUser);
             Users pm = userService.getUserById(pmId);
             System.out.println("pm nya adalah: " + pm);
             System.out.println("direktorateuser: " + directorateUser);
             System.out.println("divisionnyaUser: " + division);
-            return projectRepository.findProjectAF(division,pm,directorateUser);
+            return projectRepository.findProjectAF(division, pm, directorateUser);
         }
 
-        if(!divisiUser.isEmpty() && directorateUser.isEmpty() && pmId.isEmpty() && pmoId.isEmpty()){
+        if (!divisiUser.isEmpty() && directorateUser.isEmpty() && pmId.isEmpty() && pmoId.isEmpty()) {
             System.out.println("divisi doang disini");
             Division division = divisionService.getDivisionByName(divisiUser);
             return projectRepository.findProjectAG(division);
         }
 
-        if(!divisiUser.isEmpty() && !directorateUser.isEmpty() && pmId.isEmpty() && pmoId.isEmpty()){
+        if (!divisiUser.isEmpty() && !directorateUser.isEmpty() && pmId.isEmpty() && pmoId.isEmpty()) {
             Division division = divisionService.getDivisionByName(divisiUser);
-            return projectRepository.findProjectAH(division,directorateUser);
+            return projectRepository.findProjectAH(division, directorateUser);
         }
 
-        if(!divisiUser.isEmpty() && directorateUser.isEmpty() && !pmId.isEmpty() && pmoId.isEmpty()){
+        if (!divisiUser.isEmpty() && directorateUser.isEmpty() && !pmId.isEmpty() && pmoId.isEmpty()) {
             Division division = divisionService.getDivisionByName(divisiUser);
             Users pm = userService.getUserById(pmId);
-            return projectRepository.findProjectAJ(division,pm);
+            return projectRepository.findProjectAJ(division, pm);
         }
 
-        if(divisiUser.isEmpty() && !directorateUser.isEmpty() && pmId.isEmpty() && !pmoId.isEmpty()){
+        if (divisiUser.isEmpty() && !directorateUser.isEmpty() && pmId.isEmpty() && !pmoId.isEmpty()) {
             Division division = divisionService.getDivisionByName(divisiUser);
             Users pmo = userService.getUserById(pmoId);
-            return projectRepository.findProjectAK(pmo,directorateUser);
+            return projectRepository.findProjectAK(pmo, directorateUser);
         }
 
-        if(divisiUser.isEmpty() && !directorateUser.isEmpty() && !pmId.isEmpty() && pmoId.isEmpty()){
+        if (divisiUser.isEmpty() && !directorateUser.isEmpty() && !pmId.isEmpty() && pmoId.isEmpty()) {
             Division division = divisionService.getDivisionByName(divisiUser);
             Users pm = userService.getUserById(pmId);
-            return projectRepository.findProjectAL(pm,directorateUser);
+            return projectRepository.findProjectAL(pm, directorateUser);
         }
 
-        if(divisiUser.isEmpty() && !directorateUser.isEmpty() && pmId.isEmpty() && pmoId.isEmpty()){
+        if (divisiUser.isEmpty() && !directorateUser.isEmpty() && pmId.isEmpty() && pmoId.isEmpty()) {
             return projectRepository.findProjectAM(directorateUser);
         }
         return null;

@@ -30,4 +30,6 @@ public interface ProjectService {
     public List<Project> getProjectByPmoID(String id);
     public List<Project> getProjectByCoPmID(String id);
     public List<Project> getProjectByKeyword(String keyword);
+    public List<Project> getProjectByLineItemBebanUsaha();
+    public List<Project> getProjectByLineItemBelanjaModal();
 }
