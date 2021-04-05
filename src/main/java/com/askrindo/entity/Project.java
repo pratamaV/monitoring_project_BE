@@ -63,6 +63,7 @@ public class  Project {
     private String categoryInitiative;
     private String statusProject;
     private String keyword;
+    private String lineItem;
 
     @ManyToOne
     @JoinColumn(name = "department_head")
@@ -76,9 +77,10 @@ public class  Project {
     public Project() {
     }
 
-    public Project(String id, String projectName, Users pmo, Users pm, String benefit, String description, Users coPM, Division divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, String statusProject, List<Release> releaseList) {
+    public Project(String id, String projectName, String projectCode, Users pmo, Users pm, String benefit, String description, Users coPM, Division divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, String statusProject, String keyword, String lineItem, Users departmentHead, List<Release> releaseList) {
         this.id = id;
         this.projectName = projectName;
+        this.projectCode = projectCode;
         this.pmo = pmo;
         this.pm = pm;
         this.benefit = benefit;
@@ -97,6 +99,9 @@ public class  Project {
         this.categoryActivity = categoryActivity;
         this.categoryInitiative = categoryInitiative;
         this.statusProject = statusProject;
+        this.keyword = keyword;
+        this.lineItem = lineItem;
+        this.departmentHead = departmentHead;
         this.releaseList = releaseList;
     }
 
@@ -330,6 +335,14 @@ public class  Project {
         this.releaseList = releaseList;
     }
 
+    public String getLineItem() {
+        return lineItem;
+    }
+
+    public void setLineItem(String lineItem) {
+        this.lineItem = lineItem;
+    }
+
     @Override
     public String toString() {
         return "Project{" +
@@ -354,6 +367,9 @@ public class  Project {
                 ", categoryActivity='" + categoryActivity + '\'' +
                 ", categoryInitiative='" + categoryInitiative + '\'' +
                 ", statusProject='" + statusProject + '\'' +
+                ", keyword='" + keyword + '\'' +
+                ", lineItem='" + lineItem + '\'' +
+                ", departmentHead=" + departmentHead +
                 ", releaseList=" + releaseList +
                 '}';
     }

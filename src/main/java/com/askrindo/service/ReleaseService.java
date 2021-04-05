@@ -19,4 +19,5 @@ public interface ReleaseService {
     public void updateStatusReleaseById(String id, String releaseStatus);
     public List<Release> getReleaseByProjectId(String idProject, String status, String stage);
     public List<Release> getReleaseByProjectIdWithSort(String idProject, String orderBy, String sort);
+    public List<Release> getReleaseByStatusReleaseAndProjectId(String statusRelease, String projectId);
 }

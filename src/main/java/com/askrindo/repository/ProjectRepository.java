@@ -19,6 +19,7 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
     public List<Project> findProjectByStatusProject(String statusProject);
 //    public List<Project> getAllProjectforUser();
     public List<Project> findProjectByDivisiUserAndStatusProject(String divisiUser, String statusProject);
+    public List<Project> findProjectByLineItem(String lineItem);
 
 //    Project findProjectAA(Division division, Users pm, Users pmo, String directorateUser);
 
