@@ -235,6 +235,11 @@ public class TaskController {
         return taskService.getTaskAfterDeadline();
     }
 
+    @DeleteMapping("/task-file/{idFile}")
+    public void deleteTaskFile(@PathVariable String idFile) {
+        taskService.deleteTaskFile(idFile);
+    }
+
 //    @GetMapping("/taskCode")
 //    public String TestGenerateReleaseCode() {
 //

@@ -1,11 +1,13 @@
 package com.askrindo.service;
 
+import com.askrindo.GlobalKey;
 import com.askrindo.entity.Project;
 import com.askrindo.entity.Release;
 import com.askrindo.entity.sequence.SequenceIdRelease;
 import com.askrindo.exception.DataNotFoundException;
 import com.askrindo.repository.ReleaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -119,5 +121,15 @@ public class ReleaseServiceImpl implements ReleaseService {
         return releaseRepository.getReleasebyId2(idProject, status, stage);
     }
 
+    @Override
+    public List<Release> getReleaseByProjectIdWithSort(String idProject, String orderBy, String sort) {
+        if (sort.equals(GlobalKey.SORT_ASC)) {
+            return releaseRepository.findAllByProjectId(idProject,Sort.by(Sort.Direction.ASC, orderBy));
+        }
+        else if (sort.equals(GlobalKey.SORT_DESC)){
+            return releaseRepository.findAllByProjectId(idProject,Sort.by(Sort.Direction.DESC, orderBy));
+        }
+       return null;
+    }
 
 }

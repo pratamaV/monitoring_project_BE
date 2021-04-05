@@ -1,5 +1,6 @@
 package com.askrindo.service;
 
+import com.askrindo.GlobalKey;
 import com.askrindo.dto.ProjectSearchDTO;
 import com.askrindo.entity.Division;
 import com.askrindo.entity.Project;
@@ -11,6 +12,7 @@ import com.askrindo.spesification.ProjectSpesification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -63,8 +65,6 @@ public class ProjectServiceImpl implements ProjectService {
             project1.setWeight(project1.getScore() / totalScoreProject);
             projectRepository.save(project1);
         }
-
-
     }
 
     @Override
@@ -79,6 +79,17 @@ public class ProjectServiceImpl implements ProjectService {
                                                  String statusProject,
                                                  String directoratUser) {
         return projectRepository.getAllProject(divisionId, pmId, pmoId, statusProject, directoratUser);
+    }
+
+    @Override
+    public List<Project> getAllProjectWithSort(String orderBy, String sort) {
+        if (sort.equals(GlobalKey.SORT_ASC)){
+            return projectRepository.findAll(Sort.by(Sort.Direction.ASC, orderBy));
+        }
+        else if (sort.equals(GlobalKey.SORT_DESC)){
+            return projectRepository.findAll(Sort.by(Sort.Direction.DESC, orderBy));
+        }
+        return null;
     }
 
     @Override

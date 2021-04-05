@@ -78,10 +78,18 @@ public class ReleaseController {
         return releaseService.getReleaseByProjectId(id, status, stage);
     }
 
-//    @GetMapping("/releaseCode")
-//    public String TestGenerateReleaseCode() {
+    @GetMapping("/releaseByProjectId-sort/{id}")
+    public List<Release> getReleaseByProjectIdWithSort(@PathVariable String id,
+                                                  @RequestParam(name = "orderBy", required = false) String orderBy,
+                                                  @RequestParam(name = "sort", required = false) String sort
+    ) {
+        return releaseService.getReleaseByProjectIdWithSort(id, orderBy, sort);
+    }
+
+//    @GetMapping("/testSortRelease")
+//    public List<Release> TestSortRelease() {
 //
-//        return releaseService.generateReleaseCode("2c951081786843430178685388f40000");
+//        return releaseService.getReleaseByProjectIdWithSort("2c9ba081789cff4d01789d35d3500007", "release_name", "ASC");
 //    }
 
 //    @GetMapping("/releaseByProjectId/{id}")

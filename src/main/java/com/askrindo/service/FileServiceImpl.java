@@ -15,4 +15,14 @@ public class FileServiceImpl implements FileService {
     public void saveFile(File file) {
         fileRepository.save(file);
     }
+
+    @Override
+    public void deleteFile(String id) {
+        fileRepository.deleteById(id);
+    }
+
+    @Override
+    public File getFileById(String id) {
+        return fileRepository.findById(id).get();
+    }
 }

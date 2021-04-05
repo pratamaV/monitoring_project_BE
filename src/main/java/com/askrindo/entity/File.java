@@ -26,6 +26,9 @@ public class File {
     @JoinColumn(name = "task_id")
     private Task task;
 
+    public File(String s) {
+    }
+
     public File() {
     }
 

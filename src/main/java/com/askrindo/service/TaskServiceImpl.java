@@ -403,6 +403,14 @@ public class TaskServiceImpl implements TaskService {
         updatePerformanceUser(taskObj, releaseObj, projectObj);
     }
 
+    @Override
+    public void deleteTaskFile(String idFile) {
+        File fileObj = fileService.getFileById(idFile);
+        java.io.File fileToDelete = new java.io.File(documentTask+fileObj.getDocumentName());
+        fileToDelete.delete();
+        fileService.deleteFile(idFile);
+    }
+
     private void updatePerformanceUser(Task taskObj, Release releaseObj, Project projectObj) {
         Users userObj = userService.getUserById(taskObj.getAssignedTo().getId());
         Float performanceUser = Float.valueOf(0);

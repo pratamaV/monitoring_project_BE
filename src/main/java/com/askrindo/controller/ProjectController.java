@@ -66,6 +66,13 @@ public class ProjectController {
         return projectService.getAllProjectWithFilter(divisionId, pmId, pmoId, statusProject, directoratUser);
     }
 
+    @GetMapping("/projects-sort")
+    public List<Project> getAllProjectWithSort(
+            @RequestParam(name = "orderBy", required = false) String orderBy,
+            @RequestParam(name = "sort", required = false) String sort) {
+        return projectService.getAllProjectWithSort(orderBy, sort);
+    }
+
 
     @GetMapping("/projectbyuser")
     public List<Project> getAllProjectforUser(){
@@ -84,15 +91,16 @@ public class ProjectController {
     }
 
 
-    @GetMapping("/test")
-    public void test(){
-        SequenceIdProject sequenceIdProject = new SequenceIdProject();
-        SequenceIdProject idProjectGen = sequenceIdProjectService.saveSequenceIdProject(sequenceIdProject);
-        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-        String [] yearChar = year.split("");
-        year = yearChar[2]+yearChar[3];
-        String idProjectgenFormat = year +"-" + idProjectGen.getIdGeneratorProject();
-        System.out.println(idProjectgenFormat);
+    @GetMapping("/testSortProject")
+    public List<Project> test(){
+//        SequenceIdProject sequenceIdProject = new SequenceIdProject();
+//        SequenceIdProject idProjectGen = sequenceIdProjectService.saveSequenceIdProject(sequenceIdProject);
+//        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+//        String [] yearChar = year.split("");
+//        year = yearChar[2]+yearChar[3];
+//        String idProjectgenFormat = year +"-" + idProjectGen.getIdGeneratorProject();
+//        System.out.println(idProjectgenFormat);
+        return projectService.getAllProjectWithSort("projectName", "ASC");
 
     }
 
