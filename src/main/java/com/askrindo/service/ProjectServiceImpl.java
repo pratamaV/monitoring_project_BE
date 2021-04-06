@@ -8,6 +8,7 @@ import com.askrindo.repository.ProjectRepository;
 import com.askrindo.spesification.ProjectSpesification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -96,22 +97,36 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.findAll();
     }
 
+//    @Override
+//    public List<Project> getAllProjectWithFilter(String divisionId,
+//                                                 String pmId,
+//                                                 String pmoId,
+//                                                 String statusProject,
+//                                                 String directoratUser) {
+//        return projectRepository.getAllProject(divisionId, pmId, pmoId, statusProject, directoratUser);
+//    }
+
     @Override
-    public List<Project> getAllProjectWithFilter(String divisionId,
+    public Page<Project> getAllProjectWithFilter(String divisionId,
                                                  String pmId,
                                                  String pmoId,
                                                  String statusProject,
-                                                 String directoratUser) {
-        return projectRepository.getAllProject(divisionId, pmId, pmoId, statusProject, directoratUser);
+                                                 String directoratUser, Pageable pageable) {
+        return projectRepository.getAllProject(divisionId, pmId, pmoId, statusProject, directoratUser, pageable);
     }
 
     @Override
-    public List<Project> getAllProjectWithSort(String orderBy, String sort) {
+    public Page<Project> getAllProjectWithSort(String orderBy, String sort, Integer page, Integer sizePerpage) {
+
         if (sort.equals(GlobalKey.SORT_ASC)){
-            return projectRepository.findAll(Sort.by(Sort.Direction.ASC, orderBy));
+            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.ASC, orderBy));
+//            Page<Project> pagedResult = projectRepository.findAll(paging);
+            return projectRepository.findAll(paging);
         }
         else if (sort.equals(GlobalKey.SORT_DESC)){
-            return projectRepository.findAll(Sort.by(Sort.Direction.DESC, orderBy));
+            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.DESC, orderBy));
+//            Page<Project> pagedResult = projectRepository.findAll(paging);
+            return projectRepository.findAll(paging);
         }
         return null;
     }

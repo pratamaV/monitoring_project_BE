@@ -3,6 +3,9 @@ package com.askrindo.repository;
 import com.askrindo.entity.Division;
 import com.askrindo.entity.Project;
 import com.askrindo.entity.Users;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +23,7 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
 //    public List<Project> getAllProjectforUser();
     public List<Project> findProjectByDivisiUserAndStatusProject(String divisiUser, String statusProject);
     public List<Project> findProjectByLineItem(String lineItem);
+//    public Page<Project> findAll(Pageable pageable, Sort sort);
 
 //    Project findProjectAA(Division division, Users pm, Users pmo, String directorateUser);
 
@@ -118,11 +122,19 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
     @Query(nativeQuery = true, value = "SELECT * FROM mst_project WHERE keyword ilike %:keyword%")
     List<Project> findProjectByKeyword(@Param("keyword") String keyword);
 
+//    @Query(nativeQuery = true, value = "select mst_project.* from mst_project inner join mst_division on mst_project.division_id = mst_division.id inner join mst_user on mst_project.pm_id = mst_user.id where mst_project.division_id like %:divisionId% and mst_project.pm_id like %:pmId% and mst_project.pmo_id like %:pmoId% and mst_project.status like %:statusProject% and mst_project.directorate_user like %:directoratUser% " +
+//            "order by mst_project.project_name ASC")
+//    List<Project> getAllProject(@Param("divisionId") String divisionId,
+//                                @Param("pmId") String pmId,
+//                                @Param("pmoId") String pmoId,
+//                                @Param("statusProject") String statusProject,
+//                                @Param("directoratUser") String directoratUser);
+
     @Query(nativeQuery = true, value = "select mst_project.* from mst_project inner join mst_division on mst_project.division_id = mst_division.id inner join mst_user on mst_project.pm_id = mst_user.id where mst_project.division_id like %:divisionId% and mst_project.pm_id like %:pmId% and mst_project.pmo_id like %:pmoId% and mst_project.status like %:statusProject% and mst_project.directorate_user like %:directoratUser% " +
             "order by mst_project.project_name ASC")
-    List<Project> getAllProject(@Param("divisionId") String divisionId,
+    Page<Project> getAllProject(@Param("divisionId") String divisionId,
                                 @Param("pmId") String pmId,
                                 @Param("pmoId") String pmoId,
                                 @Param("statusProject") String statusProject,
-                                @Param("directoratUser") String directoratUser);
+                                @Param("directoratUser") String directoratUser, Pageable pageable);
 }

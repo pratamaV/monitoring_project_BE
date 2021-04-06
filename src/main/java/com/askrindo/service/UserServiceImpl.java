@@ -3,6 +3,8 @@ package com.askrindo.service;
 import com.askrindo.entity.Users;
 import com.askrindo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +26,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<Users> getAllUser() {
-        return userRepository.findAll();
+    public Page<Users> getAllUser(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     @Override

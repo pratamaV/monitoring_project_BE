@@ -7,6 +7,9 @@ import com.askrindo.entity.sequence.SequenceIdRelease;
 import com.askrindo.exception.DataNotFoundException;
 import com.askrindo.repository.ReleaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -117,17 +120,24 @@ public class ReleaseServiceImpl implements ReleaseService {
     }
 
     @Override
-    public List<Release> getReleaseByProjectId(String idProject, String status, String stage) {
-        return releaseRepository.getReleasebyId2(idProject, status, stage);
+    public Page<Release> getReleaseByProjectId(String idProject, String status, String stage, Pageable pageable) {
+        return releaseRepository.getReleasebyId2(idProject, status, stage, pageable);
     }
 
     @Override
-    public List<Release> getReleaseByProjectIdWithSort(String idProject, String orderBy, String sort) {
+    public List<Release> getReleaseByProjectIdWithSort(String idProject, String orderBy, String sort, Integer page, Integer sizePerpage) {
         if (sort.equals(GlobalKey.SORT_ASC)) {
-            return releaseRepository.findAllByProjectId(idProject,Sort.by(Sort.Direction.ASC, orderBy));
+            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.ASC, orderBy));
+//            Page<Project> pagedResult = projectRepository.findAll(paging);
+//            return releaseRepository.findAll(paging);
+            return releaseRepository.findAllByProjectId(idProject, paging);
         }
         else if (sort.equals(GlobalKey.SORT_DESC)){
-            return releaseRepository.findAllByProjectId(idProject,Sort.by(Sort.Direction.DESC, orderBy));
+            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.DESC, orderBy));
+//            Page<Project> pagedResult = projectRepository.findAll(paging);
+//            return releaseRepository.findAll(paging);
+            return releaseRepository.findAllByProjectId(idProject, paging);
+//            return releaseRepository.findAllByProjectId(idProject,Sort.by(Sort.Direction.DESC, orderBy));
         }
        return null;
     }

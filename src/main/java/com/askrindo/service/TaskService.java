@@ -2,6 +2,8 @@ package com.askrindo.service;
 
 import com.askrindo.entity.File;
 import com.askrindo.entity.Task;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -21,14 +23,14 @@ public interface TaskService {
     public List<Task> getTaskByReleaseId(String id);
     public void updateTaskByReleaseId(Task task,String id);
     public Float getWeightTaskByUserId(String userID);
-    public List<Task> getTaskByUserId(String id, String statusDone, String releaseName,
+    public Page<Task> getTaskByUserId(String id, String statusDone, String releaseName,
                                       String projectName,
                                       Date estStartDateFrom,
                                       Date estStartDateTo,
                                       Date estEndDateFrom,
-                                      Date estEndDateTo);
+                                      Date estEndDateTo, Pageable pageable);
 ;
-    public List<Task> getTaskByReleaseId(String id, String userId, String statusDone);
+    public Page<Task> getTaskByReleaseId(String id, String userId, String statusDone, Pageable pageable);
     public List<Task> getTaskAfterDeadline();
     public void updateDoneTask(String idTask, Float prosentase);
     public void deleteTaskFile(String idFile);

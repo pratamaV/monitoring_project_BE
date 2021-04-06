@@ -5,6 +5,9 @@ import com.askrindo.entity.Users;
 import com.askrindo.security.UsersServiceAuth;
 import com.askrindo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -30,8 +33,11 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<Users> getAllUser(){
-        return userService.getAllUser();
+    public Page<Users> getAllUser(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                                  @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage
+                                  ){
+        Pageable pageable = PageRequest.of(page, sizePerPage);
+        return userService.getAllUser(pageable);
     }
 
     @PutMapping("/user")

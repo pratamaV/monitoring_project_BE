@@ -11,6 +11,10 @@ import org.apache.catalina.User;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -327,47 +331,47 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getTaskByUserId(String id, String statusDone, String releaseName,
+    public Page<Task> getTaskByUserId(String id, String statusDone, String releaseName,
                                       String projectName,
                                       Date estStartDateFrom,
                                       Date estStartDateTo,
                                       Date estEndDateFrom,
-                                      Date estEndDateTo) {
+                                      Date estEndDateTo, Pageable pageable) {
         Date estStartDateToNow = new Date();
         Date estEndDateToNow = new Date();
 
         if (estStartDateFrom != null && estEndDateFrom == null) {
             if (estStartDateTo != null) {
-                return taskRepository.getTaskAssignedToIdWithEstStartDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateTo);
+                return taskRepository.getTaskAssignedToIdWithEstStartDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateTo, pageable);
             } else if (estStartDateTo == null) {
-                return taskRepository.getTaskAssignedToIdWithEstStartDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateToNow);
+                return taskRepository.getTaskAssignedToIdWithEstStartDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateToNow, pageable);
             }
         } else if (estStartDateFrom == null && estEndDateFrom != null) {
             if (estEndDateTo != null) {
-                return taskRepository.getTaskAssignedToIdWithEstEndDate(id, statusDone, releaseName, projectName, estEndDateFrom, estEndDateTo);
+                return taskRepository.getTaskAssignedToIdWithEstEndDate(id, statusDone, releaseName, projectName, estEndDateFrom, estEndDateTo, pageable);
             } else if (estEndDateTo == null) {
-                return taskRepository.getTaskAssignedToIdWithEstEndDate(id, statusDone, releaseName, projectName, estEndDateFrom, estEndDateToNow);
+                return taskRepository.getTaskAssignedToIdWithEstEndDate(id, statusDone, releaseName, projectName, estEndDateFrom, estEndDateToNow, pageable);
             }
         } else if (estStartDateFrom != null && estEndDateFrom != null) {
             if (estStartDateTo == null && estEndDateTo == null) {
-                return taskRepository.getTaskAssignedToIdWithDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateToNow, estEndDateFrom, estEndDateToNow);
+                return taskRepository.getTaskAssignedToIdWithDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateToNow, estEndDateFrom, estEndDateToNow, pageable);
             } else if (estStartDateTo == null) {
-                return taskRepository.getTaskAssignedToIdWithDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateToNow, estEndDateFrom, estEndDateTo);
+                return taskRepository.getTaskAssignedToIdWithDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateToNow, estEndDateFrom, estEndDateTo, pageable);
             } else if (estEndDateTo == null) {
-                return taskRepository.getTaskAssignedToIdWithDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateTo, estEndDateFrom, estEndDateToNow);
+                return taskRepository.getTaskAssignedToIdWithDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateTo, estEndDateFrom, estEndDateToNow, pageable);
             }
             else {
-                return taskRepository.getTaskAssignedToIdWithDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateTo, estEndDateFrom, estEndDateTo);
+                return taskRepository.getTaskAssignedToIdWithDate(id, statusDone, releaseName, projectName, estStartDateFrom, estStartDateTo, estEndDateFrom, estEndDateTo, pageable);
             }
         } else if (estStartDateFrom == null && estEndDateFrom == null) {
-            return taskRepository.getTaskAssignedToId(id, statusDone, releaseName, projectName);
+            return taskRepository.getTaskAssignedToId(id, statusDone, releaseName, projectName, pageable);
         }
         return null;
     }
 
     @Override
-    public List<Task> getTaskByReleaseId(String id, String userId, String statusDone) {
-        return taskRepository.getTaskByReleaseId(id, userId, statusDone);
+    public Page<Task> getTaskByReleaseId(String id, String userId, String statusDone, Pageable pageable) {
+        return taskRepository.getTaskByReleaseId(id, userId, statusDone, pageable);
     }
 
     @Override

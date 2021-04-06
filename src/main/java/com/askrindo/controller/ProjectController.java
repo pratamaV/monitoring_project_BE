@@ -6,6 +6,10 @@ import com.askrindo.service.DivisionService;
 import com.askrindo.service.ProjectService;
 import com.askrindo.service.SequenceIdProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
@@ -40,7 +44,9 @@ public class ProjectController {
     }
 
     @GetMapping("/projects")
-    public List<Project> getAllProject(
+    public Page<Project> getAllProject(
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
             @RequestParam(name = "divisionId", required = false) String divisionId,
             @RequestParam(name = "pmId", required = false) String pmId,
             @RequestParam(name = "pmoId", required = false) String pmoId,
@@ -62,15 +68,17 @@ public class ProjectController {
         if (directoratUser == null) {
             directoratUser = "";
         }
-
-        return projectService.getAllProjectWithFilter(divisionId, pmId, pmoId, statusProject, directoratUser);
+        Pageable pageable = PageRequest.of(page, sizePerPage);
+        return projectService.getAllProjectWithFilter(divisionId, pmId, pmoId, statusProject, directoratUser, pageable);
     }
 
     @GetMapping("/projects-sort")
-    public List<Project> getAllProjectWithSort(
+    public Page<Project> getAllProjectWithSort(
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
             @RequestParam(name = "orderBy", required = false) String orderBy,
             @RequestParam(name = "sort", required = false) String sort) {
-        return projectService.getAllProjectWithSort(orderBy, sort);
+            return projectService.getAllProjectWithSort(orderBy, sort, page, sizePerPage);
     }
 
 
@@ -92,7 +100,8 @@ public class ProjectController {
 
 
     @GetMapping("/testSortProject")
-    public List<Project> test(){
+    public Page<Project> test(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                              @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage){
 //        SequenceIdProject sequenceIdProject = new SequenceIdProject();
 //        SequenceIdProject idProjectGen = sequenceIdProjectService.saveSequenceIdProject(sequenceIdProject);
 //        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
@@ -100,8 +109,9 @@ public class ProjectController {
 //        year = yearChar[2]+yearChar[3];
 //        String idProjectgenFormat = year +"-" + idProjectGen.getIdGeneratorProject();
 //        System.out.println(idProjectgenFormat);
-        return projectService.getAllProjectWithSort("projectName", "ASC");
-
+//        Pageable pageable = PageRequest.of(page, sizePerPage);
+//        return projectService.getAllProjectWithSort("projectName", "ASC", pageable);
+        return projectService.getAllProjectWithSort("projectName", "ASC", page, sizePerPage);
     }
 
     @GetMapping("/projectByDivision")

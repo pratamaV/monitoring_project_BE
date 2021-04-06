@@ -2,6 +2,8 @@ package com.askrindo.repository;
 
 import com.askrindo.entity.Release;
 import com.askrindo.entity.Task;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -34,22 +36,22 @@ public interface TaskRepository extends JpaRepository<Task, String> {
     public Task findTaskByActEndDateDesc();
 
     @Query(nativeQuery = true, value = "select mst_task.* from mst_task inner join mst_release on mst_task.release_id = mst_release.id inner join mst_user on mst_task.assigned_to = mst_user.id where mst_release.id like %:releaseId% and mst_user.id like %:userId% and mst_task.status_done like %:statusDone%")
-    public List<Task> getTaskByReleaseId(@Param("releaseId") String releaseId, @Param("userId") String userId, @Param("statusDone") String statusDone);
+    public Page<Task> getTaskByReleaseId(@Param("releaseId") String releaseId, @Param("userId") String userId, @Param("statusDone") String statusDone, Pageable pageable);
 
     @Query(nativeQuery = true, value = "select mst_task.* from mst_task inner join mst_release on mst_task.release_id = mst_release.id inner join mst_user on mst_task.assigned_to = mst_user.id inner join mst_project on mst_release.project_id = mst_project.id where mst_task.assigned_to like %:id% and mst_task.status_done like %:statusDone% and mst_release.release_name like %:releaseName% and mst_project.project_name like %:projectName%")
-    public List<Task> getTaskAssignedToId(@Param("id") String id, @Param("statusDone") String statusDone, @Param("releaseName") String releaseName,
-                                          @Param("projectName") String projectName);
+    public Page<Task> getTaskAssignedToId(@Param("id") String id, @Param("statusDone") String statusDone, @Param("releaseName") String releaseName,
+                                          @Param("projectName") String projectName, Pageable pageable);
 
     @Query(nativeQuery = true, value = "select mst_task.* from mst_task inner join mst_release on mst_task.release_id = mst_release.id inner join mst_user on mst_task.assigned_to = mst_user.id inner join mst_project on mst_release.project_id = mst_project.id where mst_task.assigned_to like %:id% and mst_task.status_done like %:statusDone% and mst_release.release_name like %:releaseName% and mst_project.project_name like %:projectName% and (mst_task.est_start_date >= :estStartDateFrom and mst_task.est_start_date <= :estStartDateTo) and (mst_task.est_end_date >= :estEndDateFrom and mst_task.est_end_date <= :estEndDateTo)")
-    public List<Task> getTaskAssignedToIdWithDate(@Param("id") String id, @Param("statusDone") String statusDone, @Param("releaseName") String releaseName,
-                                                  @Param("projectName") String projectName, @Param("estStartDateFrom") Date estStartDateFrom, @Param("estStartDateTo") Date estStartDateTo, @Param("estEndDateFrom") Date estEndDateFrom, @Param("estEndDateTo") Date estEndDateTo);
+    public Page<Task> getTaskAssignedToIdWithDate(@Param("id") String id, @Param("statusDone") String statusDone, @Param("releaseName") String releaseName,
+                                                  @Param("projectName") String projectName, @Param("estStartDateFrom") Date estStartDateFrom, @Param("estStartDateTo") Date estStartDateTo, @Param("estEndDateFrom") Date estEndDateFrom, @Param("estEndDateTo") Date estEndDateTo, Pageable pageable);
 
     @Query(nativeQuery = true, value = "select mst_task.* from mst_task inner join mst_release on mst_task.release_id = mst_release.id inner join mst_user on mst_task.assigned_to = mst_user.id inner join mst_project on mst_release.project_id = mst_project.id where mst_task.assigned_to like %:id% and mst_task.status_done like %:statusDone% and mst_release.release_name like %:releaseName% and mst_project.project_name like %:projectName% and (mst_task.est_start_date >= :estStartDateFrom and mst_task.est_start_date <= :estStartDateTo) ")
-    public List<Task> getTaskAssignedToIdWithEstStartDate(@Param("id") String id, @Param("statusDone") String statusDone, @Param("releaseName") String releaseName,
-                                                          @Param("projectName") String projectName, @Param("estStartDateFrom") Date estStartDateFrom, @Param("estStartDateTo") Date estStartDateTo);
+    public Page<Task> getTaskAssignedToIdWithEstStartDate(@Param("id") String id, @Param("statusDone") String statusDone, @Param("releaseName") String releaseName,
+                                                          @Param("projectName") String projectName, @Param("estStartDateFrom") Date estStartDateFrom, @Param("estStartDateTo") Date estStartDateTo, Pageable pageable);
 
     @Query(nativeQuery = true, value = "select mst_task.* from mst_task inner join mst_release on mst_task.release_id = mst_release.id inner join mst_user on mst_task.assigned_to = mst_user.id inner join mst_project on mst_release.project_id = mst_project.id where mst_task.assigned_to like %:id% and mst_task.status_done like %:statusDone% and mst_release.release_name like %:releaseName% and mst_project.project_name like %:projectName% and (mst_task.est_end_date >= :estEndDateFrom and mst_task.est_end_date <= :estEndDateTo)")
-    public List<Task> getTaskAssignedToIdWithEstEndDate(@Param("id") String id, @Param("statusDone") String statusDone, @Param("releaseName") String releaseName,@Param("projectName") String projectName,
-                                                        @Param("estEndDateFrom") Date estEndDateFrom, @Param("estEndDateTo") Date estEndDateTo);
+    public Page<Task> getTaskAssignedToIdWithEstEndDate(@Param("id") String id, @Param("statusDone") String statusDone, @Param("releaseName") String releaseName,@Param("projectName") String projectName,
+                                                        @Param("estEndDateFrom") Date estEndDateFrom, @Param("estEndDateTo") Date estEndDateTo, Pageable pageable);
 
 }

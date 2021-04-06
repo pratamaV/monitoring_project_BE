@@ -2,6 +2,8 @@ package com.askrindo.repository;
 
 import com.askrindo.entity.Release;
 import io.swagger.models.auth.In;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -21,11 +23,15 @@ public interface ReleaseRepository extends JpaRepository<Release, String>, JpaSp
     public List<Release> findReleaseByStage(String stage);
     public List<Release> findReleaseByStatus(String status);
     public List<Release> findReleaseByStatusReleaseAndProjectId(String statusRelease, String id);
-    List<Release> findAllByProjectId(String idProject, Sort sort);
+    List<Release> findAllByProjectId(String idProject, Pageable pageable);
 
     public Integer countReleaseByProjectId(String IdProject);
+//    @Query(nativeQuery = true, value = "SELECT mst_release.* FROM mst_release inner join mst_project on mst_release.project_id  = mst_project.id where mst_project.id like %:projectId% and mst_release.status like %:status% and mst_release.stage like %:stage% ORDER BY release_name ASC")
+//    public List<Release> getReleasebyId2(@Param("projectId") String projectId,@Param("status") String status,@Param("stage") String stage);
+
     @Query(nativeQuery = true, value = "SELECT mst_release.* FROM mst_release inner join mst_project on mst_release.project_id  = mst_project.id where mst_project.id like %:projectId% and mst_release.status like %:status% and mst_release.stage like %:stage% ORDER BY release_name ASC")
-    public List<Release> getReleasebyId2(@Param("projectId") String projectId,@Param("status") String status,@Param("stage") String stage);
+    public Page<Release> getReleasebyId2(@Param("projectId") String projectId, @Param("status") String status, @Param("stage") String stage, Pageable pageable);
+
 
     @Query(nativeQuery = true, value = "SELECT mst_release.* FROM mst_release inner join mst_project on mst_release.project_id  = mst_project.id where mst_project.id = :projectId ORDER BY :param ASC")
     public List<Release> getReleasebyIdWithSortASC(@Param("projectId") String projectId, @Param("param") String param);

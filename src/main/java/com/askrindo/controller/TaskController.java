@@ -9,6 +9,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -177,7 +180,9 @@ public class TaskController {
 //    }
 
     @GetMapping("/taskByReleaseId/{id}")
-    public List<Task> getTaskByReleaseId(@PathVariable String id,
+    public Page<Task> getTaskByReleaseId(@PathVariable String id,
+                                         @RequestParam(name = "page", defaultValue = "0") Integer page,
+                                         @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
                                          @RequestParam(name = "assignTo", required = false) String userId,
                                          @RequestParam(name = "statusDone", required = false) String statusDone) {
         if (userId == null && statusDone == null) {
@@ -188,12 +193,15 @@ public class TaskController {
         } else if (statusDone == null) {
             statusDone = "";
         }
-        return taskService.getTaskByReleaseId(id, userId, statusDone);
+        Pageable pageable = PageRequest.of(page, sizePerPage);
+        return taskService.getTaskByReleaseId(id, userId, statusDone, pageable);
     }
 
 
     @GetMapping("/taskByUserId/{id}")
-    public List<Task> getTaskByUserId(@PathVariable String id,
+    public Page<Task> getTaskByUserId(@PathVariable String id,
+                                      @RequestParam(name = "page", defaultValue = "0") Integer page,
+                                      @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
                                       @RequestParam(name = "statusDone", required = false) String statusDone,
                                       @RequestParam(name = "releaseName", required = false) String releaseName,
                                       @RequestParam(name = "projectName", required = false) String projectName,
@@ -227,7 +235,8 @@ public class TaskController {
         }else {
             estEndDateToParse = new SimpleDateFormat("yyyy-MM-dd").parse(estEndDateTo);
         }
-        return taskService.getTaskByUserId(id, statusDone, releaseName, projectName, estStartDateFromParse , estStartDateToParse , estEndDateFromParse , estEndDateToParse);
+        Pageable pageable = PageRequest.of(page, sizePerPage);
+        return taskService.getTaskByUserId(id, statusDone, releaseName, projectName, estStartDateFromParse , estStartDateToParse , estEndDateFromParse , estEndDateToParse, pageable);
     }
 
     @GetMapping("/taskDeadline")

@@ -13,11 +13,11 @@ import java.util.List;
 public interface ProjectService {
     public void saveProject(Project project);
     public List<Project> getAllProject();
-    public List<Project> getAllProjectWithFilter(String divisionId,
+    public Page<Project> getAllProjectWithFilter(String divisionId,
                                                  String pmId,
                                                  String pmoId,
                                                  String statusProject,
-                                                 String directoratUser);
+                                                 String directoratUser, Pageable pageable);
     public Project getProjectById(String id);
     public void updateProject(Project project);
     public void updateStatusProjectById(String id, String projectStatus);
@@ -30,7 +30,7 @@ public interface ProjectService {
     public List<Project> getProjectByPmoID(String id);
     public List<Project> getProjectByCoPmID(String id);
     public List<Project> getProjectByKeyword(String keyword);
-    public List<Project> getAllProjectWithSort(String orderBy, String sort);
+    public Page<Project> getAllProjectWithSort(String orderBy, String sort, Integer page, Integer sizePerpage);
     public List<Project> getProjectByLineItemBebanUsaha();
     public List<Project> getProjectByLineItemBelanjaModal();
 }

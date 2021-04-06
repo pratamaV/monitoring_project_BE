@@ -4,6 +4,9 @@ import com.askrindo.entity.Release;
 import com.askrindo.service.ProjectService;
 import com.askrindo.service.ReleaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,7 +66,9 @@ public class ReleaseController {
     }
 
     @GetMapping("/releaseByProjectId/{id}")
-    public List<Release> searchReleaseByProjectId(@PathVariable String id,
+    public Page<Release> searchReleaseByProjectId(@PathVariable String id,
+                                                  @RequestParam(name = "page", defaultValue = "0") Integer page,
+                                                  @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
                                                   @RequestParam(name = "status", required = false) String status,
                                                   @RequestParam(name = "stage", required = false) String stage
     ) {
@@ -75,15 +80,18 @@ public class ReleaseController {
         } else if (stage == null) {
             stage = "";
         }
-        return releaseService.getReleaseByProjectId(id, status, stage);
+        Pageable pageable = PageRequest.of(page, sizePerPage);
+        return releaseService.getReleaseByProjectId(id, status, stage, pageable);
     }
 
     @GetMapping("/releaseByProjectId-sort/{id}")
     public List<Release> getReleaseByProjectIdWithSort(@PathVariable String id,
-                                                  @RequestParam(name = "orderBy", required = false) String orderBy,
-                                                  @RequestParam(name = "sort", required = false) String sort
+                                                       @RequestParam(name = "page", defaultValue = "0") Integer page,
+                                                       @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
+                                                       @RequestParam(name = "orderBy", required = false) String orderBy,
+                                                       @RequestParam(name = "sort", required = false) String sort
     ) {
-        return releaseService.getReleaseByProjectIdWithSort(id, orderBy, sort);
+        return releaseService.getReleaseByProjectIdWithSort(id, orderBy, sort, page, sizePerPage);
     }
 
 //    @GetMapping("/testSortRelease")

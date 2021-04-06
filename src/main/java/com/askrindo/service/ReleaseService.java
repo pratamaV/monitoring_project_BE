@@ -2,6 +2,8 @@ package com.askrindo.service;
 
 import com.askrindo.entity.Project;
 import com.askrindo.entity.Release;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -17,7 +19,7 @@ public interface ReleaseService {
     public List<Release> getReleaseByStage(String stage);
     public List<Release> getReleaseByStatus(String status);
     public void updateStatusReleaseById(String id, String releaseStatus);
-    public List<Release> getReleaseByProjectId(String idProject, String status, String stage);
-    public List<Release> getReleaseByProjectIdWithSort(String idProject, String orderBy, String sort);
+    public Page<Release> getReleaseByProjectId(String idProject, String status, String stage, Pageable pageable);
+    public List<Release> getReleaseByProjectIdWithSort(String idProject, String orderBy, String sort, Integer page, Integer pagePerSize);
     public List<Release> getReleaseByStatusReleaseAndProjectId(String statusRelease, String projectId);
 }
