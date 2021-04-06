@@ -40,6 +40,11 @@ public class UserController {
         return userService.getAllUser(pageable);
     }
 
+    @GetMapping("/users-list")
+    public List<Users> getAllUserList(){
+        return userService.getAllUserList();
+    }
+
     @PutMapping("/user")
     public void updateUser(@RequestBody Users users){
         userService.updateUser(users);

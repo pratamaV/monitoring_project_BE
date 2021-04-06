@@ -12,6 +12,7 @@ import java.util.List;
 public interface UserService {
     public void saveUser(Users users);
     public Page<Users> getAllUser(Pageable pageable);
+    public List<Users> getAllUserList();
     public Users getUserById(String id);
     public void updateUser(Users users);
     public void updateStatusUserById(String id, String status);

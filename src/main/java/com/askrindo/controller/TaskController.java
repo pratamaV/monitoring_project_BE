@@ -197,6 +197,24 @@ public class TaskController {
         return taskService.getTaskByReleaseId(id, userId, statusDone, pageable);
     }
 
+    @GetMapping("/taskByReleaseId-sort/{id}")
+    public Page<Task> getTaskByReleaseIdWithSort(@PathVariable String id,
+                                                 @RequestParam(name = "page", defaultValue = "0") Integer page,
+                                                 @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
+                                                 @RequestParam(name = "orderBy", required = false) String orderBy,
+                                                 @RequestParam(name = "sort", required = false) String sort) {
+        return taskService.getTaskByReleaseIdWithSort(id, orderBy, sort, page, sizePerPage);
+    }
+
+    @GetMapping("/taskByUserId-sort/{id}")
+    public Page<Task> getTaskByUserIdWithSort(@PathVariable String id,
+                                                 @RequestParam(name = "page", defaultValue = "0") Integer page,
+                                                 @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
+                                                 @RequestParam(name = "orderBy", required = false) String orderBy,
+                                                 @RequestParam(name = "sort", required = false) String sort) {
+        return taskService.getTaskByUserIdWithSort(id, orderBy, sort, page, sizePerPage);
+    }
+
 
     @GetMapping("/taskByUserId/{id}")
     public Page<Task> getTaskByUserId(@PathVariable String id,

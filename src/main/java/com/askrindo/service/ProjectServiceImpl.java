@@ -93,6 +93,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<Project> getAllProjectList() {
+        return projectRepository.findAll();
+    }
+
+    @Override
     public List<Project> getAllProject() {
         return projectRepository.findAll();
     }

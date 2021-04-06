@@ -22,6 +22,8 @@ public interface TaskRepository extends JpaRepository<Task, String> {
     public List<Task> findTaskByReleaseId(String id);
     public List<Task> findTaskByAssignedToId(String id);
     public Integer countTaskByReleaseId(String idRelease);
+    public Page<Task> findAllByReleaseId(String idRelease, Pageable pageable);
+    public Page<Task> findAllByAssignedTo(String idUser, Pageable pageable);
 
     @Query(nativeQuery = true, value = "select * from mst_task order by est_start_date ASC limit 1")
     public Task findTaskByEstStartDateAcs();

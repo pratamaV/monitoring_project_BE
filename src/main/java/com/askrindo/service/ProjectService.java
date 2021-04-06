@@ -33,4 +33,5 @@ public interface ProjectService {
     public Page<Project> getAllProjectWithSort(String orderBy, String sort, Integer page, Integer sizePerpage);
     public List<Project> getProjectByLineItemBebanUsaha();
     public List<Project> getProjectByLineItemBelanjaModal();
+    public List<Project> getAllProjectList();
 }

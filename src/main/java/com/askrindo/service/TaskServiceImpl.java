@@ -375,6 +375,32 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public Page<Task> getTaskByReleaseIdWithSort(String idRelease, String orderBy, String sort, Integer page, Integer sizePerpage) {
+        if (sort.equals(GlobalKey.SORT_ASC)) {
+            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.ASC, orderBy));
+            return taskRepository.findAllByReleaseId(idRelease, paging);
+        }
+        else if (sort.equals(GlobalKey.SORT_DESC)){
+            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.DESC, orderBy));
+            return taskRepository.findAllByReleaseId(idRelease, paging);
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Task> getTaskByUserIdWithSort(String idUser, String orderBy, String sort, Integer page, Integer sizePerpage) {
+        if (sort.equals(GlobalKey.SORT_ASC)) {
+            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.ASC, orderBy));
+            return taskRepository.findAllByAssignedTo(idUser, paging);
+        }
+        else if (sort.equals(GlobalKey.SORT_DESC)){
+            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.DESC, orderBy));
+            return taskRepository.findAllByAssignedTo(idUser, paging);
+        }
+        return null;
+    }
+
+    @Override
     public List<Task> getTaskAfterDeadline() {
         List<Task> taskList = taskRepository.findAll();
         List<Task> taskDeadline = new ArrayList<>();

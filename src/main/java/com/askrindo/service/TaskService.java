@@ -1,6 +1,7 @@
 package com.askrindo.service;
 
 import com.askrindo.entity.File;
+import com.askrindo.entity.Release;
 import com.askrindo.entity.Task;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,5 +35,7 @@ public interface TaskService {
     public List<Task> getTaskAfterDeadline();
     public void updateDoneTask(String idTask, Float prosentase);
     public void deleteTaskFile(String idFile);
-//    public String generateTaskCode(String idRelease);
+    public Page<Task> getTaskByReleaseIdWithSort(String idRelease, String orderBy, String sort, Integer page, Integer sizePerpage);
+    public Page<Task> getTaskByUserIdWithSort(String idUser, String orderBy, String sort, Integer page, Integer sizePerpage);
+        //    public String generateTaskCode(String idRelease);
 }

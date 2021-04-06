@@ -72,6 +72,11 @@ public class ProjectController {
         return projectService.getAllProjectWithFilter(divisionId, pmId, pmoId, statusProject, directoratUser, pageable);
     }
 
+    @GetMapping("/projects-list")
+    public List<Project> getAllProject(){
+            return projectService.getAllProjectList();
+    }
+
     @GetMapping("/projects-sort")
     public Page<Project> getAllProjectWithSort(
             @RequestParam(name = "page", defaultValue = "0") Integer page,
