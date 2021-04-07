@@ -190,6 +190,7 @@ public class ProjectServiceImpl implements ProjectService {
 //        for (Release release1: releaseList) {
 //            release1.setWeight(release1.getScore()/totalScoreRelease);
 //            releaseService.saveRelease(release1);
+//            List<Task> taskList =
 //        }
     }
 
