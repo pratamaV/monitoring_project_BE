@@ -2,12 +2,9 @@ package com.askrindo.service;
 
 import com.askrindo.GlobalKey;
 import com.askrindo.entity.*;
-import com.askrindo.entity.sequence.SequenceIdFile;
-import com.askrindo.entity.sequence.SequenceIdTask;
 
 import com.askrindo.exception.DataNotFoundException;
 import com.askrindo.repository.TaskRepository;
-import org.apache.catalina.User;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,12 +42,6 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     FileService fileService;
 
-    @Autowired
-    SequenceIdTaskService sequenceIdTaskService;
-
-    @Autowired
-    SequenceIdFileService sequenceIdFileService;
-
     @Value("${document-task}")
     String documentTask;
 
@@ -74,9 +65,6 @@ public class TaskServiceImpl implements TaskService {
             taskRepository.save(task1);
         }
         Release releaseObj = releaseService.getReleaseById(task.getRelease().getId());
-//        SequenceIdTask sequenceIdTask = new SequenceIdTask();
-//        SequenceIdTask idTaskGen = sequenceIdTaskService.saveSequenceIdTask(sequenceIdTask);
-//        String idTaskGen = releaseObj.getReleaseCode()+"-"+idTaskGen.getIdGeneratorTask();
         String idTaskGen = this.generateTaskCode(releaseObj.getId());
         task.setTaskCode(idTaskGen);
         task.setRelease(releaseObj);
@@ -226,8 +214,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void addTask(Task task) {
         Release releaseObj = releaseService.getReleaseById(task.getRelease().getId());
-//        SequenceIdTask sequenceIdTask = new SequenceIdTask();
-//        SequenceIdTask idTaskGen = sequenceIdTaskService.saveSequenceIdTask(sequenceIdTask);
         String taskCodeGen = this.generateTaskCode(releaseObj.getId());
         task.setTaskCode(taskCodeGen);
         task.setRelease(releaseObj);
@@ -324,8 +310,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void uploadDocumentById(MultipartFile taskDoc, File file, String taskId) {
         Task task = taskRepository.findById(taskId).get();
-//        SequenceIdFile sequenceIdFile = new SequenceIdFile();
-//        SequenceIdFile idFileGen = sequenceIdFileService.saveSequenceIdFile(sequenceIdFile);
         String fileCode = this.generateFileCode(task.getId());
         String taskDocument = StringUtils.cleanPath(fileCode+"." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
 

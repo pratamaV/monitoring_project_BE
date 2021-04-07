@@ -77,8 +77,15 @@ public class UserController {
     }
 
     @PutMapping(value = "/userForgotPassword")
-    public void changePassword(@RequestParam(value = "email", required = true) String email) {
-        usersServiceAuth.updatePassword(email);
+    public void forgotPassword(@RequestParam(value = "email", required = true) String email) {
+        usersServiceAuth.forgotPassword(email);
+    }
+
+    @PutMapping(value = "/userChangePassword/{id}")
+    public void changePassword(@PathVariable(name = "id") String id,
+                               @RequestParam(value = "oldPassword", required = true) String oldPassword,
+                               @RequestParam(value = "newPassword", required = true) String newPassword) {
+        usersServiceAuth.updatePassword(id, oldPassword ,newPassword);
     }
 
     @GetMapping("/userByPerformance")
