@@ -1,6 +1,7 @@
 package com.askrindo.service;
 
 import com.askrindo.entity.File;
+import com.askrindo.entity.Project;
 import com.askrindo.entity.Release;
 import com.askrindo.entity.Task;
 import org.springframework.data.domain.Page;
@@ -31,6 +32,9 @@ public interface TaskService {
                                       Date estEndDateFrom,
                                       Date estEndDateTo, Pageable pageable);
 ;
+    public void updatePerformanceUser(Task taskObj, Release releaseObj, Project projectObj);
+    public void updateProsentaseProject(Project projectObj);
+    public void updateProsentaseRelease(Release releaseObj);
     public Page<Task> getTaskByReleaseId(String id, String userId, String statusDone, Pageable pageable);
     public List<Task> getTaskAfterDeadline();
     public void updateDoneTask(String idTask, Float prosentase);

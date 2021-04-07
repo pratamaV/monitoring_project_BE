@@ -37,6 +37,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    TaskService taskService;
+
 
     @Autowired
     SequenceIdProjectService sequenceIdProjectService;
@@ -168,7 +171,17 @@ public class ProjectServiceImpl implements ProjectService {
             release.setStatusRelease("Not Active");
             release.setWeight(0.0f);
             releaseService.saveRelease(release);
+            List <Task> taskList = release.getTaskList();
+            for (Task task: taskList){
+                task.setWeight(0.0f);
+                taskService.saveTask(task);
+                taskService.updatePerformanceUser(task, release, project);
+                taskService.updateProsentaseRelease(release);
+                taskService.updateProsentaseProject(project);
+            }
         }
+
+
 //        List <Release> releaseList1 = releaseService.getReleaseByStatusReleaseAndProjectId("Active", id);
 //        Float totalScoreRelease = Float.valueOf(0);
 //        for (Release release1: releaseList1) {

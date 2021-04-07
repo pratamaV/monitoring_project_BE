@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FileRepository extends JpaRepository<File, String> {
+
+    public Integer countFileByTaskId(String idTask);
 }

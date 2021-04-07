@@ -102,6 +102,14 @@ public class TaskServiceImpl implements TaskService {
         return taskCode;
     }
 
+    public String generateFileCode(String idTask){
+        Task taskObj = taskRepository.findById(idTask).get();
+        Integer countTaskByReleaseId = fileService.countFileByIdTask(idTask);
+        String numberIncrement = String.format(Locale.getDefault(), "%01d", countTaskByReleaseId + 1);
+        String fileCode = taskObj.getTaskCode() + "-" + numberIncrement;
+        return fileCode;
+    }
+
     @Override
     public List<Task> getAllTask() {
         return taskRepository.findAll();
@@ -312,9 +320,10 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void uploadDocumentById(MultipartFile taskDoc, File file, String taskId) {
         Task task = taskRepository.findById(taskId).get();
-        SequenceIdFile sequenceIdFile = new SequenceIdFile();
-        SequenceIdFile idFileGen = sequenceIdFileService.saveSequenceIdFile(sequenceIdFile);
-        String taskDocument = StringUtils.cleanPath(task.getTaskCode() + "-" + idFileGen.getIdGeneratorFile()+ "." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
+//        SequenceIdFile sequenceIdFile = new SequenceIdFile();
+//        SequenceIdFile idFileGen = sequenceIdFileService.saveSequenceIdFile(sequenceIdFile);
+        String fileCode = this.generateFileCode(task.getId());
+        String taskDocument = StringUtils.cleanPath(fileCode+"." + FilenameUtils.getExtension(taskDoc.getOriginalFilename()));
 
         try {
             if (taskDoc != null) {
@@ -323,7 +332,7 @@ public class TaskServiceImpl implements TaskService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        file.setDocumentCode(task.getTaskCode() + "-" + idFileGen.getIdGeneratorFile());
+        file.setDocumentCode(fileCode);
         file.setDocumentName(taskDocument);
         file.setTask(task);
         file.setCreatedDate(new Date());
@@ -441,7 +450,8 @@ public class TaskServiceImpl implements TaskService {
         fileService.deleteFile(idFile);
     }
 
-    private void updatePerformanceUser(Task taskObj, Release releaseObj, Project projectObj) {
+    @Override
+    public void updatePerformanceUser(Task taskObj, Release releaseObj, Project projectObj) {
         Users userObj = userService.getUserById(taskObj.getAssignedTo().getId());
         Float performanceUser = Float.valueOf(0);
         Float weightUser = Float.valueOf(0);
@@ -456,7 +466,8 @@ public class TaskServiceImpl implements TaskService {
         userService.saveUser(userObj);
     }
 
-    private void updateProsentaseProject(Project projectObj) {
+    @Override
+    public void updateProsentaseProject(Project projectObj) {
         List<Release> releaseList = new ArrayList<>();
         Float prosentaseProject = Float.valueOf(0);
         releaseList = releaseService.getReleaseByProjectId(projectObj.getId());
@@ -467,7 +478,8 @@ public class TaskServiceImpl implements TaskService {
         projectService.saveProject(projectObj);
     }
 
-    private void updateProsentaseRelease(Release releaseObj) {
+    @Override
+    public void updateProsentaseRelease(Release releaseObj) {
         List<Task> taskList = new ArrayList<>();
         Float prosentaseRelease = Float.valueOf(0);
         taskList = taskRepository.findTaskByReleaseId(releaseObj.getId());

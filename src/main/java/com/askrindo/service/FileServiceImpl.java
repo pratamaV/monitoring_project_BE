@@ -25,4 +25,9 @@ public class FileServiceImpl implements FileService {
     public File getFileById(String id) {
         return fileRepository.findById(id).get();
     }
+
+    @Override
+    public Integer countFileByIdTask(String taskId) {
+        return fileRepository.countFileByTaskId(taskId);
+    }
 }
