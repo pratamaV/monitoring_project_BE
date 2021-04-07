@@ -15,6 +15,7 @@ import java.util.List;
  * Created by DELL on 26/02/2021.
  */
 public interface TaskService {
+    public Task saveTaskOrdinary(Task task);
     public void saveTask(Task task);
     public void addTask(Task task);
     public void uploadDocumentById(MultipartFile taskDoc,File file, String taskId);

@@ -175,9 +175,9 @@ public class ProjectServiceImpl implements ProjectService {
                 List<Task> taskList = taskService.getTaskByReleaseId(release.getId());
                 if (!taskList.isEmpty()) {
                     for (Task task : taskList) {
-                        task.setWeight(0.0f);
-                        taskService.saveTask(task);
-                        taskService.updatePerformanceUser(task, release, project);
+                        task.setWeight(Float.valueOf(0));
+                        Task taskObj = taskService.saveTaskOrdinary(task);
+                        taskService.updatePerformanceUser(taskObj, release, project);
                     }
                 }
                 taskService.updateProsentaseRelease(release);

@@ -55,6 +55,11 @@ public class TaskServiceImpl implements TaskService {
     String documentTask;
 
     @Override
+    public Task saveTaskOrdinary(Task task) {
+        return taskRepository.save(task);
+    }
+
+    @Override
     public void saveTask(Task task) {
         List<Task> taskList = taskRepository.findTaskByReleaseId(task.getRelease().getId());
         Float totalScore = Float.valueOf(0);
@@ -90,7 +95,6 @@ public class TaskServiceImpl implements TaskService {
         Users users = userService.getUserById(task.getAssignedTo().getId());
         users.setTotalWeight(userWeight);
         userService.saveUser(users);
-
     }
 
 //    @Override
