@@ -6,6 +6,7 @@ import com.askrindo.entity.UsersHelper;
 import com.askrindo.repository.UserRepository;
 import com.askrindo.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,7 +27,7 @@ public class UsersServiceAuth implements UserDetailsService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-    
+
     @Autowired
     JavaMailSender javaMailSender;
 
@@ -106,7 +107,7 @@ public class UsersServiceAuth implements UserDetailsService {
         return password;
     }
 
-    public void updatePassword(String email) {
+    public void forgotPassword(String email) {
         Users users = userRepository.findUsersByEmail(email).get();
         if (users.getId() != null) {
             String userDefaultPassword = "2Up" + String.copyValueOf(this.generatePasswordDefault(6));
@@ -123,4 +124,19 @@ public class UsersServiceAuth implements UserDetailsService {
         }
     }
 
+    public void updatePassword(String id, String oldPassword, String newPassword) {
+        Optional<Users> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            Boolean verifyPass = passwordEncoder.matches(oldPassword, user.get().getPassword());
+            if (!verifyPass) {
+//                throw new OldPasswordNotMatchesException(GlobalKey.OLD_PASSWORD_NOT_MATCHES);
+            } else {
+                user.get().setPassword(passwordEncoder.encode(newPassword));
+//                userObj.setPassDefault(false);
+                userRepository.save(user.get());
+            }
+        } else {
+
+        }
+    }
 }
