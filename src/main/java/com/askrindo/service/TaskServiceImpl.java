@@ -463,7 +463,7 @@ public class TaskServiceImpl implements TaskService {
         taskListUser = taskRepository.findTaskByAssignedToId(userObj.getId());
         for (Task task : taskListUser) {
             performanceUser = performanceUser + (task.getWeight() * task.getTaskProsentase() * releaseObj.getWeight() * projectObj.getWeight());
-            weightUser = weightUser + (task.getWeight() * releaseObj.getWeight() * projectObj.getWeight());
+            weightUser = weightUser + (task.getWeight() * task.getRelease().getWeight() * task.getRelease().getProject().getWeight());
         }
         userObj.setTotalWeight(weightUser);
         userObj.setTotalPerformance(performanceUser);
