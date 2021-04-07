@@ -166,21 +166,24 @@ public class ProjectServiceImpl implements ProjectService {
             project1.setWeight(project1.getScore() / totalScoreProject);
             projectRepository.save(project1);
         }
-        List <Release> releaseList = project.getReleaseList();
-        for (Release release: releaseList) {
-            release.setStatusRelease("Not Active");
-            release.setWeight(0.0f);
-            releaseService.saveRelease(release);
-            List <Task> taskList = release.getTaskList();
-            for (Task task: taskList){
-                task.setWeight(0.0f);
-                taskService.saveTask(task);
-                taskService.updatePerformanceUser(task, release, project);
+        List <Release> releaseList = releaseService.getReleaseByProjectId(project.getId());
+        if(!releaseList.isEmpty()) {
+            for (Release release : releaseList) {
+                release.setStatusRelease("Not Active");
+                release.setWeight(0.0f);
+                releaseService.saveRelease(release);
+                List<Task> taskList = taskService.getTaskByReleaseId(release.getId());
+                if (!taskList.isEmpty()) {
+                    for (Task task : taskList) {
+                        task.setWeight(0.0f);
+                        taskService.saveTask(task);
+                        taskService.updatePerformanceUser(task, release, project);
+                    }
+                }
                 taskService.updateProsentaseRelease(release);
                 taskService.updateProsentaseProject(project);
             }
         }
-
 
 //        List <Release> releaseList1 = releaseService.getReleaseByStatusReleaseAndProjectId("Active", id);
 //        Float totalScoreRelease = Float.valueOf(0);
