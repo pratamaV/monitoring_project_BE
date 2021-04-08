@@ -1,6 +1,7 @@
 package com.askrindo.service;
 
 import com.askrindo.entity.Users;
+import com.askrindo.pojo.UserPojo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,7 +15,7 @@ public interface UserService {
     public Page<Users> getAllUser(Pageable pageable);
     public List<Users> getAllUserList();
     public Users getUserById(String id);
-    public void updateUser(Users users);
+    public void updateUser(String id, UserPojo user);
     public void updateStatusUserById(String id, String status);
     public List<Users> getUserByStatus(String status);
     public Float getTotalWeightById(String id);

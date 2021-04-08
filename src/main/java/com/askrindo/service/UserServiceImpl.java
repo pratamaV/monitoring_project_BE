@@ -1,6 +1,8 @@
 package com.askrindo.service;
 
+import com.askrindo.entity.Division;
 import com.askrindo.entity.Users;
+import com.askrindo.pojo.UserPojo;
 import com.askrindo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    DivisionService divisionService;
 
     @Override
     public void saveUser(Users users) {
@@ -42,8 +47,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updateUser(Users users) {
-        userRepository.save(users);
+    public void updateUser(String id, UserPojo userPojo) {
+        Users user = userRepository.findById(id).get();
+        Division division = divisionService.getDivisionById(userPojo.getDivisiUser().getId());
+        user.setUsername(userPojo.getUsername());
+        user.setUserRole(userPojo.getUserRole());
+        user.setDivisiUser(division);
+        user.setDirectorateUser(userPojo.getDirectorateUser());
+        userRepository.save(user);
     }
 
     @Override

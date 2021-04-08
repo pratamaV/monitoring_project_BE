@@ -1,8 +1,11 @@
 package com.askrindo.controller;
 
 
+import com.askrindo.entity.Division;
 import com.askrindo.entity.Users;
+import com.askrindo.pojo.UserPojo;
 import com.askrindo.security.UsersServiceAuth;
+import com.askrindo.service.DivisionService;
 import com.askrindo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,8 @@ public class UserController {
 
     @Autowired
     UsersServiceAuth usersServiceAuth;
+
+
 
     @PostMapping("/user")
     public void saveUser(@RequestBody Users users){
@@ -45,9 +50,15 @@ public class UserController {
         return userService.getAllUserList();
     }
 
-    @PutMapping("/user")
-    public void updateUser(@RequestBody Users users){
-        userService.updateUser(users);
+//    @PutMapping("/user")
+//    public void updateUser(@RequestBody Users users){
+//        userService.updateUser(users);
+//    }
+
+    @PutMapping("/user-update/{id}")
+    public void updateUser(@PathVariable String id,
+                           @RequestBody UserPojo userPojo){
+        userService.updateUser(id, userPojo);
     }
 
     @PutMapping("/user/{id}")
