@@ -40,7 +40,7 @@ public class Users {
 
     @OneToMany
     @JsonIgnore
-    private List<Project> projectList = new ArrayList<>();
+    private List<Release> releaseList = new ArrayList<>();
 
     @Transient
     private Collection<GrantedAuthority> listOfgrantedAuthorities = new ArrayList<>();
@@ -48,7 +48,7 @@ public class Users {
     public Users() {
     }
 
-    public Users(String id, String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, Float totalWeight, Float totalPerformance, List<Task> taskList, List<Project> projectList, Collection<GrantedAuthority> listOfgrantedAuthorities) {
+    public Users(String id, String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, Float totalWeight, Float totalPerformance, List<Task> taskList, List<Release> releaseList, Collection<GrantedAuthority> listOfgrantedAuthorities) {
         this.id = id;
         this.username = username;
         this.userRole = userRole;
@@ -60,12 +60,11 @@ public class Users {
         this.totalWeight = totalWeight;
         this.totalPerformance = totalPerformance;
         this.taskList = taskList;
-        this.projectList = projectList;
+        this.releaseList = releaseList;
         this.listOfgrantedAuthorities = listOfgrantedAuthorities;
     }
 
-    public Users(String id, String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, List<Task> taskList, List<Project> projectList) {
-        this.id = id;
+    public Users(String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, Float totalWeight, Float totalPerformance, List<Task> taskList, List<Release> releaseList, Collection<GrantedAuthority> listOfgrantedAuthorities) {
         this.username = username;
         this.userRole = userRole;
         this.email = email;
@@ -73,22 +72,12 @@ public class Users {
         this.directorateUser = directorateUser;
         this.password = password;
         this.statusUser = statusUser;
+        this.totalWeight = totalWeight;
+        this.totalPerformance = totalPerformance;
         this.taskList = taskList;
-        this.projectList = projectList;
+        this.releaseList = releaseList;
+        this.listOfgrantedAuthorities = listOfgrantedAuthorities;
     }
-
-    public Users(String username, String userRole, String email, Division divisiUser, String directorateUser, String password, String statusUser, List<Task> taskList, List<Project> projectList) {
-        this.username = username;
-        this.userRole = userRole;
-        this.email = email;
-        this.divisiUser = divisiUser;
-        this.directorateUser = directorateUser;
-        this.password = password;
-        this.statusUser = statusUser;
-        this.taskList = taskList;
-        this.projectList = projectList;
-    }
-
 
     public String getId() {
         return id;
@@ -178,12 +167,12 @@ public class Users {
         this.taskList = taskList;
     }
 
-    public List<Project> getProjectList() {
-        return projectList;
+    public List<Release> getReleaseList() {
+        return releaseList;
     }
 
-    public void setProjectList(List<Project> projectList) {
-        this.projectList = projectList;
+    public void setReleaseList(List<Release> releaseList) {
+        this.releaseList = releaseList;
     }
 
     public Collection<GrantedAuthority> getListOfgrantedAuthorities() {
@@ -208,7 +197,7 @@ public class Users {
                 ", totalWeight=" + totalWeight +
                 ", totalPerformance=" + totalPerformance +
                 ", taskList=" + taskList +
-                ", projectList=" + projectList +
+                ", releaseList=" + releaseList +
                 ", listOfgrantedAuthorities=" + listOfgrantedAuthorities +
                 '}';
     }

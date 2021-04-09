@@ -28,6 +28,30 @@ public class Release {
     private String stage;
     private Float prosentaseRelease;
     private String statusRelease;
+    private Float contractedValue;
+    private String categoryActivity;
+
+    @ManyToOne
+    @JoinColumn(name = "pmo_id")
+    private Users pmo;
+
+    @ManyToOne
+    @JoinColumn(name = "pm_id")
+    private Users pm;
+
+    @ManyToOne
+    @JoinColumn(name = "coPM_id")
+    private Users coPM;
+
+    @ManyToOne
+    @JoinColumn(name = "division_id")
+    private Division divisiUser;
+
+    private String directorateUser;
+
+    @ManyToOne
+    @JoinColumn(name = "department_head")
+    private Users departmentHead;
 
     @JsonFormat(timezone = "Asia/Jakarta",pattern = "yyyy-MM-dd")
     private Date estStartdate;
@@ -57,59 +81,10 @@ public class Release {
     public Release() {
     }
 
-    public Release(String id, String releaseName, Integer score, Float weight, String description, String status, String stage, Float prosentaseRelease, Date estStartdate, Date estEnddate, Date actStartdate, Date actEnddate, Project project, List<Task> taskList, List<Issued> issuedList) {
+    public Release(String id, String releaseName, String releaseCode, Integer score, Float weight, String description, String status, String stage, Float prosentaseRelease, String statusRelease, Float contractedValue, String categoryActivity, Users pmo, Users pm, Users coPM, Division divisiUser, String directorateUser, Users departmentHead, Date estStartdate, Date estEnddate, Date actStartdate, Date actEnddate, Project project, List<Task> taskList, List<Issued> issuedList) {
         this.id = id;
         this.releaseName = releaseName;
-        this.score = score;
-        this.weight = weight;
-        this.description = description;
-        this.status = status;
-        this.stage = stage;
-        this.prosentaseRelease = prosentaseRelease;
-        this.estStartdate = estStartdate;
-        this.estEnddate = estEnddate;
-        this.actStartdate = actStartdate;
-        this.actEnddate = actEnddate;
-        this.project = project;
-        this.taskList = taskList;
-        this.issuedList = issuedList;
-    }
-
-    public Release(String releaseName, Integer score, Float weight, String description, String status, String stage, Float prosentaseRelease, Date estStartdate, Date estEnddate, Date actStartdate, Date actEnddate, Project project, List<Task> taskList, List<Issued> issuedList) {
-        this.releaseName = releaseName;
-        this.score = score;
-        this.weight = weight;
-        this.description = description;
-        this.status = status;
-        this.stage = stage;
-        this.prosentaseRelease = prosentaseRelease;
-        this.estStartdate = estStartdate;
-        this.estEnddate = estEnddate;
-        this.actStartdate = actStartdate;
-        this.actEnddate = actEnddate;
-        this.project = project;
-        this.taskList = taskList;
-        this.issuedList = issuedList;
-    }
-
-    public Release(String releaseName, Integer score, Float weight, String description, String status, String stage, Float prosentaseRelease, Date estStartdate, Date estEnddate, Date actStartdate, Date actEnddate, Project project) {
-        this.releaseName = releaseName;
-        this.score = score;
-        this.weight = weight;
-        this.description = description;
-        this.status = status;
-        this.stage = stage;
-        this.prosentaseRelease = prosentaseRelease;
-        this.estStartdate = estStartdate;
-        this.estEnddate = estEnddate;
-        this.actStartdate = actStartdate;
-        this.actEnddate = actEnddate;
-        this.project = project;
-    }
-
-    public Release(String id, String releaseName, Integer score, Float weight, String description, String status, String stage, Float prosentaseRelease, String statusRelease, Date estStartdate, Date estEnddate, Date actStartdate, Date actEnddate, Project project, List<Task> taskList, List<Issued> issuedList) {
-        this.id = id;
-        this.releaseName = releaseName;
+        this.releaseCode = releaseCode;
         this.score = score;
         this.weight = weight;
         this.description = description;
@@ -117,6 +92,41 @@ public class Release {
         this.stage = stage;
         this.prosentaseRelease = prosentaseRelease;
         this.statusRelease = statusRelease;
+        this.contractedValue = contractedValue;
+        this.categoryActivity = categoryActivity;
+        this.pmo = pmo;
+        this.pm = pm;
+        this.coPM = coPM;
+        this.divisiUser = divisiUser;
+        this.directorateUser = directorateUser;
+        this.departmentHead = departmentHead;
+        this.estStartdate = estStartdate;
+        this.estEnddate = estEnddate;
+        this.actStartdate = actStartdate;
+        this.actEnddate = actEnddate;
+        this.project = project;
+        this.taskList = taskList;
+        this.issuedList = issuedList;
+    }
+
+    public Release(String releaseName, String releaseCode, Integer score, Float weight, String description, String status, String stage, Float prosentaseRelease, String statusRelease, Float contractedValue, String categoryActivity, Users pmo, Users pm, Users coPM, Division divisiUser, String directorateUser, Users departmentHead, Date estStartdate, Date estEnddate, Date actStartdate, Date actEnddate, Project project, List<Task> taskList, List<Issued> issuedList) {
+        this.releaseName = releaseName;
+        this.releaseCode = releaseCode;
+        this.score = score;
+        this.weight = weight;
+        this.description = description;
+        this.status = status;
+        this.stage = stage;
+        this.prosentaseRelease = prosentaseRelease;
+        this.statusRelease = statusRelease;
+        this.contractedValue = contractedValue;
+        this.categoryActivity = categoryActivity;
+        this.pmo = pmo;
+        this.pm = pm;
+        this.coPM = coPM;
+        this.divisiUser = divisiUser;
+        this.directorateUser = directorateUser;
+        this.departmentHead = departmentHead;
         this.estStartdate = estStartdate;
         this.estEnddate = estEnddate;
         this.actStartdate = actStartdate;
@@ -148,6 +158,22 @@ public class Release {
 
     public void setReleaseCode(String releaseCode) {
         this.releaseCode = releaseCode;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Float weight) {
+        this.weight = weight;
     }
 
     public String getDescription() {
@@ -182,6 +208,78 @@ public class Release {
         this.prosentaseRelease = prosentaseRelease;
     }
 
+    public String getStatusRelease() {
+        return statusRelease;
+    }
+
+    public void setStatusRelease(String statusRelease) {
+        this.statusRelease = statusRelease;
+    }
+
+    public Float getContractedValue() {
+        return contractedValue;
+    }
+
+    public void setContractedValue(Float contractedValue) {
+        this.contractedValue = contractedValue;
+    }
+
+    public String getCategoryActivity() {
+        return categoryActivity;
+    }
+
+    public void setCategoryActivity(String categoryActivity) {
+        this.categoryActivity = categoryActivity;
+    }
+
+    public Users getPmo() {
+        return pmo;
+    }
+
+    public void setPmo(Users pmo) {
+        this.pmo = pmo;
+    }
+
+    public Users getPm() {
+        return pm;
+    }
+
+    public void setPm(Users pm) {
+        this.pm = pm;
+    }
+
+    public Users getCoPM() {
+        return coPM;
+    }
+
+    public void setCoPM(Users coPM) {
+        this.coPM = coPM;
+    }
+
+    public Division getDivisiUser() {
+        return divisiUser;
+    }
+
+    public void setDivisiUser(Division divisiUser) {
+        this.divisiUser = divisiUser;
+    }
+
+    public String getDirectorateUser() {
+        return directorateUser;
+    }
+
+    public void setDirectorateUser(String directorateUser) {
+        this.directorateUser = directorateUser;
+    }
+
+    public Users getDepartmentHead() {
+        return departmentHead;
+    }
+
+    public void setDepartmentHead(Users departmentHead) {
+        this.departmentHead = departmentHead;
+    }
+
     public Date getEstStartdate() {
         return estStartdate;
     }
@@ -214,22 +312,6 @@ public class Release {
         this.actEnddate = actEnddate;
     }
 
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
-    public Float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Float weight) {
-        this.weight = weight;
-    }
-
     public Project getProject() {
         return project;
     }
@@ -254,11 +336,34 @@ public class Release {
         this.issuedList = issuedList;
     }
 
-    public String getStatusRelease() {
-        return statusRelease;
-    }
-
-    public void setStatusRelease(String statusRelease) {
-        this.statusRelease = statusRelease;
+    @Override
+    public String toString() {
+        return "Release{" +
+                "id='" + id + '\'' +
+                ", releaseName='" + releaseName + '\'' +
+                ", releaseCode='" + releaseCode + '\'' +
+                ", score=" + score +
+                ", weight=" + weight +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                ", stage='" + stage + '\'' +
+                ", prosentaseRelease=" + prosentaseRelease +
+                ", statusRelease='" + statusRelease + '\'' +
+                ", contractedValue=" + contractedValue +
+                ", categoryActivity='" + categoryActivity + '\'' +
+                ", pmo=" + pmo +
+                ", pm=" + pm +
+                ", coPM=" + coPM +
+                ", divisiUser=" + divisiUser +
+                ", directorateUser='" + directorateUser + '\'' +
+                ", departmentHead=" + departmentHead +
+                ", estStartdate=" + estStartdate +
+                ", estEnddate=" + estEnddate +
+                ", actStartdate=" + actStartdate +
+                ", actEnddate=" + actEnddate +
+                ", project=" + project +
+                ", taskList=" + taskList +
+                ", issuedList=" + issuedList +
+                '}';
     }
 }

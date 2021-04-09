@@ -1,8 +1,5 @@
 package com.askrindo.entity;
 
-import com.askrindo.generator.PrefixedSequenceIdGenerator;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -10,7 +7,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.hibernate.annotations.Parameter;
 
 
 @Entity
@@ -18,56 +14,25 @@ import org.hibernate.annotations.Parameter;
 public class  Project {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_seq")
-//    @GenericGenerator(
-//            name = "project_seq",
-//            strategy = "com.askrindo.generator.PrefixedSequenceIdGenerator",
-//            parameters = {@Parameter(name = PrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
-//                    @Parameter(name = PrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "PROJECT-")})
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
     private String projectName;
     private String projectCode;
-
-    @ManyToOne
-    @JoinColumn(name = "pmo_id")
-    private Users pmo;
-
-    @ManyToOne
-    @JoinColumn(name = "pm_id")
-    private Users pm;
     private String benefit;
-    private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "coPM_id")
-    private Users coPM;
-
-    @ManyToOne
-    @JoinColumn(name = "division_id")
-    private Division divisiUser;
-
-    private String directorateUser;
     private String status;
 
-    @JsonFormat(timezone = "Asia/Jakarta",pattern = "yyyy-MM-dd")
-    private Date targetLive;
     private Float prosentaseProject;
     private Float budget;
-    private Float contracted_value;
+    private Float contractedValue;
     private Float paymentRealization;
     private Integer score;
     private Float weight;
-    private String categoryActivity;
+
     private String categoryInitiative;
     private String statusProject;
     private String keyword;
     private String lineItem;
-
-    @ManyToOne
-    @JoinColumn(name = "department_head")
-    private Users departmentHead;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("project")
@@ -77,73 +42,41 @@ public class  Project {
     public Project() {
     }
 
-    public Project(String id, String projectName, String projectCode, Users pmo, Users pm, String benefit, String description, Users coPM, Division divisiUser, String directorateUser, String status, Date targetLive, Float prosentaseProject, Float budget, Float contracted_value, Float paymentRealization, Integer score, Float weight, String categoryActivity, String categoryInitiative, String statusProject, String keyword, String lineItem, Users departmentHead, List<Release> releaseList) {
+    public Project(String id, String projectName, String projectCode, String benefit, String status, Float prosentaseProject, Float budget, Float contractedValue, Float paymentRealization, Integer score, Float weight, String categoryInitiative, String statusProject, String keyword, String lineItem, List<Release> releaseList) {
         this.id = id;
         this.projectName = projectName;
         this.projectCode = projectCode;
-        this.pmo = pmo;
-        this.pm = pm;
         this.benefit = benefit;
-        this.description = description;
-        this.coPM = coPM;
-        this.divisiUser = divisiUser;
-        this.directorateUser = directorateUser;
         this.status = status;
-        this.targetLive = targetLive;
         this.prosentaseProject = prosentaseProject;
         this.budget = budget;
-        this.contracted_value = contracted_value;
+        this.contractedValue = contractedValue;
         this.paymentRealization = paymentRealization;
         this.score = score;
         this.weight = weight;
-        this.categoryActivity = categoryActivity;
         this.categoryInitiative = categoryInitiative;
         this.statusProject = statusProject;
         this.keyword = keyword;
         this.lineItem = lineItem;
-        this.departmentHead = departmentHead;
         this.releaseList = releaseList;
     }
 
-    public Project(String projectName, Users pmo, Users pm, String benefit, String description, Users coPM, Division divisiUser, String directorateUser, String status,
-                   Date targetLive, Float prosentaseProject, Float budget, Float contracted_value,
-                   Float paymentRealization, Integer score, Float weight, String categoryActivity,
-                   String categoryInitiative, String statusProject, String keyword, Users departmentHead, List<Release> releaseList) {
+    public Project(String projectName, String projectCode, String benefit, String status, Float prosentaseProject, Float budget, Float contractedValue, Float paymentRealization, Integer score, Float weight, String categoryInitiative, String statusProject, String keyword, String lineItem, List<Release> releaseList) {
         this.projectName = projectName;
-        this.pmo = pmo;
-        this.pm = pm;
+        this.projectCode = projectCode;
         this.benefit = benefit;
-        this.description = description;
-        this.coPM = coPM;
-        this.divisiUser = divisiUser;
-        this.directorateUser = directorateUser;
         this.status = status;
-        this.targetLive = targetLive;
         this.prosentaseProject = prosentaseProject;
         this.budget = budget;
-        this.contracted_value = contracted_value;
+        this.contractedValue = contractedValue;
         this.paymentRealization = paymentRealization;
         this.score = score;
         this.weight = weight;
-        this.categoryActivity = categoryActivity;
         this.categoryInitiative = categoryInitiative;
         this.statusProject = statusProject;
-        this.releaseList = releaseList;
         this.keyword = keyword;
-        this.departmentHead = departmentHead;
-    }
-
-
-    public Users getCoPM() {
-        return coPM;
-    }
-
-    public String getStatusProject() {
-        return statusProject;
-    }
-
-    public void setStatusProject(String statusProject) {
-        this.statusProject = statusProject;
+        this.lineItem = lineItem;
+        this.releaseList = releaseList;
     }
 
     public String getId() {
@@ -166,29 +99,8 @@ public class  Project {
         return projectCode;
     }
 
-    public void setProjectCode(String idGen) {
-        this.projectCode = idGen;
-    }
-
-    public Users getPmo() {
-
-        return pmo;
-    }
-
-    public void setPmo(Users pmo) {
-        this.pmo = pmo;
-    }
-
-    public Users getPm() {
-        return pm;
-    }
-
-    public void setPm(Users pm) {
-        this.pm = pm;
-    }
-
-    public void setCoPM(Users coPM) {
-        this.coPM = coPM;
+    public void setProjectCode(String projectCode) {
+        this.projectCode = projectCode;
     }
 
     public String getBenefit() {
@@ -199,44 +111,12 @@ public class  Project {
         this.benefit = benefit;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Division getDivisiUser() {
-        return divisiUser;
-    }
-
-    public void setDivisiUser(Division divisiUser) {
-        this.divisiUser = divisiUser;
-    }
-
-    public String getDirectorateUser() {
-        return directorateUser;
-    }
-
-    public void setDirectorateUser(String directorateUser) {
-        this.directorateUser = directorateUser;
-    }
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Date getTarget_live() {
-        return targetLive;
-    }
-
-    public void setTarget_live(Date target_live) {
-        this.targetLive = target_live;
     }
 
     public Float getProsentaseProject() {
@@ -255,12 +135,12 @@ public class  Project {
         this.budget = budget;
     }
 
-    public Float getContracted_value() {
-        return contracted_value;
+    public Float getContractedValue() {
+        return contractedValue;
     }
 
-    public void setContracted_value(Float contracted_value) {
-        this.contracted_value = contracted_value;
+    public void setContractedValue(Float contractedValue) {
+        this.contractedValue = contractedValue;
     }
 
     public Float getPaymentRealization() {
@@ -271,20 +151,20 @@ public class  Project {
         this.paymentRealization = paymentRealization;
     }
 
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
     public Float getWeight() {
         return weight;
     }
 
     public void setWeight(Float weight) {
         this.weight = weight;
-    }
-
-    public String getCategoryActivity() {
-        return categoryActivity;
-    }
-
-    public void setCategoryActivity(String categoryActivity) {
-        this.categoryActivity = categoryActivity;
     }
 
     public String getCategoryInitiative() {
@@ -295,20 +175,12 @@ public class  Project {
         this.categoryInitiative = categoryInitiative;
     }
 
-    public Date getTargetLive() {
-        return targetLive;
+    public String getStatusProject() {
+        return statusProject;
     }
 
-    public void setTargetLive(Date targetLive) {
-        this.targetLive = targetLive;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
+    public void setStatusProject(String statusProject) {
+        this.statusProject = statusProject;
     }
 
     public String getKeyword() {
@@ -319,12 +191,12 @@ public class  Project {
         this.keyword = keyword;
     }
 
-    public Users getDepartmentHead() {
-        return departmentHead;
+    public String getLineItem() {
+        return lineItem;
     }
 
-    public void setDepartmentHead(Users departmentHead) {
-        this.departmentHead = departmentHead;
+    public void setLineItem(String lineItem) {
+        this.lineItem = lineItem;
     }
 
     public List<Release> getReleaseList() {
@@ -335,41 +207,24 @@ public class  Project {
         this.releaseList = releaseList;
     }
 
-    public String getLineItem() {
-        return lineItem;
-    }
-
-    public void setLineItem(String lineItem) {
-        this.lineItem = lineItem;
-    }
-
     @Override
     public String toString() {
         return "Project{" +
                 "id='" + id + '\'' +
                 ", projectName='" + projectName + '\'' +
                 ", projectCode='" + projectCode + '\'' +
-                ", pmo=" + pmo +
-                ", pm=" + pm +
                 ", benefit='" + benefit + '\'' +
-                ", description='" + description + '\'' +
-                ", coPM=" + coPM +
-                ", divisiUser=" + divisiUser +
-                ", directorateUser='" + directorateUser + '\'' +
                 ", status='" + status + '\'' +
-                ", targetLive=" + targetLive +
                 ", prosentaseProject=" + prosentaseProject +
                 ", budget=" + budget +
-                ", contracted_value=" + contracted_value +
+                ", contractedValue=" + contractedValue +
                 ", paymentRealization=" + paymentRealization +
                 ", score=" + score +
                 ", weight=" + weight +
-                ", categoryActivity='" + categoryActivity + '\'' +
                 ", categoryInitiative='" + categoryInitiative + '\'' +
                 ", statusProject='" + statusProject + '\'' +
                 ", keyword='" + keyword + '\'' +
                 ", lineItem='" + lineItem + '\'' +
-                ", departmentHead=" + departmentHead +
                 ", releaseList=" + releaseList +
                 '}';
     }

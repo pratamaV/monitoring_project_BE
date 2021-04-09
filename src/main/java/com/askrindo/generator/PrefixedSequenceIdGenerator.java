@@ -19,23 +19,28 @@ public class PrefixedSequenceIdGenerator extends SequenceStyleGenerator {
     private String valuePrefix;
 
     public static final String NUMBER_FORMAT_PARAMETER = "numberFormat";
-    public static final String NUMBER_FORMAT_DEFAULT = "%d";
+    public static final String NUMBER_FORMAT_DEFAULT = "%03d";
     private String numberFormat;
+
+    public static final String DATE_FORMAT_PARAMETER = "dateFormat";
+    public static final String DATE_FORMAT_DEFAULT = "%tY";
+
+    private String format;
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session,
                                  Object object) throws HibernateException {
-        return valuePrefix + String.format(numberFormat, super.generate(session, object));
+        return String.format(format, LocalDate.now(), super.generate(session, object));
     }
 
     @Override
     public void configure(Type type, Properties params,
                           ServiceRegistry serviceRegistry) throws MappingException {
         super.configure(LongType.INSTANCE, params, serviceRegistry);
-        valuePrefix = ConfigurationHelper.getString(VALUE_PREFIX_PARAMETER,
-                params, VALUE_PREFIX_DEFAULT);
-        numberFormat = ConfigurationHelper.getString(NUMBER_FORMAT_PARAMETER,
-                params, NUMBER_FORMAT_DEFAULT);
+        String dateFormat = ConfigurationHelper.getString(DATE_FORMAT_PARAMETER, params, DATE_FORMAT_DEFAULT).replace("%", "%1$");
+        String prefixFormat = ConfigurationHelper.getString(VALUE_PREFIX_PARAMETER, params, VALUE_PREFIX_DEFAULT);
+        String numberFormat = ConfigurationHelper.getString(NUMBER_FORMAT_PARAMETER, params, NUMBER_FORMAT_DEFAULT).replace("%", "%2$");
+        this.format = prefixFormat+dateFormat+numberFormat;
     }
 }
 
