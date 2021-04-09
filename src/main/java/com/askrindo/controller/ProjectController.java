@@ -81,14 +81,14 @@ public class ProjectController {
             return projectService.getAllProjectList();
     }
 
-//    @GetMapping("/projects-sort")
-//    public Page<Project> getAllProjectWithSort(
-//            @RequestParam(name = "page", defaultValue = "0") Integer page,
-//            @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
-//            @RequestParam(name = "orderBy", required = false) String orderBy,
-//            @RequestParam(name = "sort", required = false) String sort) {
-//            return projectService.getAllProjectWithSort(orderBy, sort, page, sizePerPage);
-//    }
+    @GetMapping("/projects-sort")
+    public Page<Project> getAllProjectWithSort(
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
+            @RequestParam(name = "orderBy", required = false) String orderBy,
+            @RequestParam(name = "sort", required = false) String sort) {
+            return projectService.getAllProjectWithSort(orderBy, sort, page, sizePerPage);
+    }
 
 
     @GetMapping("/projectbyuser")
