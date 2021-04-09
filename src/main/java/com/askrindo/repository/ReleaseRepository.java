@@ -1,5 +1,6 @@
 package com.askrindo.repository;
 
+import com.askrindo.entity.Project;
 import com.askrindo.entity.Release;
 import io.swagger.models.auth.In;
 import org.springframework.data.domain.Page;
@@ -38,5 +39,8 @@ public interface ReleaseRepository extends JpaRepository<Release, String>, JpaSp
 
     @Query(nativeQuery = true, value = "SELECT mst_release.* FROM mst_release inner join mst_project on mst_release.project_id  = mst_project.id where mst_project.id = :projectId ORDER BY :param DESC")
     public List<Release> getReleasebyIdWithSortDESC(@Param("projectId") String projectId, @Param("param") String param);
+
+    public List<Release> findAllByCoPMId(String id);
+
 
 }

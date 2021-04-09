@@ -137,4 +137,7 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
 //                                @Param("pmoId") String pmoId,
 //                                @Param("statusProject") String statusProject,
 //                                @Param("directoratUser") String directoratUser, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "SELECT DISTINCT mst_project.* FROM mst_project INNER JOIN mst_release ON mst_project.id=mst_release.project_id where mst_release.coPM_id= :coPMId")
+    public Page<Project> findProjectBycoPMId(@Param("coPMId") String coPMId, Pageable pageable);
 }

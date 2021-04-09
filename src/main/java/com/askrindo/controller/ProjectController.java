@@ -180,4 +180,13 @@ public class ProjectController {
         return projectService.getProjectByLineItemBelanjaModal();
     }
 
+    @GetMapping("/my-project/{id}")
+    public Page<Project> getMyProject(@PathVariable String id,
+                                      @RequestParam(name = "page", defaultValue = "0") Integer page,
+                                        @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage){
+
+        Pageable pageable = PageRequest.of(page, sizePerPage);
+        return projectService.getProjectByCoPMId(id, pageable);
+    }
+
 }

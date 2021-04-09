@@ -299,4 +299,9 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getProjectByKeyword(String keyword) {
         return projectRepository.findProjectByKeyword(keyword);
     }
+
+    @Override
+    public Page<Project> getProjectByCoPMId(String id, Pageable pageable) {
+        return projectRepository.findProjectBycoPMId(id, pageable);
+    }
 }

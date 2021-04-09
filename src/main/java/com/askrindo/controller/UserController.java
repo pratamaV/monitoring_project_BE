@@ -2,6 +2,7 @@ package com.askrindo.controller;
 
 
 import com.askrindo.entity.Division;
+import com.askrindo.entity.Project;
 import com.askrindo.entity.Users;
 import com.askrindo.pojo.UserPojo;
 import com.askrindo.security.UsersServiceAuth;
@@ -24,8 +25,6 @@ public class UserController {
 
     @Autowired
     UsersServiceAuth usersServiceAuth;
-
-
 
     @PostMapping("/user")
     public void saveUser(@RequestBody Users users){
