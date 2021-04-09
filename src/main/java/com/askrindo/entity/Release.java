@@ -336,34 +336,4 @@ public class Release {
         this.issuedList = issuedList;
     }
 
-    @Override
-    public String toString() {
-        return "Release{" +
-                "id='" + id + '\'' +
-                ", releaseName='" + releaseName + '\'' +
-                ", releaseCode='" + releaseCode + '\'' +
-                ", score=" + score +
-                ", weight=" + weight +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                ", stage='" + stage + '\'' +
-                ", prosentaseRelease=" + prosentaseRelease +
-                ", statusRelease='" + statusRelease + '\'' +
-                ", contractedValue=" + contractedValue +
-                ", categoryActivity='" + categoryActivity + '\'' +
-                ", pmo=" + pmo +
-                ", pm=" + pm +
-                ", coPM=" + coPM +
-                ", divisiUser=" + divisiUser +
-                ", directorateUser='" + directorateUser + '\'' +
-                ", departmentHead=" + departmentHead +
-                ", estStartdate=" + estStartdate +
-                ", estEnddate=" + estEnddate +
-                ", actStartdate=" + actStartdate +
-                ", actEnddate=" + actEnddate +
-                ", project=" + project +
-                ", taskList=" + taskList +
-                ", issuedList=" + issuedList +
-                '}';
-    }
 }

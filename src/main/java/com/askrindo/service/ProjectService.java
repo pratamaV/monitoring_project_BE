@@ -33,5 +33,9 @@ public interface ProjectService {
     public List<Project> getProjectByLineItemBebanUsaha();
     public List<Project> getProjectByLineItemBelanjaModal();
     public List<Project> getAllProjectList();
+
+    public Page<Project> getProjectByCoPMId(String id, Pageable pageable);
+
     public Page<Project> getAllProjectPageFilter(String projectDependency, Pageable pageable);
+
 }
