@@ -46,6 +46,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void saveProject(Project project) {
+        if (project.getId() == null) {
+            SequenceIdProject sequenceIdProject = new SequenceIdProject();
+            SequenceIdProject idProjectGen = sequenceIdProjectService.saveSequenceIdProject(sequenceIdProject);
+            String idProjectgenFormat = idProjectGen.getIdGeneratorProject();
+            project.setProjectCode(idProjectgenFormat);
+        }
         projectRepository.save(project);
         List<Project> projectList = projectRepository.findProjectByStatusProject("Active");
         Float totalScoreProject = Float.valueOf(0);
@@ -146,8 +152,8 @@ public class ProjectServiceImpl implements ProjectService {
             project1.setWeight(project1.getScore() / totalScoreProject);
             projectRepository.save(project1);
         }
-        List <Release> releaseList = releaseService.getReleaseByProjectId(project.getId());
-        if(!releaseList.isEmpty()) {
+        List<Release> releaseList = releaseService.getReleaseByProjectId(project.getId());
+        if (!releaseList.isEmpty()) {
             for (Release release : releaseList) {
                 release.setStatusRelease("Not Active");
                 release.setWeight(0.0f);

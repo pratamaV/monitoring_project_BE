@@ -7,7 +7,6 @@ import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -21,13 +20,8 @@ public class  Project {
     private String id;
     private String projectName;
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_idproject")
-    @GenericGenerator(
-            name = "seq_idproject",
-            strategy = "com.askrindo.generator.PrefixedSequenceIdGenerator",
-            parameters = {@Parameter(name = PrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
-                    @Parameter(name = PrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "ASK")})
     private String projectCode;
+
     private String benefit;
     private String status;
 
@@ -40,7 +34,7 @@ public class  Project {
 
     private String categoryInitiative;
     private String statusProject;
-    private String keyword;
+    private String projectDependency;
     private String lineItem;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
@@ -51,7 +45,7 @@ public class  Project {
     public Project() {
     }
 
-    public Project(String id, String projectName, String projectCode, String benefit, String status, Float prosentaseProject, Float budget, Float contractedValue, Float paymentRealization, Integer score, Float weight, String categoryInitiative, String statusProject, String keyword, String lineItem, List<Release> releaseList) {
+    public Project(String id, String projectName, String projectCode, String benefit, String status, Float prosentaseProject, Float budget, Float contractedValue, Float paymentRealization, Integer score, Float weight, String categoryInitiative, String statusProject, String projectDependency, String lineItem, List<Release> releaseList) {
         this.id = id;
         this.projectName = projectName;
         this.projectCode = projectCode;
@@ -65,12 +59,12 @@ public class  Project {
         this.weight = weight;
         this.categoryInitiative = categoryInitiative;
         this.statusProject = statusProject;
-        this.keyword = keyword;
+        this.projectDependency = projectDependency;
         this.lineItem = lineItem;
         this.releaseList = releaseList;
     }
 
-    public Project(String projectName, String projectCode, String benefit, String status, Float prosentaseProject, Float budget, Float contractedValue, Float paymentRealization, Integer score, Float weight, String categoryInitiative, String statusProject, String keyword, String lineItem, List<Release> releaseList) {
+    public Project(String projectName, String projectCode, String benefit, String status, Float prosentaseProject, Float budget, Float contractedValue, Float paymentRealization, Integer score, Float weight, String categoryInitiative, String statusProject, String projectDependency, String lineItem, List<Release> releaseList) {
         this.projectName = projectName;
         this.projectCode = projectCode;
         this.benefit = benefit;
@@ -83,7 +77,7 @@ public class  Project {
         this.weight = weight;
         this.categoryInitiative = categoryInitiative;
         this.statusProject = statusProject;
-        this.keyword = keyword;
+        this.projectDependency = projectDependency;
         this.lineItem = lineItem;
         this.releaseList = releaseList;
     }
@@ -192,12 +186,12 @@ public class  Project {
         this.statusProject = statusProject;
     }
 
-    public String getKeyword() {
-        return keyword;
+    public String getProjectDependency() {
+        return projectDependency;
     }
 
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+    public void setProjectDependency(String keyword) {
+        this.projectDependency = keyword;
     }
 
     public String getLineItem() {
@@ -232,7 +226,7 @@ public class  Project {
                 ", weight=" + weight +
                 ", categoryInitiative='" + categoryInitiative + '\'' +
                 ", statusProject='" + statusProject + '\'' +
-                ", keyword='" + keyword + '\'' +
+                ", keyword='" + projectDependency + '\'' +
                 ", lineItem='" + lineItem + '\'' +
                 ", releaseList=" + releaseList +
                 '}';
