@@ -19,7 +19,7 @@ public interface ReleaseService {
     public List<Release> getReleaseByStage(String stage);
     public List<Release> getReleaseByStatus(String status);
     public void updateStatusReleaseById(String id, String releaseStatus);
-    public Page<Release> getReleaseByProjectId(String idProject, String status, String stage, Pageable pageable);
+    public Page<Release> getReleaseByProjectId(String idProject, String pmId, String pmoId, String copmId,  String status, String stage, String divisionId, String directoratUser, Pageable pageable);
     public List<Release> getReleaseByProjectIdWithSort(String idProject, String orderBy, String sort, Integer page, Integer pagePerSize);
     public List<Release> getReleaseByStatusReleaseAndProjectId(String statusRelease, String projectId);
 }

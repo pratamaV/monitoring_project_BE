@@ -29,7 +29,7 @@ public interface ProjectService {
 //    public List<Project> getProjectByPmoID(String id);
 //    public List<Project> getProjectByCoPmID(String id);
 //    public List<Project> getProjectByKeyword(String keyword);
-//    public Page<Project> getAllProjectWithSort(String orderBy, String sort, Integer page, Integer sizePerpage);
+    public Page<Project> getAllProjectWithSort(String orderBy, String sort, Integer page, Integer sizePerpage);
     public List<Project> getProjectByLineItemBebanUsaha();
     public List<Project> getProjectByLineItemBelanjaModal();
     public List<Project> getAllProjectList();

@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -69,19 +68,38 @@ public class ReleaseController {
     public Page<Release> searchReleaseByProjectId(@PathVariable String id,
                                                   @RequestParam(name = "page", defaultValue = "0") Integer page,
                                                   @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
+                                                  @RequestParam(name = "pmId", required = false) String pmId,
+                                                  @RequestParam(name = "pmoId", required = false) String pmoId,
+                                                  @RequestParam(name = "copmId", required = false) String copmId,
                                                   @RequestParam(name = "status", required = false) String status,
-                                                  @RequestParam(name = "stage", required = false) String stage
-    ) {
-        if (status == null && stage == null) {
+                                                  @RequestParam(name = "status", required = false) String stage,
+                                                  @RequestParam(name = "divisionId", required = false) String divisionId,
+                                                  @RequestParam(name = "directoratUser", required = false) String directoratUser) {
+
+
+        if (pmId == null) {
+            pmId = "";
+        }
+        if (pmoId == null) {
+            pmoId = "";
+        }
+        if (copmId == null) {
+            copmId = "";
+        }
+        if (status == null) {
             status = "";
-            stage = "";
-        } else if (status == null) {
-            status = "";
-        } else if (stage == null) {
+        }
+        if (stage == null) {
             stage = "";
         }
+        if (divisionId == null) {
+            divisionId = "";
+        }
+        if (directoratUser == null) {
+            directoratUser = "";
+        }
         Pageable pageable = PageRequest.of(page, sizePerPage);
-        return releaseService.getReleaseByProjectId(id, status, stage, pageable);
+        return releaseService.getReleaseByProjectId(id,  pmId, pmoId, copmId, status, stage, divisionId, directoratUser, pageable);
     }
 
     @GetMapping("/releaseByProjectId-sort/{id}")

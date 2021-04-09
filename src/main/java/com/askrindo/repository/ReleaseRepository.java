@@ -29,6 +29,17 @@ public interface ReleaseRepository extends JpaRepository<Release, String>, JpaSp
 //    @Query(nativeQuery = true, value = "SELECT mst_release.* FROM mst_release inner join mst_project on mst_release.project_id  = mst_project.id where mst_project.id like %:projectId% and mst_release.status like %:status% and mst_release.stage like %:stage% ORDER BY release_name ASC")
 //    public List<Release> getReleasebyId2(@Param("projectId") String projectId,@Param("status") String status,@Param("stage") String stage);
 
+    @Query(nativeQuery = true, value = "select mst_release.* from mst_release inner join mst_division on mst_release.division_id = mst_division.id inner join mst_project on mst_release.project_id  = mst_project.id inner join mst_user on mst_release.pm_id = mst_user.id  where mst_project.id like %:projectId% and mst_release.pm_id like %:pmId%  and mst_release.pmo_id like %:pmoId%  and mst_release.copm_id like %:copmId%  and mst_release.status like %:status%  and mst_release.stage like %:stage% and mst_release.division_id like %:divisionId%  and mst_release.directorate_user like %:directoratUser% order by mst_release.release_name asc")
+    Page<Release> getAllReleaseByIdProject(
+                                @Param("projectId") String projectId,
+                                @Param("pmId") String pmId,
+                                @Param("pmoId") String pmoId,
+                                @Param("copmId") String copmId,
+                                @Param("status") String status,
+                                @Param("stage") String stage,
+                                @Param("divisionId") String divisionId,
+                                @Param("directoratUser") String directoratUser, Pageable pageable);
+
     @Query(nativeQuery = true, value = "SELECT mst_release.* FROM mst_release inner join mst_project on mst_release.project_id  = mst_project.id where mst_project.id like %:projectId% and mst_release.status like %:status% and mst_release.stage like %:stage% ORDER BY release_name ASC")
     public Page<Release> getReleasebyId2(@Param("projectId") String projectId, @Param("status") String status, @Param("stage") String stage, Pageable pageable);
 

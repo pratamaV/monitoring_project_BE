@@ -110,21 +110,21 @@ public class ProjectServiceImpl implements ProjectService {
 //        return projectRepository.getAllProject(divisionId, pmId, pmoId, statusProject, directoratUser, pageable);
 //    }
 
-//    @Override
-//    public Page<Project> getAllProjectWithSort(String orderBy, String sort, Integer page, Integer sizePerpage) {
-//
-//        if (sort.equals(GlobalKey.SORT_ASC)){
-//            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.ASC, orderBy));
-////            Page<Project> pagedResult = projectRepository.findAll(paging);
-//            return projectRepository.findAll(paging);
-//        }
-//        else if (sort.equals(GlobalKey.SORT_DESC)){
-//            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.DESC, orderBy));
-////            Page<Project> pagedResult = projectRepository.findAll(paging);
-//            return projectRepository.findAll(paging);
-//        }
-//        return null;
-//    }
+    @Override
+    public Page<Project> getAllProjectWithSort(String orderBy, String sort, Integer page, Integer sizePerpage) {
+
+        if (sort.equals(GlobalKey.SORT_ASC)){
+            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.ASC, orderBy));
+//            Page<Project> pagedResult = projectRepository.findAll(paging);
+            return projectRepository.findAll(paging);
+        }
+        else if (sort.equals(GlobalKey.SORT_DESC)){
+            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.DESC, orderBy));
+//            Page<Project> pagedResult = projectRepository.findAll(paging);
+            return projectRepository.findAll(paging);
+        }
+        return null;
+    }
 
     @Override
     public Project getProjectById(String id) {
