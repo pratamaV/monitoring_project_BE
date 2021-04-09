@@ -53,7 +53,7 @@ public class ProjectServiceImpl implements ProjectService {
             project.setProjectCode(idProjectgenFormat);
         }
         projectRepository.save(project);
-        List<Project> projectList = projectRepository.findProjectByStatusProject("Active");
+        List<Project> projectList = projectRepository.findProjectByStatusProject(GlobalKey.ACTIVE_STATUS);
         Float totalScoreProject = Float.valueOf(0);
         for (Project project1 : projectList) {
             totalScoreProject = totalScoreProject + project1.getScore();
@@ -96,9 +96,10 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> getAllProject() {
-        return projectRepository.findAll();
+    public Page<Project> getAllProjectPageFilter(String projectDependency, Pageable pageable) {
+        return projectRepository.getAllProjectDependency(projectDependency, pageable);
     }
+
 
 //    @Override
 //    public Page<Project> getAllProjectWithFilter(String divisionId,
@@ -139,11 +140,11 @@ public class ProjectServiceImpl implements ProjectService {
     public void updateStatusProjectById(String id, String projectStatus) {
         Project project = projectRepository.findById(id).get();
         project.setStatusProject(projectStatus);
-        if (projectStatus.equalsIgnoreCase("Not Active")) {
+        if (projectStatus.equalsIgnoreCase(GlobalKey.NOT_ACTIVE_STATUS)) {
             project.setWeight(0.0f);
         }
         projectRepository.save(project);
-        List<Project> projectList = projectRepository.findProjectByStatusProject("Active");
+        List<Project> projectList = projectRepository.findProjectByStatusProject(GlobalKey.ACTIVE_STATUS);
         Float totalScoreProject = Float.valueOf(0);
         for (Project project1 : projectList) {
             totalScoreProject = totalScoreProject + project1.getScore();
@@ -155,7 +156,7 @@ public class ProjectServiceImpl implements ProjectService {
         List<Release> releaseList = releaseService.getReleaseByProjectId(project.getId());
         if (!releaseList.isEmpty()) {
             for (Release release : releaseList) {
-                release.setStatusRelease("Not Active");
+                release.setStatusRelease(GlobalKey.NOT_ACTIVE_STATUS);
                 release.setWeight(0.0f);
                 releaseService.saveRelease(release);
                 List<Task> taskList = taskService.getTaskByReleaseId(release.getId());
@@ -295,13 +296,15 @@ public class ProjectServiceImpl implements ProjectService {
 //        return projectRepository.findProjectByCoPMId(id);
 //    }
 
-    @Override
-    public List<Project> getProjectByKeyword(String keyword) {
-        return projectRepository.findProjectByKeyword(keyword);
-    }
 
     @Override
     public Page<Project> getProjectByCoPMId(String id, Pageable pageable) {
         return projectRepository.findProjectBycoPMId(id, pageable);
     }
+
+//    @Override
+//    public List<Project> getProjectByKeyword(String keyword) {
+//        return projectRepository.findProjectByKeyword(keyword);
+//    }
+
 }

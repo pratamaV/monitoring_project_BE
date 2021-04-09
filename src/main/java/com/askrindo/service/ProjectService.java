@@ -12,7 +12,6 @@ import java.util.List;
  */
 public interface ProjectService {
     public void saveProject(Project project);
-    public List<Project> getAllProject();
 //    public Page<Project> getAllProjectWithFilter(String divisionId,
 //                                                 String pmId,
 //                                                 String pmoId,
@@ -29,10 +28,14 @@ public interface ProjectService {
 //    public List<Project> getProjectByPmID(String id);
 //    public List<Project> getProjectByPmoID(String id);
 //    public List<Project> getProjectByCoPmID(String id);
-    public List<Project> getProjectByKeyword(String keyword);
+//    public List<Project> getProjectByKeyword(String keyword);
 //    public Page<Project> getAllProjectWithSort(String orderBy, String sort, Integer page, Integer sizePerpage);
     public List<Project> getProjectByLineItemBebanUsaha();
     public List<Project> getProjectByLineItemBelanjaModal();
     public List<Project> getAllProjectList();
+
     public Page<Project> getProjectByCoPMId(String id, Pageable pageable);
+
+    public Page<Project> getAllProjectPageFilter(String projectDependency, Pageable pageable);
+
 }
