@@ -43,48 +43,48 @@ public class ProjectController {
         return projectService.getAllProject();
     }
 
-    @GetMapping("/projects")
-    public Page<Project> getAllProject(
-            @RequestParam(name = "page", defaultValue = "0") Integer page,
-            @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
-            @RequestParam(name = "divisionId", required = false) String divisionId,
-            @RequestParam(name = "pmId", required = false) String pmId,
-            @RequestParam(name = "pmoId", required = false) String pmoId,
-            @RequestParam(name = "statusProject", required = false) String statusProject,
-            @RequestParam(name = "directoratUser", required = false) String directoratUser) {
-
-        if (divisionId == null ) {
-            divisionId = "";
-        }
-        if (pmId == null) {
-            pmId = "";
-        }
-        if (pmoId == null) {
-            pmoId = "";
-        }
-        if (statusProject == null) {
-            statusProject = "";
-        }
-        if (directoratUser == null) {
-            directoratUser = "";
-        }
-        Pageable pageable = PageRequest.of(page, sizePerPage);
-        return projectService.getAllProjectWithFilter(divisionId, pmId, pmoId, statusProject, directoratUser, pageable);
-    }
+//    @GetMapping("/projects")
+//    public Page<Project> getAllProject(
+//            @RequestParam(name = "page", defaultValue = "0") Integer page,
+//            @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
+//            @RequestParam(name = "divisionId", required = false) String divisionId,
+//            @RequestParam(name = "pmId", required = false) String pmId,
+//            @RequestParam(name = "pmoId", required = false) String pmoId,
+//            @RequestParam(name = "statusProject", required = false) String statusProject,
+//            @RequestParam(name = "directoratUser", required = false) String directoratUser) {
+//
+//        if (divisionId == null ) {
+//            divisionId = "";
+//        }
+//        if (pmId == null) {
+//            pmId = "";
+//        }
+//        if (pmoId == null) {
+//            pmoId = "";
+//        }
+//        if (statusProject == null) {
+//            statusProject = "";
+//        }
+//        if (directoratUser == null) {
+//            directoratUser = "";
+//        }
+//        Pageable pageable = PageRequest.of(page, sizePerPage);
+//        return projectService.getAllProjectWithFilter(divisionId, pmId, pmoId, statusProject, directoratUser, pageable);
+//    }
 
     @GetMapping("/projects-list")
     public List<Project> getAllProject(){
             return projectService.getAllProjectList();
     }
 
-    @GetMapping("/projects-sort")
-    public Page<Project> getAllProjectWithSort(
-            @RequestParam(name = "page", defaultValue = "0") Integer page,
-            @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
-            @RequestParam(name = "orderBy", required = false) String orderBy,
-            @RequestParam(name = "sort", required = false) String sort) {
-            return projectService.getAllProjectWithSort(orderBy, sort, page, sizePerPage);
-    }
+//    @GetMapping("/projects-sort")
+//    public Page<Project> getAllProjectWithSort(
+//            @RequestParam(name = "page", defaultValue = "0") Integer page,
+//            @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
+//            @RequestParam(name = "orderBy", required = false) String orderBy,
+//            @RequestParam(name = "sort", required = false) String sort) {
+//            return projectService.getAllProjectWithSort(orderBy, sort, page, sizePerPage);
+//    }
 
 
     @GetMapping("/projectbyuser")
@@ -104,26 +104,26 @@ public class ProjectController {
     }
 
 
-    @GetMapping("/testSortProject")
-    public Page<Project> test(@RequestParam(name = "page", defaultValue = "0") Integer page,
-                              @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage){
-//        SequenceIdProject sequenceIdProject = new SequenceIdProject();
-//        SequenceIdProject idProjectGen = sequenceIdProjectService.saveSequenceIdProject(sequenceIdProject);
-//        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-//        String [] yearChar = year.split("");
-//        year = yearChar[2]+yearChar[3];
-//        String idProjectgenFormat = year +"-" + idProjectGen.getIdGeneratorProject();
-//        System.out.println(idProjectgenFormat);
-//        Pageable pageable = PageRequest.of(page, sizePerPage);
-//        return projectService.getAllProjectWithSort("projectName", "ASC", pageable);
-        return projectService.getAllProjectWithSort("projectName", "ASC", page, sizePerPage);
-    }
+//    @GetMapping("/testSortProject")
+//    public Page<Project> test(@RequestParam(name = "page", defaultValue = "0") Integer page,
+//                              @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage){
+////        SequenceIdProject sequenceIdProject = new SequenceIdProject();
+////        SequenceIdProject idProjectGen = sequenceIdProjectService.saveSequenceIdProject(sequenceIdProject);
+////        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+////        String [] yearChar = year.split("");
+////        year = yearChar[2]+yearChar[3];
+////        String idProjectgenFormat = year +"-" + idProjectGen.getIdGeneratorProject();
+////        System.out.println(idProjectgenFormat);
+////        Pageable pageable = PageRequest.of(page, sizePerPage);
+////        return projectService.getAllProjectWithSort("projectName", "ASC", pageable);
+//        return projectService.getAllProjectWithSort("projectName", "ASC", page, sizePerPage);
+//    }
 
-    @GetMapping("/projectByDivision")
-    public List<Project> getProjectByDivisiUserAndStatusProject(@RequestParam String divisiUser,
-                                                                @RequestParam String statusProject){
-        return projectService.getProjectByDivisiUserAndStatusProject(divisiUser, statusProject);
-    }
+//    @GetMapping("/projectByDivision")
+//    public List<Project> getProjectByDivisiUserAndStatusProject(@RequestParam String divisiUser,
+//                                                                @RequestParam String statusProject){
+//        return projectService.getProjectByDivisiUserAndStatusProject(divisiUser, statusProject);
+//    }
 
 //    @GetMapping("/project")
 //    public Page<Project> searchProject(@RequestParam(name = "page" , defaultValue = "0") Integer page,
@@ -141,29 +141,29 @@ public class ProjectController {
 ////        return  projectService.getProjects(pageable, projectSearchDTO);
 //    }
 
-    @GetMapping("/project")
-    public List<Project> searchProject(@RequestParam(name = "divisiUser", required = false) String divisiUser,
-                                       @RequestParam(name = "directorateUser", required = false) String directorateUser,
-                                       @RequestParam(name = "pm", required = false) String pm,
-                                       @RequestParam(name = "pmo", required = false) String pmo){
-        System.out.println("divisi usernya adlaha: " + divisiUser);
-        return  projectService.getProjectList(divisiUser, directorateUser, pm, pmo);
-    }
+//    @GetMapping("/project")
+//    public List<Project> searchProject(@RequestParam(name = "divisiUser", required = false) String divisiUser,
+//                                       @RequestParam(name = "directorateUser", required = false) String directorateUser,
+//                                       @RequestParam(name = "pm", required = false) String pm,
+//                                       @RequestParam(name = "pmo", required = false) String pmo){
+//        System.out.println("divisi usernya adlaha: " + divisiUser);
+//        return  projectService.getProjectList(divisiUser, directorateUser, pm, pmo);
+//    }
 
-    @GetMapping("/projectByPM/{id}")
-    public List<Project> getProjectByPMID(@PathVariable String id){
-       return projectService.getProjectByPmID(id);
-    }
+//    @GetMapping("/projectByPM/{id}")
+//    public List<Project> getProjectByPMID(@PathVariable String id){
+//       return projectService.getProjectByPmID(id);
+//    }
 
-    @GetMapping("/projectByPMO/{id}")
-    public List<Project> getProjectByPMOID(@PathVariable String id){
-        return projectService.getProjectByPmoID(id);
-    }
-
-    @GetMapping("/projectBycoPM/{id}")
-    public List<Project> getProjectByCoPMID(@PathVariable String id){
-        return projectService.getProjectByCoPmID(id);
-    }
+//    @GetMapping("/projectByPMO/{id}")
+//    public List<Project> getProjectByPMOID(@PathVariable String id){
+//        return projectService.getProjectByPmoID(id);
+//    }
+//
+//    @GetMapping("/projectBycoPM/{id}")
+//    public List<Project> getProjectByCoPMID(@PathVariable String id){
+//        return projectService.getProjectByCoPmID(id);
+//    }
 
     @GetMapping("/projectByKeyword/{keyword}")
     public List<Project> getProjectByKeyword(@PathVariable String keyword){

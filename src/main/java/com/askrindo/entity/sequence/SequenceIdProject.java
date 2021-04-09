@@ -15,7 +15,7 @@ public class SequenceIdProject {
             name = "seq_idproject",
             strategy = "com.askrindo.generator.PrefixedSequenceIdGenerator",
             parameters = {@Parameter(name = PrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
-                    @Parameter(name = PrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})
+                    @Parameter(name = PrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "ASK")})
 
     private String idGeneratorProject;
 

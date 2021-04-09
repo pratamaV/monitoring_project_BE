@@ -20,7 +20,7 @@ public class Division {
 
     @OneToMany
     @JsonIgnore
-    private List<Project> projectList = new ArrayList<>();
+    private List<Release> releaseList = new ArrayList<>();
 
     public Division(String id, String divisionName, String divisionCode) {
         this.id = id;
@@ -28,11 +28,11 @@ public class Division {
         this.divisionCode = divisionCode;
     }
 
-    public Division(String id, String divisionName, String divisionCode, List<Project> projectList) {
+    public Division(String id, String divisionName, String divisionCode, List<Release> releaseList) {
         this.id = id;
         this.divisionName = divisionName;
         this.divisionCode = divisionCode;
-        this.projectList = projectList;
+        this.releaseList = releaseList;
     }
 
     public Division() {
@@ -63,14 +63,13 @@ public class Division {
         this.divisionCode = divisionCode;
     }
 
-    public List<Project> getProjectList() {
-        return projectList;
+    public List<Release> getReleaseList() {
+        return releaseList;
     }
 
-    public void setProjectList(List<Project> projectList) {
-        this.projectList = projectList;
+    public void setReleaseList(List<Release> releaseList) {
+        this.releaseList = releaseList;
     }
-
 
     @Override
     public String toString() {
@@ -78,7 +77,7 @@ public class Division {
                 "id='" + id + '\'' +
                 ", divisionName='" + divisionName + '\'' +
                 ", divisionCode='" + divisionCode + '\'' +
-                ", projectList=" + projectList +
+                ", releaseList=" + releaseList +
                 '}';
     }
 }
