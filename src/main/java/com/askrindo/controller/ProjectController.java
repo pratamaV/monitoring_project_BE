@@ -38,9 +38,13 @@ public class ProjectController {
         return projectService.getProjectById(id);
     }
 
-    @GetMapping("/projectsnofilter")
-    public List<Project> getAllProjectNoFilter(){
-        return projectService.getAllProject();
+    @GetMapping("/projects-page")
+    public Page<Project> getAllProjectPage(
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
+            @RequestParam(name = "projectDependency", required = false) String projectDependency){
+        Pageable pageable = PageRequest.of(page, sizePerPage);
+        return projectService.getAllProjectPageFilter(projectDependency, pageable);
     }
 
 //    @GetMapping("/projects")
@@ -165,10 +169,10 @@ public class ProjectController {
 //        return projectService.getProjectByCoPmID(id);
 //    }
 
-    @GetMapping("/projectByKeyword/{keyword}")
-    public List<Project> getProjectByKeyword(@PathVariable String keyword){
-        return projectService.getProjectByKeyword(keyword);
-    }
+//    @GetMapping("/projectByKeyword/{keyword}")
+//    public List<Project> getProjectByKeyword(@PathVariable String keyword){
+//        return projectService.getProjectByKeyword(keyword);
+//    }
 
     @GetMapping("/projectByBebanUsaha")
     public List<Project> getProjectByLineItemBebanUsaha(){

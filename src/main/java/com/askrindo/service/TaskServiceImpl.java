@@ -52,18 +52,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void saveTask(Task task) {
-        List<Task> taskList = taskRepository.findTaskByReleaseId(task.getRelease().getId());
-        Float totalScore = Float.valueOf(0);
-        Float totalScore2 = Float.valueOf(0);
-        for (Task task1: taskList) {
-            totalScore = totalScore + task1.getScore();
-        }
-        totalScore2 = totalScore + task.getScore();
-        task.setWeight(task.getScore()/totalScore2);
-        for (Task task1: taskList) {
-            task1.setWeight(task1.getScore()/totalScore2);
-            taskRepository.save(task1);
-        }
+        task.setWeight(calculateWeightTask(task));
         Release releaseObj = releaseService.getReleaseById(task.getRelease().getId());
         String idTaskGen = this.generateTaskCode(releaseObj.getId());
         task.setTaskCode(idTaskGen);
@@ -85,7 +74,25 @@ public class TaskServiceImpl implements TaskService {
         userService.saveUser(users);
     }
 
-//    @Override
+    private Float calculateWeightTask(Task task) {
+        List<Task> taskList = taskRepository.findTaskByReleaseId(task.getRelease().getId());
+        Float totalScore = Float.valueOf(0);
+        Float totalScore2 = Float.valueOf(0);
+        Float weightTaskUpd = Float.valueOf(0);
+        for (Task task1: taskList) {
+            totalScore = totalScore + task1.getScore();
+        }
+        totalScore2 = totalScore + task.getScore();
+        weightTaskUpd = task.getScore()/totalScore2;
+        for (Task task1: taskList) {
+            task1.setWeight(task1.getScore()/totalScore2);
+            taskRepository.save(task1);
+        }
+
+        return weightTaskUpd;
+    }
+
+    //    @Override
     public String generateTaskCode(String idRelease){
         Release releaseObj = releaseService.getReleaseById(idRelease);
         Integer countTaskByReleaseId = taskRepository.countTaskByReleaseId(idRelease);
@@ -125,13 +132,17 @@ public class TaskServiceImpl implements TaskService {
         } else if (task.getTaskProsentase() == 1) {
             task.setStatusDone(GlobalKey.TASK_STATUS_DONE);
         }
+        task.setWeight(calculateWeightTask(task));
         Task taskObj = taskRepository.save(task);
         Release releaseObj = releaseService.getReleaseById(taskObj.getRelease().getId());
         Project projectObj = projectService.getProjectById(releaseObj.getProject().getId());
         updateProsentaseRelease(releaseObj);
         updateProsentaseProject(projectObj);
         updatePerformanceUser(taskObj, releaseObj, projectObj);
-
+        releaseObj.setStatusRelease(GlobalKey.ACTIVE_STATUS);
+        releaseService.saveRelease(releaseObj);
+        projectObj.setStatusProject(GlobalKey.ACTIVE_STATUS);
+        projectService.saveProject(projectObj);
     }
 
     @Override

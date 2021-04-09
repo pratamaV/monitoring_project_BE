@@ -20,7 +20,10 @@ import java.util.List;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, String>, JpaSpecificationExecutor<Project> {
     public List<Project> findProjectByStatusProject(String statusProject);
-//    public List<Project> getAllProjectforUser();
+    @Query(nativeQuery = true, value = "SELECT * FROM mst_project WHERE project_dependency ilike %:projectDependency%")
+    Page<Project> getAllProjectDependency(@Param("projectDependency") String projectDependency, Pageable pageable);
+
+    //    public List<Project> getAllProjectforUser();
 //    public List<Project> findProjectByDivisiUserAndStatusProject(String divisiUser, String statusProject);
     public List<Project> findProjectByLineItem(String lineItem);
 //    public Page<Project> findAll(Pageable pageable, Sort sort);
@@ -119,8 +122,6 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
 //    List<Project> findProjectByPmoId(String id);
 //    List<Project> findProjectByCoPMId(String id);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM mst_project WHERE keyword ilike %:keyword%")
-    List<Project> findProjectByKeyword(@Param("keyword") String keyword);
 
 //    @Query(nativeQuery = true, value = "select mst_project.* from mst_project inner join mst_division on mst_project.division_id = mst_division.id inner join mst_user on mst_project.pm_id = mst_user.id where mst_project.division_id like %:divisionId% and mst_project.pm_id like %:pmId% and mst_project.pmo_id like %:pmoId% and mst_project.status like %:statusProject% and mst_project.directorate_user like %:directoratUser% " +
 //            "order by mst_project.project_name ASC")
