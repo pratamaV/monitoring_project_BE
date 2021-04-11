@@ -78,10 +78,12 @@ public class Release {
     @JsonIgnore
     private List<Issued> issuedList = new ArrayList<>();
 
+    private String developmentMode;
+
     public Release() {
     }
 
-    public Release(String id, String releaseName, String releaseCode, Integer score, Float weight, String description, String status, String stage, Float prosentaseRelease, String statusRelease, Float contractedValue, String categoryActivity, Users pmo, Users pm, Users coPM, Division divisiUser, String directorateUser, Users departmentHead, Date estStartdate, Date estEnddate, Date actStartdate, Date actEnddate, Project project, List<Task> taskList, List<Issued> issuedList) {
+    public Release(String id, String releaseName, String releaseCode, Integer score, Float weight, String description, String status, String stage, Float prosentaseRelease, String statusRelease, Float contractedValue, String categoryActivity, Users pmo, Users pm, Users coPM, Division divisiUser, String directorateUser, Users departmentHead, Date estStartdate, Date estEnddate, Date actStartdate, Date actEnddate, Project project, List<Task> taskList, List<Issued> issuedList, String developmentMode) {
         this.id = id;
         this.releaseName = releaseName;
         this.releaseCode = releaseCode;
@@ -107,9 +109,10 @@ public class Release {
         this.project = project;
         this.taskList = taskList;
         this.issuedList = issuedList;
+        this.developmentMode = developmentMode;
     }
 
-    public Release(String releaseName, String releaseCode, Integer score, Float weight, String description, String status, String stage, Float prosentaseRelease, String statusRelease, Float contractedValue, String categoryActivity, Users pmo, Users pm, Users coPM, Division divisiUser, String directorateUser, Users departmentHead, Date estStartdate, Date estEnddate, Date actStartdate, Date actEnddate, Project project, List<Task> taskList, List<Issued> issuedList) {
+    public Release(String releaseName, String releaseCode, Integer score, Float weight, String description, String status, String stage, Float prosentaseRelease, String statusRelease, Float contractedValue, String categoryActivity, Users pmo, Users pm, Users coPM, Division divisiUser, String directorateUser, Users departmentHead, Date estStartdate, Date estEnddate, Date actStartdate, Date actEnddate, Project project, List<Task> taskList, List<Issued> issuedList, String developmentMode) {
         this.releaseName = releaseName;
         this.releaseCode = releaseCode;
         this.score = score;
@@ -134,6 +137,16 @@ public class Release {
         this.project = project;
         this.taskList = taskList;
         this.issuedList = issuedList;
+        this.developmentMode = developmentMode;
+    }
+
+
+    public String getDevelopmentMode() {
+        return developmentMode;
+    }
+
+    public void setDevelopmentMode(String developmentMode) {
+        this.developmentMode = developmentMode;
     }
 
     public String getId() {
