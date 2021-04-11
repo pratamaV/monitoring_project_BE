@@ -84,10 +84,16 @@ public class ReleaseServiceImpl implements ReleaseService {
         Project project = projectService.getProjectById(release.getProject().getId());
         List<Release> releaseList = project.getReleaseList();
         Float contractedValue = Float.valueOf(0.0f);
-        for (Release release1 : releaseList) {
-            contractedValue = contractedValue + release1.getContractedValue();
+        if(!releaseList.isEmpty()){
+            for (Release release1 : releaseList) {
+                if (!release1.getContractedValue().equals(null)){
+                    contractedValue = contractedValue + release1.getContractedValue();
+                }
+            }
+            project.setContractedValue(contractedValue);
+            projectService.saveProject(project);
         }
-        project.setContractedValue(contractedValue);
+
     }
 
     @Override
