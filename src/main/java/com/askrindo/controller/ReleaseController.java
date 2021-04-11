@@ -73,7 +73,7 @@ public class ReleaseController {
                                                   @RequestParam(name = "pmoId", required = false) String pmoId,
                                                   @RequestParam(name = "copmId", required = false) String copmId,
                                                   @RequestParam(name = "status", required = false) String status,
-                                                  @RequestParam(name = "status", required = false) String stage,
+                                                  @RequestParam(name = "stage", required = false) String stage,
                                                   @RequestParam(name = "divisionId", required = false) String divisionId,
                                                   @RequestParam(name = "directoratUser", required = false) String directoratUser) {
 
