@@ -13,6 +13,7 @@ import java.util.List;
 public interface ReleaseService {
     public void saveRelease(Release release);
     public List<Release> getAllRelease();
+    public Page<Release> getAllReleasePage(String projectName, String pmId, String pmoId, String copmId,  String status, String stage, String divisionId, String directoratUser, String developmentMode, Pageable pageable);
     public Release getReleaseById(String id);
     public void updateRelease(Release release);
     public List<Release> getReleaseByProjectId(String id);

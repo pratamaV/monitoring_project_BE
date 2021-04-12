@@ -62,6 +62,11 @@ public class ReleaseServiceImpl implements ReleaseService {
     }
 
     @Override
+    public Page<Release> getAllReleasePage(String projectName, String pmId, String pmoId, String copmId,  String status, String stage, String divisionId, String directoratUser, String developmentMode, Pageable pageable) {
+        return releaseRepository.getAllReleaseByFilter(projectName, pmId, pmoId, copmId, status, stage, divisionId, directoratUser, developmentMode, pageable);
+    }
+
+    @Override
     public Release getReleaseById(String id) {
         if (!releaseRepository.existsById(id)) {
             throw new DataNotFoundException(String.format(DataNotFoundException.DATA_NOT_FOUND, releaseRepository.findById(id).get().getClass(), id));
