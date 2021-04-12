@@ -1,8 +1,10 @@
 package com.askrindo.security;
 
+import com.askrindo.GlobalKey;
 import com.askrindo.entity.Mail;
 import com.askrindo.entity.Users;
 import com.askrindo.entity.UsersHelper;
+import com.askrindo.exception.OldPasswordNotMatchesException;
 import com.askrindo.repository.UserRepository;
 import com.askrindo.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,7 +131,7 @@ public class UsersServiceAuth implements UserDetailsService {
         if (user.isPresent()) {
             Boolean verifyPass = passwordEncoder.matches(oldPassword, user.get().getPassword());
             if (!verifyPass) {
-//                throw new OldPasswordNotMatchesException(GlobalKey.OLD_PASSWORD_NOT_MATCHES);
+                throw new OldPasswordNotMatchesException(GlobalKey.OLD_PASSWORD_NOT_MATCHES);
             } else {
                 user.get().setPassword(passwordEncoder.encode(newPassword));
 //                userObj.setPassDefault(false);
