@@ -44,6 +44,49 @@ public class ReleaseController {
         return releaseService.getAllRelease();
     }
 
+    @GetMapping("/releasesPage")
+    public Page<Release> getAllReleasePage(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                                           @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
+                                           @RequestParam(name = "projectName", required = false) String projectName,
+                                           @RequestParam(name = "pmId", required = false) String pmId,
+                                           @RequestParam(name = "pmoId", required = false) String pmoId,
+                                           @RequestParam(name = "copmId", required = false) String copmId,
+                                           @RequestParam(name = "status", required = false) String status,
+                                           @RequestParam(name = "stage", required = false) String stage,
+                                           @RequestParam(name = "divisionId", required = false) String divisionId,
+                                           @RequestParam(name = "directoratUser", required = false) String directoratUser,
+                                           @RequestParam(name = "developmentMode", required = false) String developmentMode) {
+        Pageable pageable = PageRequest.of(page, sizePerPage);
+        if(projectName == null){
+            projectName = "";
+        }
+        if (pmId == null) {
+            pmId = "";
+        }
+        if (pmoId == null) {
+            pmoId = "";
+        }
+        if (copmId == null) {
+            copmId = "";
+        }
+        if (status == null) {
+            status = "";
+        }
+        if (stage == null) {
+            stage = "";
+        }
+        if (divisionId == null) {
+            divisionId = "";
+        }
+        if (directoratUser == null) {
+            directoratUser = "";
+        }
+        if (developmentMode == null) {
+            developmentMode = "";
+        }
+        return releaseService.getAllReleasePage(projectName,  pmId, pmoId, copmId, status, stage, divisionId, directoratUser, developmentMode, pageable);
+    }
+
     @PutMapping("/release")
     public void updateRelease(@RequestBody Release release) {
         releaseService.updateRelease(release);
