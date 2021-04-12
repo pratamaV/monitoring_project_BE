@@ -75,7 +75,10 @@ public class ReleaseController {
                                                   @RequestParam(name = "status", required = false) String status,
                                                   @RequestParam(name = "stage", required = false) String stage,
                                                   @RequestParam(name = "divisionId", required = false) String divisionId,
-                                                  @RequestParam(name = "directoratUser", required = false) String directoratUser) {
+                                                  @RequestParam(name = "directoratUser", required = false) String directoratUser,
+                                                  @RequestParam(name = "projectCode", required = false) String projectCode,
+                                                  @RequestParam(name = "projectName", required = false) String projectName,
+                                                  @RequestParam(name = "developmentMode", required = false) String developmentMode) {
 
 
         if (pmId == null) {
@@ -99,8 +102,17 @@ public class ReleaseController {
         if (directoratUser == null) {
             directoratUser = "";
         }
+        if (projectCode == null) {
+            projectCode = "";
+        }
+        if (projectName == null) {
+            projectName = "";
+        }
+        if (developmentMode == null) {
+            developmentMode = "";
+        }
         Pageable pageable = PageRequest.of(page, sizePerPage);
-        return releaseService.getReleaseByProjectId(id,  pmId, pmoId, copmId, status, stage, divisionId, directoratUser, pageable);
+        return releaseService.getReleaseByProjectId(id, pmId, pmoId, copmId, status, stage, divisionId, directoratUser, projectCode, projectName, developmentMode, pageable);
     }
 
     @GetMapping("/releaseByProjectId-sort/{id}")

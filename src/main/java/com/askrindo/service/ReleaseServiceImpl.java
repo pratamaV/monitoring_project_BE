@@ -135,8 +135,8 @@ public class ReleaseServiceImpl implements ReleaseService {
     }
 
     @Override
-    public Page<Release> getReleaseByProjectId(String idProject, String pmId, String pmoId, String copmId,  String status, String stage, String divisionId, String directoratUser, Pageable pageable) {
-        return releaseRepository.getAllReleaseByIdProject(idProject, pmId, pmoId, copmId, status, stage, divisionId, directoratUser, pageable);
+    public Page<Release> getReleaseByProjectId(String idProject, String pmId, String pmoId, String copmId,  String status, String stage, String divisionId, String directoratUser, String projectCode, String projectName, String developmentMode, Pageable pageable) {
+        return releaseRepository.getAllReleaseByIdProject(idProject, pmId, pmoId, copmId, status, stage, divisionId, directoratUser, projectCode, projectName, developmentMode, pageable);
     }
 
     @Override
