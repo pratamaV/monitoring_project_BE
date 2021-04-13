@@ -179,6 +179,15 @@ public class ReleaseController {
         return releaseService.getReleaseWithSort(orderBy, sort, page, sizePerPage);
     }
 
+    @GetMapping("/releases-search")
+    public Page<Release> getAllReleaseSearch(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                                           @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
+                                           @RequestParam(name = "projectName", required = false) String projectName,
+                                             @RequestParam(name = "projectDependency", required = false) String projectDependency) {
+        Pageable pageable = PageRequest.of(page, sizePerPage);
+        return releaseService.getAllReleaseSearch(projectDependency, projectName, pageable);
+    }
+
 //    @GetMapping("/testSortRelease")
 //    public List<Release> TestSortRelease() {
 //

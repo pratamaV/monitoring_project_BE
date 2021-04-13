@@ -24,4 +24,5 @@ public interface ReleaseService {
     public List<Release> getReleaseByProjectIdWithSort(String idProject, String orderBy, String sort, Integer page, Integer pagePerSize);
     public Page<Release> getReleaseWithSort(String orderBy, String sort, Integer page, Integer sizePerPage);
     public List<Release> getReleaseByStatusReleaseAndProjectId(String statusRelease, String projectId);
+    public Page<Release> getAllReleaseSearch(String projectDependency, String projectName, Pageable pageable);
 }

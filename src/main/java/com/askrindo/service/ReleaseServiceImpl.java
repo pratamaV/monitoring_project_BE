@@ -167,4 +167,9 @@ public class ReleaseServiceImpl implements ReleaseService {
         }
         return null;
     }
+
+    @Override
+    public Page<Release> getAllReleaseSearch(String projectDependency, String projectName, Pageable pageable) {
+        return releaseRepository.getAllReleaseSearch(projectDependency, projectName, pageable);
+    }
 }

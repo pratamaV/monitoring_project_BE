@@ -69,5 +69,12 @@ public interface ReleaseRepository extends JpaRepository<Release, String>, JpaSp
             @Param("developmentMode") String developmentMode,
             Pageable pageable);
 
+    @Query(nativeQuery = true, value = "SELECT * FROM mst_release INNER JOIN mst_project ON mst_release.project_id = mst_project.id WHERE mst_project.project_dependency ilike %:projectDependency% OR mst_project.project_name ilike %:projectName% order by mst_release.release_name asc")
+    Page<Release> getAllReleaseSearch(@Param("projectDependency") String projectDependency,
+                                      @Param("projectName") String projectName,
+                                      Pageable pageable);
+
+
+
 
 }
