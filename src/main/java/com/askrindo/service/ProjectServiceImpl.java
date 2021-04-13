@@ -307,4 +307,9 @@ public class ProjectServiceImpl implements ProjectService {
 //        return projectRepository.findProjectByKeyword(keyword);
 //    }
 
+
+    @Override
+    public List<Project> getProjectByDirectorateUser(String directorateUser) {
+        return projectRepository.findProjectByDirectorateUser(directorateUser);
+    }
 }

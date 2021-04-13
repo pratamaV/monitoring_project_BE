@@ -141,4 +141,8 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
 
     @Query(nativeQuery = true, value = "SELECT DISTINCT mst_project.* FROM mst_project INNER JOIN mst_release ON mst_project.id=mst_release.project_id where mst_release.coPM_id= :coPMId")
     public Page<Project> findProjectBycoPMId(@Param("coPMId") String coPMId, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "SELECT DISTINCT mst_project.* FROM mst_project INNER JOIN mst_release ON mst_project.id=mst_release.project_id where mst_release.directorate_user= :directorateUser AND mst_project.status_project='Active'")
+    public List<Project> findProjectByDirectorateUser(@Param("directorateUser") String directorateUser);
+
 }

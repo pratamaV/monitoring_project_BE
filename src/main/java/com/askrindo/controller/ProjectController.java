@@ -96,6 +96,11 @@ public class ProjectController {
         return projectService.getAllProjectforUser();
     }
 
+    @GetMapping("/projectByDirectorateUser")
+    public List<Project> getProjectByDirectorateUser(@RequestParam String directorateUser){
+        return projectService.getProjectByDirectorateUser(directorateUser);
+    }
+
     @PutMapping("/project")
     public void updateProject(@RequestBody Project project){
         projectService.updateProject(project);
