@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -57,7 +58,7 @@ public class ReleaseController {
                                            @RequestParam(name = "directoratUser", required = false) String directoratUser,
                                            @RequestParam(name = "developmentMode", required = false) String developmentMode) {
         Pageable pageable = PageRequest.of(page, sizePerPage);
-        if(projectName == null){
+        if (projectName == null) {
             projectName = "";
         }
         if (pmId == null) {
@@ -84,7 +85,7 @@ public class ReleaseController {
         if (developmentMode == null) {
             developmentMode = "";
         }
-        return releaseService.getAllReleasePage(projectName,  pmId, pmoId, copmId, status, stage, divisionId, directoratUser, developmentMode, pageable);
+        return releaseService.getAllReleasePage(projectName, pmId, pmoId, copmId, status, stage, divisionId, directoratUser, developmentMode, pageable);
     }
 
     @PutMapping("/release")
@@ -166,6 +167,16 @@ public class ReleaseController {
                                                        @RequestParam(name = "sort", required = false) String sort
     ) {
         return releaseService.getReleaseByProjectIdWithSort(id, orderBy, sort, page, sizePerPage);
+    }
+
+
+    @GetMapping("/release-sort")
+    public Page<Release> getReleaseWithSort(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                                            @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
+                                            @RequestParam(name = "orderBy", required = false) String orderBy,
+                                            @RequestParam(name = "sort", required = false) String sort
+    ) {
+        return releaseService.getReleaseWithSort(orderBy, sort, page, sizePerPage);
     }
 
 //    @GetMapping("/testSortRelease")

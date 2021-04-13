@@ -22,5 +22,6 @@ public interface ReleaseService {
     public void updateStatusReleaseById(String id, String releaseStatus);
     public Page<Release> getReleaseByProjectId(String idProject, String pmId, String pmoId, String copmId,  String status, String stage, String divisionId, String directoratUser, String projectCode, String projectName, String developmentMode, Pageable pageable);
     public List<Release> getReleaseByProjectIdWithSort(String idProject, String orderBy, String sort, Integer page, Integer pagePerSize);
+    public Page<Release> getReleaseWithSort(String orderBy, String sort, Integer page, Integer sizePerPage);
     public List<Release> getReleaseByStatusReleaseAndProjectId(String statusRelease, String projectId);
 }
