@@ -156,4 +156,15 @@ public class ReleaseServiceImpl implements ReleaseService {
         return null;
     }
 
+    @Override
+    public Page<Release> getReleaseWithSort(String orderBy, String sort, Integer page, Integer sizePerPage) {
+        if (sort.equals(GlobalKey.SORT_ASC)) {
+            Pageable paging = PageRequest.of(page, sizePerPage, Sort.by(Sort.Direction.ASC, orderBy));
+            return releaseRepository.findAll(paging);
+        } else if (sort.equals(GlobalKey.SORT_DESC)) {
+            Pageable paging = PageRequest.of(page, sizePerPage, Sort.by(Sort.Direction.DESC, orderBy));
+            return releaseRepository.findAll(paging);
+        }
+        return null;
+    }
 }
