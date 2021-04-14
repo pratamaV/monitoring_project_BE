@@ -87,11 +87,12 @@ public class ReleaseServiceImpl implements ReleaseService {
 
     private void updateContractedValueProject(Release release) {
         Project project = projectService.getProjectById(release.getProject().getId());
-        List<Release> releaseList = project.getReleaseList();
+        List<Release> releaseList = releaseRepository.findReleaseByProjectId(project.getId());
         Float contractedValue = Float.valueOf(0.0f);
         if(!releaseList.isEmpty()){
             for (Release release1 : releaseList) {
-                if (!release1.getContractedValue().equals(null)){
+                System.out.println(release1.getContractedValue()+"contractedvalue");
+                if (!(release1.getContractedValue() == null)){
                     contractedValue = contractedValue + release1.getContractedValue();
                 }
             }
