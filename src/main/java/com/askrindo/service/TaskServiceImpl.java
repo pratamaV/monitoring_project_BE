@@ -47,6 +47,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task saveTaskOrdinary(Task task) {
+        task.setActStartDate(task.getEstStartDate());
+        task.setActEndDate(task.getEstEndDate());
         return taskRepository.save(task);
     }
 
@@ -55,6 +57,8 @@ public class TaskServiceImpl implements TaskService {
         task.setWeight(calculateWeightTask(task));
         Release releaseObj = releaseService.getReleaseById(task.getRelease().getId());
         String idTaskGen = this.generateTaskCode(releaseObj.getId());
+        task.setActStartDate(task.getEstStartDate());
+        task.setActEndDate(task.getEstEndDate());
         task.setTaskCode(idTaskGen);
         task.setRelease(releaseObj);
         taskRepository.save(task);
@@ -295,15 +299,17 @@ public class TaskServiceImpl implements TaskService {
                 Float uwUpdate = Float.valueOf(0);
                 Float performanceUpdate = Float.valueOf(0);
                 for (Task task4 : tasks) {
-                    Release release2 = task4.getRelease();
-                    Float releaseWeight = task4.getRelease().getWeight();
-                    Float projectWeight = release2.getProject().getWeight();
+                    Release release2 = releaseService.getReleaseById(task4.getRelease().getId());
+                    Float releaseWeight = release2.getWeight();
+                    Project project1 = projectService.getProjectById(release2.getProject().getId());
+                    Float projectWeight = project1.getWeight();
                     Float taskWeight = task4.getWeight();
+                    System.out.println("ini task weight" + taskWeight);
+                    System.out.println("ini release weight" + releaseWeight);
+                    System.out.println("ini project weight" + projectWeight);
                     uwUpdate = uwUpdate + (taskWeight * releaseWeight * projectWeight);
                     performanceUpdate = performanceUpdate + (releaseWeight * projectWeight * task4.getTaskProsentase() * taskWeight);
                 }
-                System.out.println(users1);
-                System.out.println(performanceUpdate);
                 users1.setTotalPerformance(performanceUpdate);
                 users1.setTotalWeight(uwUpdate);
                 userService.saveUser(users1);

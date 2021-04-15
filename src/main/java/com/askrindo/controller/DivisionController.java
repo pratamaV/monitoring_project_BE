@@ -18,6 +18,13 @@ public class DivisionController {
         divisionService.saveDivision(division);
     }
 
+    @PostMapping("/divisions")
+    public void saveDivisionArray(@RequestBody List<Division> division){
+        for (Division division1: division) {
+            divisionService.saveDivision(division1);
+        }
+    }
+
     @GetMapping("/divisions")
     public List<Division> getAllDivision(){
         return divisionService.getAllDivision();
