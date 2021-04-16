@@ -31,6 +31,13 @@ public class UserController {
         userService.saveUser(users);
     }
 
+    @PostMapping("/users")
+    public void saveUserArray(@RequestBody List<Users> users){
+        for (Users users1:users) {
+            userService.saveUser(users1);
+        }
+    }
+
     @GetMapping("/user/{id}")
     public Users getUserById(@PathVariable String id){
         return userService.getUserById(id);
