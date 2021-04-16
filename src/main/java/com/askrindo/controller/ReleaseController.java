@@ -23,8 +23,14 @@ public class ReleaseController {
 
     @PostMapping("/release")
     public void saveRelease(@RequestBody Release release) {
-
         releaseService.saveRelease(release);
+    }
+
+    @PostMapping("/releases")
+    public void saveReleaseArray(@RequestBody List<Release> releaseList) {
+        for (Release release: releaseList) {
+            releaseService.saveRelease(release);
+        }
     }
 //
 //    @GetMapping("/releases-seacrh")

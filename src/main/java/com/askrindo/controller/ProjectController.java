@@ -33,6 +33,13 @@ public class ProjectController {
         projectService.saveProject(project);
     }
 
+    @PostMapping("/projects")
+    public void saveProjectArray(@RequestBody List<Project> projectList){
+        for (Project project: projectList) {
+            projectService.saveProject(project);
+        }
+    }
+
     @GetMapping("/project/{id}")
     public Project getProjectById(@PathVariable String id){
         return projectService.getProjectById(id);
