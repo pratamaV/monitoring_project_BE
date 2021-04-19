@@ -95,9 +95,22 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.findAll();
     }
 
+//    @Override
+//    public Page<Project> getAllProjectPageFilter(String projectDependency, Pageable pageable) {
+//        return projectRepository.getAllProjectDependency(projectDependency, pageable);
+//    }
+
     @Override
-    public Page<Project> getAllProjectPageFilter(String projectDependency, Pageable pageable) {
-        return projectRepository.getAllProjectDependency(projectDependency, pageable);
+    public Page<Project> getAllProjectPageFilter(String projectDependency, Integer page, Integer sizePerpage, String orderBy , String sort ) {
+        if (sort.equals(GlobalKey.SORT_ASC)) {
+            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.ASC, orderBy));
+            return projectRepository.getAllProjectDependency(projectDependency, paging);
+        } else if (sort.equals(GlobalKey.SORT_DESC)) {
+            Pageable paging = PageRequest.of(page, sizePerpage, Sort.by(Sort.Direction.DESC, orderBy));
+            return projectRepository.getAllProjectDependency(projectDependency, paging);
+        }
+        return null;
+//        return projectRepository.getAllProjectDependency(projectDependency, pageable);
     }
 
 

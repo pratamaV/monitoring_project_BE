@@ -49,9 +49,12 @@ public class ProjectController {
     public Page<Project> getAllProjectPage(
             @RequestParam(name = "page", defaultValue = "0") Integer page,
             @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
-            @RequestParam(name = "projectDependency", required = false) String projectDependency){
-        Pageable pageable = PageRequest.of(page, sizePerPage);
-        return projectService.getAllProjectPageFilter(projectDependency, pageable);
+            @RequestParam(name = "projectDependency", required = false) String projectDependency,
+            @RequestParam(name = "orderBy", required = false) String orderBy,
+            @RequestParam(name = "sort", required = false) String sort){
+//        Pageable pageable = PageRequest.of(page, sizePerPage);
+//        String projectDependency, Integer page, Integer sizePerpage, String orderBy , String sort
+        return projectService.getAllProjectPageFilter(projectDependency, page, sizePerPage, orderBy, sort);
     }
 
 //    @GetMapping("/projects")
