@@ -32,11 +32,18 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public void saveUserArray(@RequestBody List<Users> users){
+    public void saveUserArray(@RequestBody List<Users> users) throws IOException {
         for (Users users1:users) {
-            userService.saveUser(users1);
+            usersServiceAuth.registerUser(users1);
         }
     }
+
+    @PostMapping("/user/change-all-password")
+    public void changePasswordAllUser(@RequestParam(name = "newPassword") String newPassword) throws IOException {
+        usersServiceAuth.changeAllPassword(newPassword);
+
+    }
+
 
     @GetMapping("/user/{id}")
     public Users getUserById(@PathVariable String id){

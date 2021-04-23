@@ -78,6 +78,15 @@ public class UsersServiceAuth implements UserDetailsService {
         }
     }
 
+    public void changeAllPassword(String newPassword) throws IOException {
+        List<Users> users = userRepository.findAll();
+        for (Users userObj: users) {
+            userObj.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(userObj);
+        }
+
+    }
+
     public List<Users> getAllUsers(){
         return userRepository.findAll();
     }
