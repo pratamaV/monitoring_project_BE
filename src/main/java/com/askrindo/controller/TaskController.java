@@ -68,7 +68,7 @@ public class TaskController {
     @PostMapping("/tasks")
     public void saveTask(@RequestBody Task [] tasks){
         for (Task task: tasks) {
-            taskService.saveTask(task);
+            taskService.addTask(task);
         }
 
     }
