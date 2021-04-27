@@ -23,6 +23,17 @@ public class IssuedServiceImpl implements IssuedService {
     }
 
     @Override
+    public void changeStatusIssue(String id) {
+        Issued issued = issuedRepository.findById(id).get();
+        if (issued.getStatus().equals("Open")){
+            issued.setStatus("Close");
+        } else if (issued.getStatus().equals("Close")){
+            issued.setStatus("Open");
+        }
+        issuedRepository.save(issued);
+    }
+
+    @Override
     public List<Issued> getAllIssued() {
         return issuedRepository.findAll();
     }

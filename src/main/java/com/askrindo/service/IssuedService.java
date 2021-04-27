@@ -13,4 +13,6 @@ public interface IssuedService {
     public Issued getIssuedById(String id);
     public void updateIssued(Issued issued);
     public List<Issued> getIssuedByReleaseId(String id);
+
+    public void changeStatusIssue(String id);
 }

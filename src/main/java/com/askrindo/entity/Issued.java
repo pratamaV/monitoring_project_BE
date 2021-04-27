@@ -25,30 +25,34 @@ public class Issued {
     @JsonFormat(timezone = "Asia/Jakarta",pattern = "yyyy-MM-dd")
     private Date estEnddate;
     private String pic;
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "release_id")
     private Release release;
 
-    public Issued(String id, String issuedDescription, Date issuedDate, String issuedPlan, Date estEnddate, String pic, Release release) {
+    public Issued(String id, String issuedDescription, Date issuedDate, String issuedPlan, Date estEnddate, String pic, String status, Release release) {
         this.id = id;
         this.issuedDescription = issuedDescription;
         this.issuedDate = issuedDate;
         this.issuedPlan = issuedPlan;
         this.estEnddate = estEnddate;
         this.pic = pic;
+        this.status = status;
         this.release = release;
     }
 
     public Issued() {
     }
 
-    public Issued(String issuedDescription, Date issuedDate, String issuedPlan, Date estEnddate, String pic) {
+    public Issued(String issuedDescription, Date issuedDate, String issuedPlan, Date estEnddate, String pic, String status, Release release) {
         this.issuedDescription = issuedDescription;
         this.issuedDate = issuedDate;
         this.issuedPlan = issuedPlan;
         this.estEnddate = estEnddate;
         this.pic = pic;
+        this.status = status;
+        this.release = release;
     }
 
     public Release getRelease() {
@@ -105,5 +109,13 @@ public class Issued {
 
     public void setPic(String pic) {
         this.pic = pic;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

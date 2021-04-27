@@ -29,6 +29,11 @@ public class IssuedController {
         return issuedService.getAllIssued();
     }
 
+    @PutMapping("/changeStatusIssue/{id}")
+    public void changeStatusIssueById(@PathVariable String id){
+        issuedService.changeStatusIssue(id);
+    }
+
     @PutMapping("/issued")
     public void updateIssued(@RequestBody Issued issued){
         issuedService.updateIssued(issued);
