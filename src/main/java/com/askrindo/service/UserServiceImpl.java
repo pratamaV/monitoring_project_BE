@@ -53,6 +53,7 @@ public class UserServiceImpl implements UserService{
         user.setUsername(userPojo.getUsername());
         user.setUserRole(userPojo.getUserRole());
         user.setDivisiUser(division);
+        user.setEmail(userPojo.getEmail());
         user.setDirectorateUser(userPojo.getDirectorateUser());
         userRepository.save(user);
     }
