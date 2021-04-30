@@ -37,7 +37,7 @@ public interface ProjectService {
     public Page<Project> getProjectByCoPMId(String id, Pageable pageable);
 
 //    public Page<Project> getAllProjectPageFilter(String projectDependency, Pageable pageable);
-    public Page<Project> getAllProjectPageFilter(String projectDependency, Integer page, Integer sizePerpage, String orderBy , String sort);
+    public Page<Project> getAllProjectPageFilter(String projectDependency, String projectName, Integer page, Integer sizePerpage, String orderBy , String sort);
 
     public List<Project> getProjectByDirectorateUser(String directorateUser);
 

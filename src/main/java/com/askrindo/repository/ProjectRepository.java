@@ -20,8 +20,10 @@ import java.util.List;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, String>, JpaSpecificationExecutor<Project> {
     public List<Project> findProjectByStatusProject(String statusProject);
-    @Query(nativeQuery = true, value = "SELECT * FROM mst_project WHERE project_dependency ilike %:projectDependency%")
-    Page<Project> getAllProjectDependency(@Param("projectDependency") String projectDependency, Pageable pageable);
+    @Query(nativeQuery = true, value = "SELECT * FROM mst_project WHERE project_dependency ilike %:projectDependency% OR project_name ilike %:projectName%")
+    Page<Project> getAllProjectDependency(@Param("projectDependency") String projectDependency,
+                                          @Param("projectName") String projectName,
+                                          Pageable pageable);
 
     @Query(nativeQuery = true, value = "SELECT DISTINCT mst_project.* FROM mst_project INNER JOIN mst_release ON mst_project.id=mst_release.project_id where mst_release.coPM_id= :coPMId")
     public Page<Project> findProjectBycoPMId(@Param("coPMId") String coPMId, Pageable pageable);
