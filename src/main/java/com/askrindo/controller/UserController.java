@@ -52,10 +52,13 @@ public class UserController {
 
     @GetMapping("/users")
     public Page<Users> getAllUser(@RequestParam(name = "page", defaultValue = "0") Integer page,
-                                  @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage
+                                  @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
+                                  @RequestParam(name = "username", required = false) String username,
+                                  @RequestParam(name = "orderBy", required = false) String orderBy,
+                                  @RequestParam(name = "sort", required = false) String sort
                                   ){
-        Pageable pageable = PageRequest.of(page, sizePerPage);
-        return userService.getAllUser(pageable);
+//        Pageable pageable = PageRequest.of(page, sizePerPage);
+        return userService.getAllUser(username, page, sizePerPage, orderBy, sort);
     }
 
     @GetMapping("/users-list")

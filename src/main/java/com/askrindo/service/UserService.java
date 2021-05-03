@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface UserService {
     public void saveUser(Users users);
-    public Page<Users> getAllUser(Pageable pageable);
+    public Page<Users> getAllUser(String username, Integer page, Integer sizePerPage, String orderBy , String sort);
     public List<Users> getAllUserList();
     public Users getUserById(String id);
     public void updateUser(String id, UserPojo user);

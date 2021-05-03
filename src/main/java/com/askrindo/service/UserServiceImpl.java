@@ -1,11 +1,13 @@
 package com.askrindo.service;
 
+import com.askrindo.GlobalKey;
 import com.askrindo.entity.Division;
 import com.askrindo.entity.Users;
 import com.askrindo.pojo.UserPojo;
 import com.askrindo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -31,8 +33,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Page<Users> getAllUser(Pageable pageable) {
-        return userRepository.findAll(pageable);
+    public Page<Users> getAllUser(String username, Integer page, Integer sizePerPage, String orderBy , String sort) {
+        if (sort.equals(GlobalKey.SORT_ASC)) {
+            Pageable paging = PageRequest.of(page, sizePerPage, Sort.by(Sort.Direction.ASC, orderBy));
+            return userRepository.getAllUserSearch(username, paging);
+        } else if (sort.equals(GlobalKey.SORT_DESC)) {
+            Pageable paging = PageRequest.of(page, sizePerPage, Sort.by(Sort.Direction.DESC, orderBy));
+            return userRepository.getAllUserSearch(username, paging);
+        }
+        return null;
     }
 
     @Override
