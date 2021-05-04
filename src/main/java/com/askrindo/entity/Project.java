@@ -4,6 +4,7 @@ import com.askrindo.generator.PrefixedSequenceIdGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "mst_project")
-public class  Project {
+@EntityListeners(AuditingEntityListener.class)
+public class  Project extends Auditable<String>{
 
     @Id
     @GeneratedValue(generator = "system-uuid")

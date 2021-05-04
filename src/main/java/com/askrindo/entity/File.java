@@ -2,13 +2,15 @@ package com.askrindo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "mst_file")
-public class File {
+@EntityListeners(AuditingEntityListener.class)
+public class File extends Auditable<String>{
 
     @Id
     @GeneratedValue(generator = "system-uuid")

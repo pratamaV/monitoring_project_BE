@@ -1,13 +1,15 @@
 package com.askrindo.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "mst_log_error")
-public class LogError {
+@EntityListeners(AuditingEntityListener.class)
+public class LogError extends Auditable<String>{
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")

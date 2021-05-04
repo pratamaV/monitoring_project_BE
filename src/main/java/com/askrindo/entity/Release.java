@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +14,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "mst_release")
-public class Release {
+@EntityListeners(AuditingEntityListener.class)
+public class Release extends Auditable<String> {
 
     @Id
     @GeneratedValue(generator = "system-uuid")

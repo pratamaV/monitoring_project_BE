@@ -13,11 +13,11 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Auditable<U> {
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = true, updatable = false)
     @CreatedBy
     protected U createdBy;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = true, updatable = false)
     @CreatedDate()
     @Temporal(TemporalType.TIMESTAMP)
     protected Date creationDate;
