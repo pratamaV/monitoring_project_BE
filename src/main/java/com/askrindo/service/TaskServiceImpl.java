@@ -416,15 +416,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getTaskAfterDeadline() {
-        List<Task> taskList = taskRepository.findAll();
-        List<Task> taskDeadline = new ArrayList<>();
-        taskDeadline.clear();
-        for (Task task: taskList) {
-            if (task.getEstEndDate().before(new Date()) && task.getStatusDone().equalsIgnoreCase(GlobalKey.TASK_STATUS_NOT_STARTED)){
-                taskDeadline.add(task);
-            }
-        }
-        return taskDeadline;
+        return taskRepository.findTaskDeadline();
     }
 
     @Override
