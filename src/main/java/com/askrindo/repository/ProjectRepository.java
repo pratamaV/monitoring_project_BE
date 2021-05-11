@@ -31,7 +31,7 @@ public interface ProjectRepository extends JpaRepository<Project, String>, JpaSp
     @Query(nativeQuery = true, value = "SELECT distinct mst_project.* FROM mst_project\n" +
             "    inner join mst_release\n" +
             "    on mst_project.id = mst_release.project_id\n" +
-            "    WHERE mst_release.copm_id = :coPMId and (mst_project.project_dependency ilike %:projectDependency% OR mst_project.project_name ilike %:projectName%)\n")
+            "    WHERE mst_release.copm_id = :coPMId and (mst_project.project_dependency ilike %:projectDependency% OR mst_project.project_name ilike %:projectName%) ORDER BY mst_project.project_code ASC")
     public Page<Project> findProjectBycoPMId(@Param("coPMId") String coPMId, @Param("projectDependency") String projectDependency,
                                              @Param("projectName") String projectName,
                                              Pageable pageable);
