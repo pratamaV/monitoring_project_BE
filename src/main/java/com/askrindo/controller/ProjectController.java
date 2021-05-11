@@ -58,6 +58,18 @@ public class ProjectController {
         return projectService.getAllProjectPageFilter(projectDependency, projectName, page, sizePerPage, orderBy, sort);
     }
 
+    @GetMapping("/my-project/{id}")
+    public Page<Project> getMyProject(@PathVariable String id,
+                                      @RequestParam(name = "page", defaultValue = "0") Integer page,
+                                      @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage,
+                                      @RequestParam(name = "projectDependency", required = false) String projectDependency,
+                                      @RequestParam(name = "projectName", required = false) String projectName){
+
+        Pageable pageable = PageRequest.of(page, sizePerPage);
+//        return projectService.getProjectByCoPMId(id, pageable);
+        return projectService.getProjectByCoPMId(id, projectDependency, projectName, pageable);
+    }
+
 //    @GetMapping("/projects")
 //    public Page<Project> getAllProject(
 //            @RequestParam(name = "page", defaultValue = "0") Integer page,
@@ -200,13 +212,15 @@ public class ProjectController {
         return projectService.getProjectByLineItemBelanjaModal();
     }
 
-    @GetMapping("/my-project/{id}")
-    public Page<Project> getMyProject(@PathVariable String id,
-                                      @RequestParam(name = "page", defaultValue = "0") Integer page,
-                                        @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage){
+//    @GetMapping("/my-project/{id}")
+//    public Page<Project> getMyProject(@PathVariable String id,
+//                                      @RequestParam(name = "page", defaultValue = "0") Integer page,
+//                                        @RequestParam(name = "size", defaultValue = "10") Integer sizePerPage){
+//
+//        Pageable pageable = PageRequest.of(page, sizePerPage);
+//        return projectService.getProjectByCoPMId(id, pageable);
+//    }
 
-        Pageable pageable = PageRequest.of(page, sizePerPage);
-        return projectService.getProjectByCoPMId(id, pageable);
-    }
+
 
 }

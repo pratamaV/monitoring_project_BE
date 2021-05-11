@@ -113,6 +113,11 @@ public class ProjectServiceImpl implements ProjectService {
 //        return projectRepository.getAllProjectDependency(projectDependency, pageable);
     }
 
+    @Override
+    public Page<Project> getProjectByCoPMId(String id, String projectDependency, String projectName, Pageable pageable ) {
+        return projectRepository.findProjectBycoPMId(id, projectDependency, projectName, pageable);
+    }
+
 
 //    @Override
 //    public Page<Project> getAllProjectWithFilter(String divisionId,
@@ -309,11 +314,6 @@ public class ProjectServiceImpl implements ProjectService {
 //        return projectRepository.findProjectByCoPMId(id);
 //    }
 
-
-    @Override
-    public Page<Project> getProjectByCoPMId(String id, Pageable pageable) {
-        return projectRepository.findProjectBycoPMId(id, pageable);
-    }
 
 //    @Override
 //    public List<Project> getProjectByKeyword(String keyword) {
