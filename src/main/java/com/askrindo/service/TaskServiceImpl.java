@@ -143,6 +143,14 @@ public class TaskServiceImpl implements TaskService {
         updateProsentaseRelease(releaseObj);
         updateProsentaseProject(projectObj);
         updatePerformanceUser(taskObj, releaseObj, projectObj);
+        Task taskActEndDate = taskRepository.findTaskByActEndDateDesc(task.getRelease().getId());
+        Task taskActStartDate = taskRepository.findTaskByActStartDateAcs(task.getRelease().getId());
+        Task taskPlanStartDate = taskRepository.findTaskByEstStartDateAcs(task.getRelease().getId());
+        Task taskPlanEndDate = taskRepository.findTaskByEstEndDateDesc(task.getRelease().getId());
+        releaseObj.setActEnddate(taskActEndDate.getActEndDate());
+        releaseObj.setActStartdate(taskActStartDate.getActStartDate());
+        releaseObj.setEstEnddate(taskPlanEndDate.getEstEndDate());
+        releaseObj.setEstStartdate(taskPlanStartDate.getEstStartDate());
         releaseObj.setStatusRelease(GlobalKey.ACTIVE_STATUS);
         releaseService.saveRelease(releaseObj);
         projectObj.setStatusProject(GlobalKey.ACTIVE_STATUS);
@@ -167,8 +175,8 @@ public class TaskServiceImpl implements TaskService {
         }
         Release release = releaseService.getReleaseById(id);
         release.setProsentaseRelease(percentageRelease);
-        Task taskActEndDate = taskRepository.findTaskByActEndDateDesc();
-        Task taskActStartDate = taskRepository.findTaskByActStartDateAcs();
+        Task taskActEndDate = taskRepository.findTaskByActEndDateDesc(task.getRelease().getId());
+        Task taskActStartDate = taskRepository.findTaskByActStartDateAcs(task.getRelease().getId());
         release.setActEnddate(taskActEndDate.getActEndDate());
         release.setActStartdate(taskActStartDate.getActStartDate());
         releaseService.saveRelease(release);
@@ -251,8 +259,8 @@ public class TaskServiceImpl implements TaskService {
         }
         Release release = releaseService.getReleaseById(task.getRelease().getId());
         release.setProsentaseRelease(percentageRelease);
-        Task taskActEndDate = taskRepository.findTaskByActEndDateDesc();
-        Task taskActStartDate = taskRepository.findTaskByActStartDateAcs();
+        Task taskActEndDate = taskRepository.findTaskByActEndDateDesc(task.getRelease().getId());
+        Task taskActStartDate = taskRepository.findTaskByActStartDateAcs(task.getRelease().getId());
         release.setActEnddate(taskActEndDate.getActEndDate());
         release.setActStartdate(taskActStartDate.getActStartDate());
         releaseService.saveRelease(release);
@@ -284,8 +292,8 @@ public class TaskServiceImpl implements TaskService {
             user.setTotalWeight(userWeight);
             user.setTotalPerformance(userPerformance);
             userService.saveUser(user);
-            Task taskStartDate = taskRepository.findTaskByEstStartDateAcs();
-            Task taskEndDate = taskRepository.findTaskByEstEndDateDesc();
+            Task taskStartDate = taskRepository.findTaskByEstStartDateAcs(task.getRelease().getId());
+            Task taskEndDate = taskRepository.findTaskByEstEndDateDesc(task.getRelease().getId());
 
             releaseObj.setEstStartdate(taskStartDate.getEstStartDate());
             releaseObj.setEstEnddate(taskEndDate.getEstEndDate());
@@ -304,9 +312,6 @@ public class TaskServiceImpl implements TaskService {
                     Project project1 = projectService.getProjectById(release2.getProject().getId());
                     Float projectWeight = project1.getWeight();
                     Float taskWeight = task4.getWeight();
-                    System.out.println("ini task weight" + taskWeight);
-                    System.out.println("ini release weight" + releaseWeight);
-                    System.out.println("ini project weight" + projectWeight);
                     uwUpdate = uwUpdate + (taskWeight * releaseWeight * projectWeight);
                     performanceUpdate = performanceUpdate + (releaseWeight * projectWeight * task4.getTaskProsentase() * taskWeight);
                 }
