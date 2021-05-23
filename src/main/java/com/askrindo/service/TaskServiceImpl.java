@@ -87,12 +87,11 @@ public class TaskServiceImpl implements TaskService {
             totalScore = totalScore + task1.getScore();
         }
         totalScore2 = totalScore + task.getScore();
-        weightTaskUpd = task.getScore()/totalScore2;
+        weightTaskUpd = task.getScore()/totalScore;
         for (Task task1: taskList) {
-            task1.setWeight(task1.getScore()/totalScore2);
+            task1.setWeight(task1.getScore()/totalScore);
             taskRepository.save(task1);
         }
-
         return weightTaskUpd;
     }
 
@@ -136,6 +135,7 @@ public class TaskServiceImpl implements TaskService {
         } else if (task.getTaskProsentase() == 1) {
             task.setStatusDone(GlobalKey.TASK_STATUS_DONE);
         }
+        taskRepository.save(task);
         task.setWeight(calculateWeightTask(task));
         Task taskObj = taskRepository.save(task);
         Release releaseObj = releaseService.getReleaseById(taskObj.getRelease().getId());

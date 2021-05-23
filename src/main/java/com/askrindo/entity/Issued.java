@@ -18,6 +18,7 @@ public class Issued extends Auditable<String> {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
+
     private String issuedDescription;
 
     @JsonFormat(timezone = "Asia/Jakarta",pattern = "yyyy-MM-dd")
