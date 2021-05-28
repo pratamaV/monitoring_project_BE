@@ -56,7 +56,7 @@ public interface TaskRepository extends JpaRepository<Task, String> {
     public Page<Task> getTaskAssignedToIdWithEstEndDate(@Param("id") String id, @Param("statusDone") String statusDone, @Param("releaseName") String releaseName,@Param("projectName") String projectName,
                                                         @Param("estEndDateFrom") Date estEndDateFrom, @Param("estEndDateTo") Date estEndDateTo, Pageable pageable);
 
-    @Query(nativeQuery = true, value = "select mst_task.* from mst_task where est_end_date < now() and status_done like '%NOT STARTED%' order by est_end_date asc")
+    @Query(nativeQuery = true, value = "select mst_task.* from mst_task where est_end_date < now() and status_done not like '%DONE%' order by est_end_date asc")
     public List<Task> findTaskDeadline();
 
 }
