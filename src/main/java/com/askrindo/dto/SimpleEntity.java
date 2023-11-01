@@ -1,10 +1,12 @@
 package com.askrindo.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 public class SimpleEntity {
@@ -35,6 +37,23 @@ public class SimpleEntity {
         private String performanceIssues;
         private String competencyIssues;
 
+        private String trainingName;
+
+        @JsonFormat(timezone = "Asia/Jakarta",pattern = "yyyy-MM-dd")
+        private Date trainingDate;
+
+        private Integer trainingParticipants;
+
+        private String trainingType;
+
+        private Double trainingCost;
+
+        private Double consumptionCost;
+
+        private Double accommodationCost;
+
+        private String type;
+
         @Override
         public String toString() {
             return "RegisterTraining{" +
@@ -48,6 +67,14 @@ public class SimpleEntity {
                     ", businessIssues='" + businessIssues + '\'' +
                     ", performanceIssues='" + performanceIssues + '\'' +
                     ", competencyIssues='" + competencyIssues + '\'' +
+                    ", trainingName='" + trainingName + '\'' +
+                    ", trainingDate=" + trainingDate +
+                    ", trainingParticipants=" + trainingParticipants +
+                    ", trainingType='" + trainingType + '\'' +
+                    ", trainingCost=" + trainingCost +
+                    ", consumptionCost=" + consumptionCost +
+                    ", accommodationCost=" + accommodationCost +
+                    ", type='" + type + '\'' +
                     '}';
         }
     }
