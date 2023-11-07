@@ -15,4 +15,6 @@ public interface TrainingRepository extends JpaRepository<Training, String>, Jpa
     List<Training> findAllByIdUsersOrderByLastModifiedByDesc(Users users);
 
     List<Training> findAllByDivisionCodeOrderByLastModifiedByDesc(String divisionCode);
+
+    List<Training> findAllByTypeOrderByLastModifiedByDesc(String type);
 }

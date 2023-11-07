@@ -54,6 +54,8 @@ public class SimpleEntity {
 
         private String type;
 
+        private String timeline;
+
         @Override
         public String toString() {
             return "RegisterTraining{" +
@@ -75,6 +77,7 @@ public class SimpleEntity {
                     ", consumptionCost=" + consumptionCost +
                     ", accommodationCost=" + accommodationCost +
                     ", type='" + type + '\'' +
+                    ", timeline='" + timeline + '\'' +
                     '}';
         }
     }

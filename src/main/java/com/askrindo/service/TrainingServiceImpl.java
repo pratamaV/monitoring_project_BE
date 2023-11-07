@@ -96,6 +96,10 @@ public class TrainingServiceImpl implements TrainingService{
                     training.get().setCompetencyIssues(request.getCompetencyIssues());
                     training.get().setStatus(request.getStatus());
                     training.get().setStatusDesc(statusDesc);
+                    System.out.println(request.getTimeline());
+                    if(request.getTimeline() != null){
+                        training.get().setTimeline(request.getTimeline());
+                    }
                     trainingList.add(training.get());
                     trainingRepository.save(training.get());
                     return new ResponseEntity<>(new SimpleEntity.DefaultResponse("00", "Success", trainingList), HttpStatus.OK);
@@ -147,6 +151,12 @@ public class TrainingServiceImpl implements TrainingService{
         Optional<Training> training = trainingRepository.findById(id);
         List<Training> trainingList = new ArrayList<>();
         trainingList.add(training.get());
+        return new ResponseEntity<>(new SimpleEntity.DefaultResponse("00", "Success", trainingList), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<SimpleEntity.DefaultResponse> findAllTrainingByType(String type) {
+        List<Training> trainingList = trainingRepository.findAllByTypeOrderByLastModifiedByDesc(type);
         return new ResponseEntity<>(new SimpleEntity.DefaultResponse("00", "Success", trainingList), HttpStatus.OK);
     }
 }

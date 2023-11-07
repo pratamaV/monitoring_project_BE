@@ -15,4 +15,6 @@ public interface TrainingService {
     ResponseEntity<SimpleEntity.DefaultResponse> findAllMasterTraining();
 
     ResponseEntity<SimpleEntity.DefaultResponse> findById(String id);
+
+    ResponseEntity<SimpleEntity.DefaultResponse> findAllTrainingByType(String type);
 }

@@ -36,4 +36,10 @@ public class TrainingController {
     public ResponseEntity<SimpleEntity.DefaultResponse> getTrainingById(@PathVariable String id){
         return trainingService.findById(id);
     }
+
+    @GetMapping("/training/type/{type}")
+    public ResponseEntity<SimpleEntity.DefaultResponse> findAllByTrainingType(@PathVariable String type){
+        System.out.println("ini type : " + type);
+        return trainingService.findAllTrainingByType(type);
+    }
 }
